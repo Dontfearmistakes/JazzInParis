@@ -24,15 +24,14 @@
 {
     if (!_upcomingEvents)
     {
-        JIPEvent *event = [[JIPEvent alloc] init];
-        event.id = @1;
+        JIPEvent *event = [[JIPEvent alloc] initWithID:@1
+                                                  name:@"Vampire WeekEnd"
+                                              location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
+                                                  date:[NSDate date]];
         event.type = @"Concert";
-        event.date = [NSDate date];
-        event.name = @"Vampire WeekEnd";
         event.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
         event.ageRestriction = @"14+";
-        event.location = CLLocationCoordinate2DMake(-0.1150322,51.4650846);
-        
+
         _upcomingEvents = @[event];
     }
     

@@ -10,6 +10,19 @@
 
 @implementation JIPEvent
 
+- (instancetype)initWithID:(NSNumber *)id name:(NSString *)name location:(CLLocationCoordinate2D)location date:(NSDate *)date
+{
+    self = [super init];
+    if (self)
+    {
+        self.id = id;
+        self.name = name;
+        self.location = location;
+        self.date = date;
+    }
+    return self;
+}
+
 // Check if we have a custom display name for the event.
 // If not, set and use the artist's name as the display name.
 - (NSString *)name

@@ -22,4 +22,6 @@
 
 @property (strong, nonatomic) NSDate *date;
 
+- (instancetype)initWithID:(NSNumber *)id name:(NSString *)name location:(CLLocationCoordinate2D)location date:(NSDate *)date;
+
 @end
