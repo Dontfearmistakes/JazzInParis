@@ -40,6 +40,8 @@
 }
 
 //methods TABLE VIEW DATA SOURCE
+// Using #pragma mark makes method list prettier
+#pragma mark - Table View Data Source
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
