@@ -20,6 +20,9 @@
 		50A52FC7189ED5D9001D9779 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50A52FC5189ED5D9001D9779 /* InfoPlist.strings */; };
 		50A52FC9189ED5D9001D9779 /* JazzInParisTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A52FC8189ED5D9001D9779 /* JazzInParisTests.m */; };
 		50A52FD4189ED91C001D9779 /* JIPUpComingEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */; };
+		50FB3190189EE02800137949 /* JIPEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FB318F189EE02800137949 /* JIPEvent.m */; };
+		50FB3194189EE27D00137949 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FB3193189EE27D00137949 /* MapKit.framework */; };
+		50FB3196189EE4DE00137949 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FB3195189EE4DE00137949 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,10 @@
 		50A52FC8189ED5D9001D9779 /* JazzInParisTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JazzInParisTests.m; sourceTree = "<group>"; };
 		50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPUpComingEventsViewController.h; sourceTree = "<group>"; };
 		50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPUpComingEventsViewController.m; sourceTree = "<group>"; };
+		50FB318E189EE02800137949 /* JIPEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPEvent.h; sourceTree = "<group>"; };
+		50FB318F189EE02800137949 /* JIPEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPEvent.m; sourceTree = "<group>"; };
+		50FB3193189EE27D00137949 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		50FB3195189EE4DE00137949 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +65,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50FB3196189EE4DE00137949 /* CoreLocation.framework in Frameworks */,
+				50FB3194189EE27D00137949 /* MapKit.framework in Frameworks */,
 				50A52FA6189ED5D9001D9779 /* CoreGraphics.framework in Frameworks */,
 				50A52FA8189ED5D9001D9779 /* UIKit.framework in Frameworks */,
 				50A52FA4189ED5D9001D9779 /* Foundation.framework in Frameworks */,
@@ -99,6 +108,8 @@
 		50A52FA2189ED5D9001D9779 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50FB3195189EE4DE00137949 /* CoreLocation.framework */,
+				50FB3193189EE27D00137949 /* MapKit.framework */,
 				50A52FA3189ED5D9001D9779 /* Foundation.framework */,
 				50A52FA5189ED5D9001D9779 /* CoreGraphics.framework */,
 				50A52FA7189ED5D9001D9779 /* UIKit.framework */,
@@ -112,8 +123,8 @@
 			children = (
 				50A52FB2189ED5D9001D9779 /* JIPAppDelegate.h */,
 				50A52FB3189ED5D9001D9779 /* JIPAppDelegate.m */,
-				50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */,
-				50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */,
+				50FB3192189EE04F00137949 /* ViewControllers */,
+				50FB3191189EE04500137949 /* Models */,
 				50A52FB5189ED5D9001D9779 /* Images.xcassets */,
 				50A52FAA189ED5D9001D9779 /* Supporting Files */,
 			);
@@ -147,6 +158,24 @@
 				50A52FC5189ED5D9001D9779 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		50FB3191189EE04500137949 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				50FB318E189EE02800137949 /* JIPEvent.h */,
+				50FB318F189EE02800137949 /* JIPEvent.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		50FB3192189EE04F00137949 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */,
+				50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */,
+			);
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +276,7 @@
 			files = (
 				50A52FD4189ED91C001D9779 /* JIPUpComingEventsViewController.m in Sources */,
 				50A52FB4189ED5D9001D9779 /* JIPAppDelegate.m in Sources */,
+				50FB3190189EE02800137949 /* JIPEvent.m in Sources */,
 				50A52FB0189ED5D9001D9779 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -448,6 +478,7 @@
 				50A52FCE189ED5D9001D9779 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		50A52FCF189ED5D9001D9779 /* Build configuration list for PBXNativeTarget "JazzInParisTests" */ = {
 			isa = XCConfigurationList;
@@ -456,6 +487,7 @@
 				50A52FD1189ED5D9001D9779 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
