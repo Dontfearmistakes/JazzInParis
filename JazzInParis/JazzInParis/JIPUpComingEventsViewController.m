@@ -51,8 +51,18 @@
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
     JIPEvent *event = self.upcomingEvents[indexPath.row];
+    
+    //CELL GETS EVENT.NAME
     cell.textLabel.text = event.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", event.date];
+    
+    //CELL GETS EVENT.DATE
+    //////1) DATE FORMAT US STYLE
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dateFormatter setLocale:usLocale];
+    //////2) CELL GETS FORMATED DATE
+    cell.detailTextLabel.text  = [dateFormatter stringFromDate:event.date];
     
     return cell;
 }
