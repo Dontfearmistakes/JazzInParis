@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5015AAAE18A159ED000A7625 /* JIPConcertDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */; };
 		50A52FA4189ED5D9001D9779 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A52FA3189ED5D9001D9779 /* Foundation.framework */; };
 		50A52FA6189ED5D9001D9779 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A52FA5189ED5D9001D9779 /* CoreGraphics.framework */; };
 		50A52FA8189ED5D9001D9779 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A52FA7189ED5D9001D9779 /* UIKit.framework */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5015AAAC18A159ED000A7625 /* JIPConcertDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPConcertDetailsViewController.h; sourceTree = "<group>"; };
+		5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPConcertDetailsViewController.m; sourceTree = "<group>"; };
 		50A52FA0189ED5D9001D9779 /* JazzInParis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JazzInParis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50A52FA3189ED5D9001D9779 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		50A52FA5189ED5D9001D9779 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -174,6 +177,8 @@
 			children = (
 				50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */,
 				50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */,
+				5015AAAC18A159ED000A7625 /* JIPConcertDetailsViewController.h */,
+				5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -278,6 +283,7 @@
 				50A52FB4189ED5D9001D9779 /* JIPAppDelegate.m in Sources */,
 				50FB3190189EE02800137949 /* JIPEvent.m in Sources */,
 				50A52FB0189ED5D9001D9779 /* main.m in Sources */,
+				5015AAAE18A159ED000A7625 /* JIPConcertDetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

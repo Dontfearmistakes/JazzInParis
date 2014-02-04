@@ -17,9 +17,10 @@
     // Override point for customization after application launch.
     
     JIPUpComingEventsViewController *upcomingEventVC = [[JIPUpComingEventsViewController alloc] init];
+    UINavigationController *upcomingEventsNavVC = [[UINavigationController alloc] initWithRootViewController:upcomingEventVC];
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[upcomingEventVC];
+    tabBarController.viewControllers = @[upcomingEventsNavVC];
     
     self.window.rootViewController = tabBarController;
     

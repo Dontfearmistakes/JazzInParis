@@ -8,6 +8,7 @@
 
 #import "JIPUpComingEventsViewController.h"
 #import "JIPEvent.h"
+#import "JIPConcertDetailsViewController.h"
 
 @interface JIPUpComingEventsViewController ()
 //proprietés privée
@@ -65,6 +66,25 @@
     cell.detailTextLabel.text  = [dateFormatter stringFromDate:event.date];
     
     return cell;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //CREATE VC////////////////////////
+    JIPConcertDetailsViewController *concertDetailsVC = [[JIPConcertDetailsViewController alloc] init];
+    JIPEvent *event = self.upcomingEvents[indexPath.row];
+    
+    //PASSING DATA FROM MODEL TO VC///////////////////
+    concertDetailsVC.name = event.name;
+    concertDetailsVC.uri = event.uri;
+    concertDetailsVC.location = event.location;
+    concertDetailsVC.date = event.date;
+    
+    //PUSH VC//////////////////////
+    [self.navigationController pushViewController:concertDetailsVC animated:YES];
 }
 
 
