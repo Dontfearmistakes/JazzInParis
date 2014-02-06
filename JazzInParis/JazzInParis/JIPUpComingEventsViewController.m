@@ -19,13 +19,15 @@
 
 //@property = crée var d'instance + getter (return _ivar) + setter _ivar = smthg)
 
--(NSDateFormatter *)dateFormatter;
+-(NSString *)stringFromDate:(NSDate *)date;
 
 @end
 
 
 
 @implementation JIPUpComingEventsViewController
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,9 +68,10 @@
                                                    name:@"Paris Combo"
                                                location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
                                                    date:dayAfterTomorrow ];
-        event3.type = @"Concert";
-        event3.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
-        event3.ageRestriction = @"14+";
+        event4.type = @"Concert";
+        event4.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
+        event4.ageRestriction = @"14+";
+        
 
         //CREATES NSDICT :: DATE : EVENT
         _upcomingEvents = @{
@@ -76,73 +79,67 @@
                              tomorrow : @[event3],
                              dayAfterTomorrow : @[event4]
                             };
-
-        //CREATE NSARRAY WITH ALL DATES TO ACCESS EACH EVENT THROUGH self.upcomingEvents[self.allDates[indexPath.row]]
-        self.allNSDates = [self.upcomingEvents allKeys];
-
     }
     
     return _upcomingEvents;
 }
 
+
+//////////////////////
+-(NSArray *)allNSDates
+{
+    if (!_allNSDates)
+    {
+        //CREATE NSARRAY WITH ALL DATES TO ACCESS EACH EVENT THROUGH self.upcomingEvents[self.allDates[indexPath.row]]
+        _allNSDates = [self.upcomingEvents allKeys];
+    }
+    return _allNSDates;
+}
+
+
 /////////////////////DATE FORMAT METHOD ////// DATE FORMAT US STYLE///////////////////////////////////////////
--(NSDateFormatter *)dateFormatter
+-(NSString *)stringFromDate:(NSDate *)date
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterLongStyle];
-    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    [dateFormatter setLocale:usLocale];
-    return dateFormatter;
+    dateFormatter.dateStyle = NSDateFormatterLongStyle;
+    NSString *string = [dateFormatter stringFromDate:date];
+    return string;
 }
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Table View Data Source
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    switch (section) {
-        case 0:
-            
-            self.concertsOnDay = self.upcomingEvents[self.allNSDates[0]];
-            NSLog(@"number of rows in section %lu : %ld", (long)section, (unsigned long)self.concertsOnDay.count);
-        
-            return self.concertsOnDay.count;
-            break;
-            
-        case 1:
-            self.concertsOnDay = self.upcomingEvents[self.allNSDates[1]];
-            NSLog(@"number of rows in section %lu : %ld", (long)section, (unsigned long)self.concertsOnDay.count);
-
-            return self.concertsOnDay.count;
-            break;
-            
-        default:
-            self.concertsOnDay = self.upcomingEvents[self.allNSDates[1]];
-            return self.concertsOnDay.count;
-            break;
-    }
-
+    self.concertsOnDay = self.upcomingEvents[self.allNSDates[section]];
+    NSLog(@"number of rows in section %lu : %ld", (long)section, (unsigned long)self.concertsOnDay.count);
+    return self.concertsOnDay.count;
 }
 
 
+////////////////////////////////////////////////////////////////
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     //ONE SECTION FOR EACH DAY
-    NSLog(@"number of sections : %lu", (unsigned long)self.upcomingEvents.count);
-    return self.upcomingEvents.count;
-    
+    NSLog(@"number of sections : %lu", (unsigned long)self.allNSDates.count);
+    return self.allNSDates.count;
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [NSString stringWithFormat:@"%@", [self.dateFormatter stringFromDate:self.allNSDates[section]] ];
+    return [self stringFromDate:self.allNSDates[section]];
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -157,6 +154,8 @@
     
     return cell;
 }
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
