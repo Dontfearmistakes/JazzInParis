@@ -28,7 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = [NSString stringWithFormat:@"%@ Concert", self.name];
+    self.title = [NSString stringWithFormat:@"%@ Concert", self.event.name];
 	// Do any additional setup after loading the view.
     
     /////////////////////////////////////////////////////NAME OF CONCERT LABEL//
@@ -37,7 +37,7 @@
     concertNameLabel.backgroundColor = [UIColor blueColor];
     concertNameLabel.textAlignment = NSTextAlignmentCenter;
     concertNameLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
-    concertNameLabel.text = self.name;
+    concertNameLabel.text = self.event.name;
     [self.view addSubview:concertNameLabel];
     
 }

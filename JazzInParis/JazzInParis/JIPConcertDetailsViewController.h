@@ -8,16 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "JIPEvent.h"
 
 @interface JIPConcertDetailsViewController : UIViewController
 
-@property (strong, nonatomic) NSString *type;
-@property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSURL *uri;
-@property (strong, nonatomic) NSString *ageRestriction;
-
-@property (nonatomic) CLLocationCoordinate2D location;
-
-@property (strong, nonatomic) NSDate *date;
+@property (strong, nonatomic) JIPEvent *event;
 
 @end

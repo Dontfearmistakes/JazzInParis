@@ -10,6 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 
+
 @interface JIPEvent : NSObject <NSCopying>
 
 @property (strong, nonatomic) NSNumber *id;

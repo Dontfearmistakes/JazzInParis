@@ -199,13 +199,9 @@
 {
     //CREATE VC////////////////////////
     JIPConcertDetailsViewController *concertDetailsVC = [[JIPConcertDetailsViewController alloc] init];
-    JIPEvent *event = self.upcomingEvents[self.upcomingEvents.allKeys[indexPath.section]][indexPath.row];
     
-    //PASSING DATA FROM MODEL TO VC///////////////////
-    concertDetailsVC.name = event.name;
-    concertDetailsVC.uri = event.uri;
-    concertDetailsVC.location = event.location;
-    concertDetailsVC.date = event.date;
+    //PASSING EVENT FROM VC TO VC///////////////////
+    concertDetailsVC.event = self.upcomingEvents[self.upcomingEvents.allKeys[indexPath.section]][indexPath.row];
     
     //PUSH VC//////////////////////
     [self.navigationController pushViewController:concertDetailsVC animated:YES];
