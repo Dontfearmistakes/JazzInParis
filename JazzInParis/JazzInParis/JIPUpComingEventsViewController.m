@@ -14,7 +14,6 @@
 //ici les proprietés sont automatiquement privée
 
 @property (strong, nonatomic) NSDictionary *upcomingEvents;
-@property (strong, nonatomic) NSArray *allNSDates;
 @property (strong, nonatomic) NSArray *concertsOnDay;
 
 //@property = crée var d'instance + getter (return _ivar) + setter _ivar = smthg)
@@ -132,17 +131,6 @@
 }
 
 
-//////////////////////
--(NSArray *)allNSDates
-{
-    if (!_allNSDates)
-    {
-        //CREATE NSARRAY WITH ALL DATES TO ACCESS EACH EVENT THROUGH self.upcomingEvents[self.allDates[indexPath.row]]
-        _allNSDates = [self.upcomingEvents allKeys];
-    }
-    return _allNSDates;
-}
-
 
 /////////////////////DATE FORMAT METHOD ////// DATE FORMAT US STYLE///////////////////////////////////////////
 -(NSString *)stringFromDate:(NSDate *)date
@@ -161,28 +149,27 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    self.concertsOnDay = self.upcomingEvents[self.allNSDates[section]];
-    NSLog(@"number of rows in section %lu : %ld", (long)section, (unsigned long)self.concertsOnDay.count);
-    return self.concertsOnDay.count;
-}
-
-
 ////////////////////////////////////////////////////////////////
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     //ONE SECTION FOR EACH DAY
-    NSLog(@"number of sections : %lu", (unsigned long)self.allNSDates.count);
-    return self.allNSDates.count;
+    return [self.upcomingEvents.allKeys count];
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    
+    NSArray *allKeysArray = self.upcomingEvents.allKeys;
+    NSArray *numberOfConcertThisDay = self.upcomingEvents[allKeysArray[section]];
+    return numberOfConcertThisDay.count;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [self stringFromDate:self.allNSDates[section]];
+    return [self stringFromDate:self.upcomingEvents.allKeys[section]];
 }
 
 
@@ -191,7 +178,7 @@
 {
     
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-    JIPEvent *event = self.upcomingEvents[self.allNSDates[indexPath.section]][indexPath.row];
+    JIPEvent *event = self.upcomingEvents[self.upcomingEvents.allKeys[indexPath.section]][indexPath.row];
     
     //CELL GETS EVENT.NAME
     cell.textLabel.text = event.name;
@@ -212,7 +199,7 @@
 {
     //CREATE VC////////////////////////
     JIPConcertDetailsViewController *concertDetailsVC = [[JIPConcertDetailsViewController alloc] init];
-    JIPEvent *event = self.upcomingEvents[self.allNSDates[indexPath.row]];
+    JIPEvent *event = self.upcomingEvents[self.upcomingEvents.allKeys[indexPath.section]][indexPath.row];
     
     //PASSING DATA FROM MODEL TO VC///////////////////
     concertDetailsVC.name = event.name;
