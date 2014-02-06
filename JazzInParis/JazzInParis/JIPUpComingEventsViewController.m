@@ -48,7 +48,7 @@
         
         JIPEvent *event1 = [[JIPEvent alloc] initWithID:@1
                                                   name:@"Vampire WeekEnd"
-                                              location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
+                                              location:CLLocationCoordinate2DMake(28.41871, -81.58121)
                                                   date:[gregorian dateFromComponents:comps]];
         event1.type = @"Concert";
         event1.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];

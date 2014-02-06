@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "JIPEvent.h"
 
-@interface JIPConcertDetailsViewController : UIViewController
+@interface JIPConcertDetailsViewController : UIViewController <MKMapViewDelegate>
 
 @property (strong, nonatomic) JIPEvent *event;
+@property (strong, nonatomic) MKMapView *venueMap;
 
 @end
