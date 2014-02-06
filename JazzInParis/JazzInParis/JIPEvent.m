@@ -33,4 +33,17 @@
     return _name;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    JIPEvent *newEvent = [[[self class] allocWithZone:zone] init];
+    newEvent.id = [_id copyWithZone:zone];
+    newEvent.type = [_type copyWithZone:zone];
+    newEvent.name = [_name copyWithZone:zone];
+    newEvent.uri = [_uri copyWithZone:zone];
+    newEvent.ageRestriction = [_ageRestriction copyWithZone:zone];
+    //newEvent.location = [self.location copyWithZone:zone]; HOW TO COPY WITH ZONE A NON POINTER OBJECT ????
+    newEvent.date = [_date copyWithZone:zone];
+
+    return newEvent;
+}
+
 @end
