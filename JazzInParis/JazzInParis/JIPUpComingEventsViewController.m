@@ -39,17 +39,37 @@
     
     if (!_upcomingEvents)
     {
+        ///////////////////
+        //GET TODAY 10AM///
+        ///////////////////
+        NSDate *now = [NSDate date];
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:now];
+        [components setHour:10];
+        [components setMinute:10];
+        [components setSecond:10];
+        NSDate *today10am = [calendar dateFromComponents:components];
+        
+        //////////////////////////
+        //GET PRECISE DATE////////
+        //////////////////////////
         NSDateComponents *comps = [[NSDateComponents alloc] init];
         [comps setDay:6];
         [comps setMonth:5];
         [comps setYear:2004];
         NSCalendar *gregorian = [[NSCalendar alloc]
                                  initWithCalendarIdentifier:NSGregorianCalendar];
+        //then use [gregorian dateFromComponents:comps]]
+        
+        //////////////////////////
+        //GET SAME DATE///////////
+        //////////////////////////
+        //[today10am dateByAddingTimeInterval:0]
         
         JIPEvent *event1 = [[JIPEvent alloc] initWithID:@1
                                                   name:@"Vampire WeekEnd"
                                               location:CLLocationCoordinate2DMake(28.41871, -81.58121)
-                                                  date:[gregorian dateFromComponents:comps]];
+                                                   date:[today10am dateByAddingTimeInterval:0]];
         event1.type = @"Concert";
         event1.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
         event1.ageRestriction = @"14+";
@@ -57,7 +77,7 @@
         JIPEvent *event2 = [[JIPEvent alloc] initWithID:@1
                                                    name:@"Brad Mehldau"
                                                location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
-                                                   date:[NSDate date]];
+                                                   date:today10am];
         event2.type = @"Concert";
         event2.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
         event2.ageRestriction = @"14+";
@@ -65,7 +85,7 @@
         JIPEvent *event3 = [[JIPEvent alloc] initWithID:@3
                                                    name:@"Bad Plus"
                                                location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
-                                                   date:tomorrow];
+                                                   date:[today10am dateByAddingTimeInterval:0]];
         event3.type = @"Concert";
         event3.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
         event3.ageRestriction = @"14+";
@@ -78,52 +98,51 @@
         event4.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
         event4.ageRestriction = @"14+";
         
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        //ARRAY OF JIPEVENTS
         NSArray *events = [NSArray arrayWithObjects:event4, event2, event3, event1, nil];
         NSLog(@"EventsArray == %@", events);
         
         
-        ///////////////////////////////////////////////
-        //SORTING ARRAY OF JIPEVENTS BY ASCENDING DATES
+        /////////////////////////////////////////////////
+        //SORTING ARRAY OF JIPEVENTS BY ASCENDING DATES//
+        /////////////////////////////////////////////////
         NSSortDescriptor *dateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
         NSArray *sortedByDateEventArray = [events sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateSortDescriptor]];
-        NSLog(@"sortedEventArray == %@", sortedByDateEventArray);
+        //AND CHECK
+        for (JIPEvent *event in sortedByDateEventArray)
+        {
+            NSLog(@"dateInSortedEventsArray == %@ - %@ - %@", event.date, event.name, event);
+        }
         
+        ////////////////////////////////////////////////////
+        //CREATE ARRAY WITH ALL DATES AND NO DUPLICATE//
+        ////////////////////////////////////////////////////
+        NSArray *datesArray = [sortedByDateEventArray valueForKeyPath:@"@distinctUnionOfObjects.date"];
+        NSLog(@"All DATES IN ORDER IN ONE ARRAY !! == %@", datesArray);
         
         ///////////////////////////////////////////////////////////////////////
-        //CREATE _upcomingEvents = @ {  TODAY    : [EVENT1, EVENT2,...],
-        //                              TOMMOROW : [EVENT3, EVENT4, ...],
+        //CREATE (NSDict*)_upcomingEvents = @ {  (NSDate*) TODAY    : [(JIPEvent*) EVENT1, EVENT2,...],
+        //                                       (NSDate*) TOMMOROW : [            EVENT3, EVENT4, ...],
         //                                                                 ... }
-
         
         NSMutableDictionary *tempUpcomingEvents = [[NSMutableDictionary alloc] init];
         
-        for (JIPEvent *event in sortedByDateEventArray)
+        for (NSDate *date in datesArray)
         {
-            //POUR CHAQUE EVENT, SI _upcomingEvents a déjà une entrée pour la date de cet event, on l'ajoute
-            if ([tempUpcomingEvents objectForKey:event.date])
+            NSMutableArray *mutArray = [[NSMutableArray alloc] init];
+            for (JIPEvent *event in sortedByDateEventArray)
             {
-                NSLog(@"adding event in already existing Key");
-                //On met le NSARRAY qui est déjà dans cet entrée dans un array temporaire
-                NSMutableArray *mutArray = [[NSMutableArray alloc] init];
-                mutArray = [tempUpcomingEvents objectForKey:event.date];
-                //On y rajoute le current event
-                [mutArray addObject:event];
-                //On réintroduit cet array temporaire dans le dictionary
-                [tempUpcomingEvents setObject:mutArray forKey:event.date];
+                if ([event.date isEqualToDate:date])
+                {
+                    [mutArray addObject:event];
+                }
             }
-            //POUR CHAQUE EVENT, SI _upcomingEvents n'a pas encore d'entrée, pour la date de cet event, on la crée et on y met l'événement
-            else
-            {
-                NSLog(@"adding event in not yet existing Key");
-                NSArray *array = [[NSArray alloc] initWithObjects:event, nil];
-                NSLog(@"array : %@", array);
-                [tempUpcomingEvents setObject:array forKey:event.date];
-                NSLog(@"tempUpcomingEvents : %@", tempUpcomingEvents);
-            }
+            [tempUpcomingEvents setObject:mutArray forKey:date];
         }
         
         _upcomingEvents = tempUpcomingEvents;
-        NSLog(@"_upcomingEvents : %@", _upcomingEvents);
         
     }
     
