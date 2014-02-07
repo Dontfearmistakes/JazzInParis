@@ -169,6 +169,8 @@
 		50FB3191189EE04500137949 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				50625C8618A3FCFC00A2B7F8 /* JIPMapAnnotation.h */,
+				50625C8718A3FCFC00A2B7F8 /* JIPMapAnnotation.m */,
 				50FB318E189EE02800137949 /* JIPEvent.h */,
 				50FB318F189EE02800137949 /* JIPEvent.m */,
 			);
@@ -182,8 +184,6 @@
 				50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */,
 				5015AAAC18A159ED000A7625 /* JIPConcertDetailsViewController.h */,
 				5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */,
-				50625C8618A3FCFC00A2B7F8 /* JIPMapAnnotation.h */,
-				50625C8718A3FCFC00A2B7F8 /* JIPMapAnnotation.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";

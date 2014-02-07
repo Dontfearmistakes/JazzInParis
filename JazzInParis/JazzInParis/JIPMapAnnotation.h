@@ -8,10 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
-#import <CoreLocation/CoreLocation.h>
 
 @interface JIPMapAnnotation : NSObject <MKAnnotation>
+{
+    CLLocationCoordinate2D coordinate;
+}
 
 @property CLLocationCoordinate2D coordinate;
+
+- (id) initWithCoordinate:(CLLocationCoordinate2D)coord;
 
 @end

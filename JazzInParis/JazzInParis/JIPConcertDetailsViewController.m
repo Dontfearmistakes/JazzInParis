@@ -51,27 +51,27 @@
     self.venueMap.zoomEnabled = NO;
     [self.view addSubview:self.venueMap];
     
-    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(self.event.location.latitude, self.event.location.longitude);
+    CLLocationCoordinate2D eventCoordinate = CLLocationCoordinate2DMake(self.event.location.latitude, self.event.location.longitude);
     double regionWidth = 2500;
     double regionHeight = 2200;
-    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(centerCoordinate, regionWidth, regionHeight);
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(eventCoordinate, regionWidth, regionHeight);
     [self.venueMap setRegion:startRegion
                   animated:YES];
     
+    //CENTRER SUR LE VENUE ET NE PAS MONTRER LA POSITION SYSTEME
+    [self.venueMap setCenterCoordinate:eventCoordinate animated:YES];
     self.venueMap.showsUserLocation = NO;
     
-    CLLocationCoordinate2D annotationCoordinate = CLLocationCoordinate2DMake(self.event.location.latitude, self.event.location.longitude)
-    ;
-    
-    JIPMapAnnotation *annotation = [[JIPMapAnnotation alloc] init];
-    annotation.coordinate = annotationCoordinate;
-    
+    //ADD ANNOTATION
+    JIPMapAnnotation *annotation = [[JIPMapAnnotation alloc] initWithCoordinate:eventCoordinate];
+    NSLog(@"annotation.coordinate : %f, %f", annotation.coordinate.latitude, annotation.coordinate.latitude);
     [self.venueMap addAnnotation:annotation];
     
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
+    NSLog(@"viewForAnnotation Called !!");
     if([annotation isKindOfClass:[MKUserLocation class]]) {
         return nil;
     }
