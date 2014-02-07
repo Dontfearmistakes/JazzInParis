@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) NSDictionary *upcomingEvents;
 @property (strong, nonatomic) NSArray *concertsOnDay;
+@property (strong, nonatomic) NSArray *orderedDates;
 
 //@property = crée var d'instance + getter (return _ivar) + setter _ivar = smthg)
 
@@ -119,8 +120,8 @@
         ////////////////////////////////////////////////////
         //CREATE ARRAY WITH ALL DATES AND NO DUPLICATE//
         ////////////////////////////////////////////////////
-        NSArray *datesArray = [sortedByDateEventArray valueForKeyPath:@"@distinctUnionOfObjects.date"];
-        NSLog(@"All DATES IN ORDER IN ONE ARRAY !! == %@", datesArray);
+        self.orderedDates = [sortedByDateEventArray valueForKeyPath:@"@distinctUnionOfObjects.date"];
+        NSLog(@"All DATES IN ORDER IN ONE ARRAY !! == %@", self.orderedDates);
         
         ///////////////////////////////////////////////////////////////////////
         //CREATE (NSDict*)_upcomingEvents = @ {  (NSDate*) TODAY    : [(JIPEvent*) EVENT1, EVENT2,...],
@@ -129,7 +130,7 @@
         
         NSMutableDictionary *tempUpcomingEvents = [[NSMutableDictionary alloc] init];
         
-        for (NSDate *date in datesArray)
+        for (NSDate *date in self.orderedDates)
         {
             NSMutableArray *mutArray = [[NSMutableArray alloc] init];
             for (JIPEvent *event in sortedByDateEventArray)
@@ -178,17 +179,16 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
-    NSArray *allKeysArray = self.upcomingEvents.allKeys;
-    NSArray *numberOfConcertThisDay = self.upcomingEvents[allKeysArray[section]];
-    return numberOfConcertThisDay.count;
+    NSLog(@"section : %ld", (long)section);
+    NSArray *concertsThisDay = self.upcomingEvents[self.orderedDates[section]];
+    return concertsThisDay.count;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [self stringFromDate:self.upcomingEvents.allKeys[section]];
+    return [self stringFromDate:self.orderedDates[section]];
 }
 
 
@@ -197,7 +197,7 @@
 {
     
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-    JIPEvent *event = self.upcomingEvents[self.upcomingEvents.allKeys[indexPath.section]][indexPath.row];
+    JIPEvent *event = self.upcomingEvents[self.orderedDates[indexPath.section]][indexPath.row];
     
     //CELL GETS EVENT.NAME
     cell.textLabel.text = event.name;
