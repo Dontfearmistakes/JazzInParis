@@ -10,6 +10,11 @@
 
 @implementation JIPEvent
 
+-(id)init
+{
+    return [self initWithID:@0 name:NSLocalizedString(@"event", @"Default event title") location:CLLocationCoordinate2DMake(0, 0) date:[NSDate date]];
+}
+
 - (instancetype)initWithID:(NSNumber *)id name:(NSString *)name location:(CLLocationCoordinate2D)location date:(NSDate *)date
 {
     self = [super init];
