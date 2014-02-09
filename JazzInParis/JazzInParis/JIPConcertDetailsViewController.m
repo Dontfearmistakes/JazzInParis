@@ -71,7 +71,7 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-    NSLog(@"viewForAnnotation Called !!");
+
     if([annotation isKindOfClass:[MKUserLocation class]]) {
         return nil;
     }
