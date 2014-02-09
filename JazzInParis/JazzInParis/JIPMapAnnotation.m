@@ -10,4 +10,10 @@
 
 @implementation JIPMapAnnotation
 
+- (id) initWithCoordinate:(CLLocationCoordinate2D)coord
+{
+    coordinate = coord;
+    return self;
+}
+
 @end
