@@ -10,4 +10,9 @@
 
 @interface JIPUpComingEventsViewController : UITableViewController
 
+@property (strong, nonatomic) NSArray *upcomingEvents;
+
+-(void)createFakeUpcomingEvents;
+
+
 @end

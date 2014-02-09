@@ -13,8 +13,7 @@
 @interface JIPUpComingEventsViewController ()
 //ici les proprietés sont automatiquement privée
 
-@property (strong, nonatomic) NSDictionary *upcomingEvents;
-@property (strong, nonatomic) NSArray *concertsOnDay;
+@property (strong, nonatomic) NSDictionary *groupedUpcomingEvents;
 @property (strong, nonatomic) NSArray *orderedDates;
 
 //@property = crée var d'instance + getter (return _ivar) + setter _ivar = smthg)
@@ -33,96 +32,107 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
--(NSDictionary *)upcomingEvents
+-(void)createFakeUpcomingEvents
 {
     NSDate *tomorrow = [NSDate dateWithTimeInterval:(24*60*60) sinceDate:[NSDate date]];
     NSDate *dayAfterTomorrow = [NSDate dateWithTimeInterval:(2*24*60*60) sinceDate:[NSDate date]];
+
+    ///////////////////
+    //GET TODAY 10AM///
+    ///////////////////
+    NSDate *now = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:now];
+    [components setHour:10];
+    [components setMinute:10];
+    [components setSecond:10];
+    NSDate *today10am = [calendar dateFromComponents:components];
     
-    if (!_upcomingEvents)
+    //////////////////////////
+    //GET PRECISE DATE////////
+    //////////////////////////
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    [comps setDay:6];
+    [comps setMonth:5];
+    [comps setYear:2004];
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSGregorianCalendar];
+    //then use [gregorian dateFromComponents:comps]]
+    
+    //////////////////////////
+    //GET SAME DATE///////////
+    //////////////////////////
+    //[today10am dateByAddingTimeInterval:0]
+    
+    JIPEvent *event1 = [[JIPEvent alloc] initWithID:@1
+                                              name:@"Vampire WeekEnd"
+                                          location:CLLocationCoordinate2DMake(28.41871, -81.58121)
+                                               date:[today10am dateByAddingTimeInterval:0]];
+    event1.type = @"Concert";
+    event1.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
+    event1.ageRestriction = @"14+";
+    
+    JIPEvent *event2 = [[JIPEvent alloc] initWithID:@1
+                                               name:@"Brad Mehldau"
+                                           location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
+                                               date:today10am];
+    event2.type = @"Concert";
+    event2.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
+    event2.ageRestriction = @"14+";
+    
+    JIPEvent *event3 = [[JIPEvent alloc] initWithID:@3
+                                               name:@"Bad Plus"
+                                           location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
+                                               date:[today10am dateByAddingTimeInterval:0]];
+    event3.type = @"Concert";
+    event3.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
+    event3.ageRestriction = @"14+";
+    
+    JIPEvent *event4 = [[JIPEvent alloc] initWithID:@3
+                                               name:@"Paris Combo"
+                                           location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
+                                               date:dayAfterTomorrow ];
+    event4.type = @"Concert";
+    event4.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
+    event4.ageRestriction = @"14+";
+        
+    NSArray *events = @[event1, event2, event3, event4];
+    self.upcomingEvents = events;
+    
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-(NSArray *)orderedDates
+{
+    if (!_orderedDates)
     {
-        ///////////////////
-        //GET TODAY 10AM///
-        ///////////////////
-        NSDate *now = [NSDate date];
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:now];
-        [components setHour:10];
-        [components setMinute:10];
-        [components setSecond:10];
-        NSDate *today10am = [calendar dateFromComponents:components];
-        
-        //////////////////////////
-        //GET PRECISE DATE////////
-        //////////////////////////
-        NSDateComponents *comps = [[NSDateComponents alloc] init];
-        [comps setDay:6];
-        [comps setMonth:5];
-        [comps setYear:2004];
-        NSCalendar *gregorian = [[NSCalendar alloc]
-                                 initWithCalendarIdentifier:NSGregorianCalendar];
-        //then use [gregorian dateFromComponents:comps]]
-        
-        //////////////////////////
-        //GET SAME DATE///////////
-        //////////////////////////
-        //[today10am dateByAddingTimeInterval:0]
-        
-        JIPEvent *event1 = [[JIPEvent alloc] initWithID:@1
-                                                  name:@"Vampire WeekEnd"
-                                              location:CLLocationCoordinate2DMake(28.41871, -81.58121)
-                                                   date:[today10am dateByAddingTimeInterval:0]];
-        event1.type = @"Concert";
-        event1.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
-        event1.ageRestriction = @"14+";
-        
-        JIPEvent *event2 = [[JIPEvent alloc] initWithID:@1
-                                                   name:@"Brad Mehldau"
-                                               location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
-                                                   date:today10am];
-        event2.type = @"Concert";
-        event2.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
-        event2.ageRestriction = @"14+";
-        
-        JIPEvent *event3 = [[JIPEvent alloc] initWithID:@3
-                                                   name:@"Bad Plus"
-                                               location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
-                                                   date:[today10am dateByAddingTimeInterval:0]];
-        event3.type = @"Concert";
-        event3.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
-        event3.ageRestriction = @"14+";
-        
-        JIPEvent *event4 = [[JIPEvent alloc] initWithID:@3
-                                                   name:@"Paris Combo"
-                                               location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
-                                                   date:dayAfterTomorrow ];
-        event4.type = @"Concert";
-        event4.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
-        event4.ageRestriction = @"14+";
-        
-        
-        //////////////////////////////////////////////////////////////////////////////////////////////
-        //ARRAY OF JIPEVENTS
-        NSArray *events = [NSArray arrayWithObjects:event4, event2, event3, event1, nil];
-        NSLog(@"EventsArray == %@", events);
-        
-        
         /////////////////////////////////////////////////
         //SORTING ARRAY OF JIPEVENTS BY ASCENDING DATES//
         /////////////////////////////////////////////////
         NSSortDescriptor *dateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
-        NSArray *sortedByDateEventArray = [events sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateSortDescriptor]];
-        //AND CHECK
-        for (JIPEvent *event in sortedByDateEventArray)
-        {
-            NSLog(@"dateInSortedEventsArray == %@ - %@ - %@", event.date, event.name, event);
-        }
+        NSArray *sortedByDateEventArray = [self.upcomingEvents sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateSortDescriptor]];
         
         ////////////////////////////////////////////////////
         //CREATE ARRAY WITH ALL DATES AND NO DUPLICATE//
         ////////////////////////////////////////////////////
-        self.orderedDates = [sortedByDateEventArray valueForKeyPath:@"@distinctUnionOfObjects.date"];
-        NSLog(@"All DATES IN ORDER IN ONE ARRAY !! == %@", self.orderedDates);
-        
+        _orderedDates = [sortedByDateEventArray valueForKeyPath:@"@distinctUnionOfObjects.date"];
+    }
+    return _orderedDates;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-(void)setUpcomingEvents:(NSArray *)upcomingEvents
+{
+    _groupedUpcomingEvents = nil;
+    _orderedDates = nil;
+    _upcomingEvents = upcomingEvents;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-(NSDictionary*)groupedUpcomingEvents
+{
+    if (!_groupedUpcomingEvents)
+    {
         ///////////////////////////////////////////////////////////////////////
         //CREATE (NSDict*)_upcomingEvents = @ {  (NSDate*) TODAY    : [(JIPEvent*) EVENT1, EVENT2,...],
         //                                       (NSDate*) TOMMOROW : [            EVENT3, EVENT4, ...],
@@ -133,7 +143,7 @@
         for (NSDate *date in self.orderedDates)
         {
             NSMutableArray *mutArray = [[NSMutableArray alloc] init];
-            for (JIPEvent *event in sortedByDateEventArray)
+            for (JIPEvent *event in self.upcomingEvents)
             {
                 if ([event.date isEqualToDate:date])
                 {
@@ -143,11 +153,10 @@
             [tempUpcomingEvents setObject:mutArray forKey:date];
         }
         
-        _upcomingEvents = tempUpcomingEvents;
-        
+        _groupedUpcomingEvents = tempUpcomingEvents;
     }
     
-    return _upcomingEvents;
+    return _groupedUpcomingEvents;
 }
 
 
