@@ -182,14 +182,14 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     //ONE SECTION FOR EACH DAY
-    return [self.upcomingEvents.allKeys count];
+    return [self.orderedDates count];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSLog(@"section : %ld", (long)section);
-    NSArray *concertsThisDay = self.upcomingEvents[self.orderedDates[section]];
+    NSArray *concertsThisDay = self.groupedUpcomingEvents[self.orderedDates[section]];
     return concertsThisDay.count;
 }
 
@@ -229,7 +229,7 @@
     JIPConcertDetailsViewController *concertDetailsVC = [[JIPConcertDetailsViewController alloc] init];
     
     //PASSING EVENT FROM VC TO VC///////////////////
-    concertDetailsVC.event = self.upcomingEvents[self.upcomingEvents.allKeys[indexPath.section]][indexPath.row];
+    concertDetailsVC.event = self.groupedUpcomingEvents[self.orderedDates[indexPath.section]][indexPath.row];
     
     //PUSH VC//////////////////////
     [self.navigationController pushViewController:concertDetailsVC animated:YES];
