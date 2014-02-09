@@ -7,7 +7,6 @@
 //
 
 #import "JIPConcertDetailsViewController.h"
-#import "JIPMapAnnotation.h"
 
 @interface JIPConcertDetailsViewController ()
 
@@ -63,23 +62,15 @@
     self.venueMap.showsUserLocation = NO;
     
     //ADD ANNOTATION
-    JIPMapAnnotation *annotation = [[JIPMapAnnotation alloc] initWithCoordinate:eventCoordinate];
-    NSLog(@"annotation.coordinate : %f, %f", annotation.coordinate.latitude, annotation.coordinate.latitude);
-    [self.venueMap addAnnotation:annotation];
+
+    [self.venueMap addAnnotation:self.event];
     
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-
-    if([annotation isKindOfClass:[MKUserLocation class]]) {
-        return nil;
-    }
     
-    MKAnnotationView *view = [self.venueMap dequeueReusableAnnotationViewWithIdentifier:@"annoView"];
-    if(!view) {
-        view = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"annoView"];
-    }
+    MKAnnotationView *view = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
     
     view.canShowCallout = YES;
     
