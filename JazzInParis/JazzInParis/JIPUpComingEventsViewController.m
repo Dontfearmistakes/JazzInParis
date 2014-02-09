@@ -171,7 +171,6 @@
 }
 
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Table View Data Source
@@ -204,9 +203,13 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-    JIPEvent *event = self.upcomingEvents[self.orderedDates[indexPath.section]][indexPath.row];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"eventCell"];
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"eventCell"];
+    }
+                             
+    JIPEvent *event = self.groupedUpcomingEvents[self.orderedDates[indexPath.section]][indexPath.row];
     
     //CELL GETS EVENT.NAME
     cell.textLabel.text = event.name;
