@@ -12,27 +12,22 @@
 
 @interface JIPUpComingEventsViewController ()
 //ici les proprietés sont automatiquement privée
-
+//@property = crée var d'instance + getter (return _ivar) + setter _ivar = smthg)
 @property (strong, nonatomic) NSDictionary *groupedUpcomingEvents;
 @property (strong, nonatomic) NSArray *orderedDates;
-
-//@property = crée var d'instance + getter (return _ivar) + setter _ivar = smthg)
 
 -(NSString *)stringFromDate:(NSDate *)date;
 
 @end
 
 
-
 @implementation JIPUpComingEventsViewController
 
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
--(void)createFakeUpcomingEvents
+-(void)createFakeUpcomingEvents //OBJECTIF : FEED the NSArray* upcomingEvents like the SONGKICK API WILL
 {
     NSDate *tomorrow = [NSDate dateWithTimeInterval:(24*60*60) sinceDate:[NSDate date]];
     NSDate *dayAfterTomorrow = [NSDate dateWithTimeInterval:(2*24*60*60) sinceDate:[NSDate date]];
@@ -95,32 +90,16 @@
     event4.type = @"Concert";
     event4.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
     event4.ageRestriction = @"14+";
-        
-    NSArray *events = @[event1, event2, event3, event4];
-    self.upcomingEvents = events;
+    
+    self.upcomingEvents = @[event1, event2, event3, event4];
     
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
--(NSArray *)orderedDates
-{
-    if (!_orderedDates)
-    {
-        /////////////////////////////////////////////////
-        //SORTING ARRAY OF JIPEVENTS BY ASCENDING DATES//
-        /////////////////////////////////////////////////
-        NSSortDescriptor *dateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
-        NSArray *sortedByDateEventArray = [self.upcomingEvents sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateSortDescriptor]];
-        
-        ////////////////////////////////////////////////////
-        //CREATE ARRAY WITH ALL DATES AND NO DUPLICATE//
-        ////////////////////////////////////////////////////
-        _orderedDates = [sortedByDateEventArray valueForKeyPath:@"@distinctUnionOfObjects.date"];
-    }
-    return _orderedDates;
-}
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//WHEN upomingEvents is filled by the API, MAKE SURE the private internal variables _groupedUpcomingEvents and _orderedDates
+//are set to nil so that the get refilled when called (see 2 getters below)
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 -(void)setUpcomingEvents:(NSArray *)upcomingEvents
 {
     _groupedUpcomingEvents = nil;
@@ -128,6 +107,29 @@
     _upcomingEvents = upcomingEvents;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//MAKE SURE _orderedDates is filled when getter called and ivar is still empty
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-(NSArray *)orderedDates
+{
+    if (!_orderedDates)
+    {
+        /////////////////////////////////////////////////////////////////////////
+        //SORTING ARRAY OF JIPEVENTS (self.upcomingEvents) BY ASCENDING DATES////
+        /////////////////////////////////////////////////////////////////////////
+        NSSortDescriptor *dateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
+        NSArray *sortedByDateEventsArray = [self.upcomingEvents sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateSortDescriptor]];
+        
+        ////////////////////////////////////////////////////
+        //CREATE ARRAY WITH ALL DATES AND NO DUPLICATE/////
+        ////////////////////////////////////////////////////
+        _orderedDates = [sortedByDateEventsArray valueForKeyPath:@"@distinctUnionOfObjects.date"];
+    }
+    return _orderedDates;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//MAKE SURE _groupedUpcomingEvents is filled when getter called and ivar is still empty
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(NSDictionary*)groupedUpcomingEvents
 {
@@ -140,16 +142,22 @@
         
         NSMutableDictionary *tempUpcomingEvents = [[NSMutableDictionary alloc] init];
         
+        //Pour chaque date du tableau des orderedDates...
         for (NSDate *date in self.orderedDates)
         {
             NSMutableArray *mutArray = [[NSMutableArray alloc] init];
+            //...check tous les events et...
             for (JIPEvent *event in self.upcomingEvents)
             {
+                //si la @property "date" de cet event est égale à la date du tableau des orderedDates
+                //ajoute cet objet à un MutArray qui contient donc tous les event à une date précise...
                 if ([event.date isEqualToDate:date])
                 {
                     [mutArray addObject:event];
                 }
             }
+            
+            //Enfin, une fois tous les events d'une date choppés, on ajoute une entrée au NSDict*
             [tempUpcomingEvents setObject:mutArray forKey:date];
         }
         
@@ -160,8 +168,9 @@
 }
 
 
-
-/////////////////////DATE FORMAT METHOD ////// DATE FORMAT US STYLE///////////////////////////////////////////
+////////////////////////////////////////////
+//////////// DATE FORMAT METHOD ////////////
+///////////////////////////////////////////
 -(NSString *)stringFromDate:(NSDate *)date
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -187,18 +196,15 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"section : %ld", (long)section);
     NSArray *concertsThisDay = self.groupedUpcomingEvents[self.orderedDates[section]];
     return concertsThisDay.count;
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     return [self stringFromDate:self.orderedDates[section]];
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -33,7 +33,7 @@
     self.title = [NSString stringWithFormat:@"%@ Concert", self.event.name];
 	// Do any additional setup after loading the view.
     
-    /////////////////////////////////////////////////////TABLE VIEW//
+    /////////////////////////////////////////////////////TABLE VIEW WITH EVENT DETAILS//
     CGRect frame = CGRectMake(0, 0, 320, 230);
     UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
     tableView.dataSource = self;

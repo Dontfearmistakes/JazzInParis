@@ -16,10 +16,17 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
+    ////////////////////////////////////
+    //////////UPCOMING EVENTS VC////////
+    ///////////////////////////////////
     JIPUpComingEventsViewController *upcomingEventVC = [[JIPUpComingEventsViewController alloc] init];
     [upcomingEventVC createFakeUpcomingEvents];
     UINavigationController *upcomingEventsNavVC = [[UINavigationController alloc] initWithRootViewController:upcomingEventVC];
     
+    
+    ////////////////////////////////////////////
+    //////////TAB BAR CONTROLLER GETS NAV VC////
+    ///////////////////////////////////////////
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = @[upcomingEventsNavVC];
     

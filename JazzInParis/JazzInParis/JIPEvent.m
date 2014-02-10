@@ -10,12 +10,20 @@
 
 @implementation JIPEvent
 
+////////////////////////////////////////
 -(id)init
 {
-    return [self initWithID:@0 name:NSLocalizedString(@"event", @"Default event title") location:CLLocationCoordinate2DMake(0, 0) date:[NSDate date]];
+    return [self initWithID:@0
+                       name:NSLocalizedString(@"event", @"Default event title")
+                   location:CLLocationCoordinate2DMake(0, 0)
+                       date:[NSDate date]];
 }
 
-- (instancetype)initWithID:(NSNumber *)id name:(NSString *)name location:(CLLocationCoordinate2D)location date:(NSDate *)date
+////////////////////////////////////////
+- (instancetype)initWithID:(NSNumber *)id
+                      name:(NSString *)name
+                  location:(CLLocationCoordinate2D)location
+                      date:(NSDate *)date
 {
     self = [super init];
     if (self)
@@ -28,6 +36,7 @@
     return self;
 }
 
+////////////////////////////////////////
 // Check if we have a custom display name for the event.
 // If not, set and use the artist's name as the display name.
 - (NSString *)name
