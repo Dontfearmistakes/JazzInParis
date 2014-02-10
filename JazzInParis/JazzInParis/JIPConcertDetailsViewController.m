@@ -64,7 +64,7 @@
     
     //CENTRER SUR LE VENUE ET NE PAS MONTRER LA POSITION SYSTEME
     [self.venueMap setCenterCoordinate:eventCoordinate animated:YES];
-    self.venueMap.showsUserLocation = NO;
+    self.venueMap.showsUserLocation = YES;
     
     //ADD ANNOTATION
     self.event.distanceFromUserToEvent = [self distanceFromUserLocationToEvent];
@@ -82,6 +82,7 @@
                                                            longitude:self.event.location.longitude];
     
     double distance = [self.venueMap.userLocation.location distanceFromLocation:eventLocation];
+    NSLog(@"%@", self.venueMap.userLocation);
     NSLog(@"%@", self.venueMap.userLocation.location);
     NSLog(@"%@", eventLocation);
     NSLog(@"%f", distance);
