@@ -10,7 +10,7 @@
 #import <MapKit/MapKit.h>
 #import "JIPEvent.h"
 
-@interface JIPConcertDetailsViewController : UIViewController <MKMapViewDelegate>
+@interface JIPConcertDetailsViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) JIPEvent *event;
 @property (strong, nonatomic) MKMapView *venueMap;

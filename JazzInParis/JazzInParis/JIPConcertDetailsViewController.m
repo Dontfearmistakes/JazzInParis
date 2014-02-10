@@ -10,6 +10,8 @@
 
 @interface JIPConcertDetailsViewController ()
 
+@property (strong, nonatomic) NSArray *allEventProperties;
+
 @end
 
 @implementation JIPConcertDetailsViewController
@@ -31,21 +33,17 @@
     self.title = [NSString stringWithFormat:@"%@ Concert", self.event.name];
 	// Do any additional setup after loading the view.
     
-    
-    /////////////////////////////////////////////////////NAME OF CONCERT LABEL//
-    UILabel *concertNameLabel = [[UILabel alloc] init];
-    concertNameLabel.frame = CGRectMake(30,100,200,40);
-    concertNameLabel.backgroundColor = [UIColor blueColor];
-    concertNameLabel.textAlignment = NSTextAlignmentCenter;
-    concertNameLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
-    concertNameLabel.text = self.event.name;
-    [self.view addSubview:concertNameLabel];
+    /////////////////////////////////////////////////////TABLE VIEW//
+    CGRect frame = CGRectMake(0, 0, 320, 230);
+    UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
+    tableView.dataSource = self;
+    [self.view addSubview:tableView];
     
     
     /////////////////////////////////////////////////////CONCERT VENUE MAPVIEW//
     self.venueMap = [[MKMapView alloc] init];
     self.venueMap.delegate = self;
-    self.venueMap.frame = CGRectMake(0, 140, 320, 300);
+    self.venueMap.frame = CGRectMake(0, 235, 320, 200);
     self.venueMap.scrollEnabled = YES;
     self.venueMap.zoomEnabled = NO;
     [self.view addSubview:self.venueMap];
@@ -67,6 +65,35 @@
     
 }
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UITableViewDataSource
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    self.allEventProperties = @[self.event.name, self.event.type, self.event.uri, self.event.ageRestriction];
+    return self.allEventProperties.count;
+}
+
+//////////////////////////////////////////////////////
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"id"];
+    
+    //CELL GETS EVENT.NAME
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", self.allEventProperties[indexPath.row]];
+    cell.backgroundColor = [UIColor blueColor];
+    cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
+    
+    return cell;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - MKMapViewDelegate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
     
