@@ -223,6 +223,8 @@
     //////2) CELL GETS US FORMATED EVENT.DATE
     cell.detailTextLabel.text  = event.type;
     
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
     return cell;
 }
 
