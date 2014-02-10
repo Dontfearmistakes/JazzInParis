@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSString *ageRestriction;
 
 @property (nonatomic) CLLocationCoordinate2D location;
+@property (nonatomic) double distanceFromUserToEvent;
 
 @property (strong, nonatomic) NSDate *date;
 

@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 #import "JIPEvent.h"
+
 
 @interface JIPConcertDetailsViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource>
 

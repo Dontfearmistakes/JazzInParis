@@ -59,7 +59,7 @@
 
 -(NSString *)subtitle
 {
-    return @"xxx km from you";
+    return [NSString stringWithFormat:@"%f meters away", self.distanceFromUserToEvent];
 }
 
 @end

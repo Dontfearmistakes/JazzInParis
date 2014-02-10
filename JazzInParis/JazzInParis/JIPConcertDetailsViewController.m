@@ -13,8 +13,13 @@
 
 @property (strong, nonatomic) NSArray *allEventProperties;
 
+-(double)distanceFromUserLocationToEvent;
+
 @end
 
+
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 @implementation JIPConcertDetailsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -26,7 +31,6 @@
     return self;
 }
 
-//////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 - (void)viewDidLoad
 {
@@ -41,7 +45,7 @@
     [self.view addSubview:tableView];
     
     
-    /////////////////////////////////////////////////////CONCERT VENUE MAPVIEW//
+    /////////////////////////////////////////////////////DESSINE MAPVIEW//
     self.venueMap = [[MKMapView alloc] init];
     self.venueMap.delegate = self;
     self.venueMap.frame = CGRectMake(0, 235, 320, 200);
@@ -49,23 +53,40 @@
     self.venueMap.zoomEnabled = NO;
     [self.view addSubview:self.venueMap];
     
+    ////////////////////////////////////////////POSITIONNE MAPVIEW DANS L'ESPACE AVEC eventCoordinate COMME CENTRE
     CLLocationCoordinate2D eventCoordinate = CLLocationCoordinate2DMake(self.event.location.latitude, self.event.location.longitude);
     double regionWidth = 2500;
     double regionHeight = 2200;
     MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(eventCoordinate, regionWidth, regionHeight);
     [self.venueMap setRegion:startRegion
                   animated:YES];
+
     
     //CENTRER SUR LE VENUE ET NE PAS MONTRER LA POSITION SYSTEME
     [self.venueMap setCenterCoordinate:eventCoordinate animated:YES];
     self.venueMap.showsUserLocation = NO;
     
     //ADD ANNOTATION
-
+    self.event.distanceFromUserToEvent = [self distanceFromUserLocationToEvent];
     [self.venueMap addAnnotation:self.event];
     
 }
 
+//////////////////////////////////////////////
+///USE CURRENT USER LOCATION TO CALCULATE DISTANCE TO eventCoordinare
+//////////////////////////////////////////////
+-(double)distanceFromUserLocationToEvent
+{
+
+    CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:self.event.location.latitude
+                                                           longitude:self.event.location.longitude];
+    
+    double distance = [self.venueMap.userLocation.location distanceFromLocation:eventLocation];
+    NSLog(@"%@", self.venueMap.userLocation.location);
+    NSLog(@"%@", eventLocation);
+    NSLog(@"%f", distance);
+    return distance;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
