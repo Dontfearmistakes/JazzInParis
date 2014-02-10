@@ -7,6 +7,7 @@
 //
 
 #import "JIPConcertDetailsViewController.h"
+#import "JIPMyPinView.h"
 
 @interface JIPConcertDetailsViewController ()
 
@@ -97,7 +98,7 @@
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
     
-    MKAnnotationView *view = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
+    MKAnnotationView *view = [[JIPMyPinView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
     
     view.canShowCallout = YES;
     
