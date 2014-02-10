@@ -101,6 +101,9 @@
     
     view.canShowCallout = YES;
     
+    UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    view.rightCalloutAccessoryView = disclosureButton;
+    
     return view;
 }
 

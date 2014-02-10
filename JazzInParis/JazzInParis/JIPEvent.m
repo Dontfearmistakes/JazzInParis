@@ -54,12 +54,12 @@
 
 -(NSString *)title
 {
-    return self.name;
+    return @"Venue Name";
 }
 
 -(NSString *)subtitle
 {
-    return self.type;
+    return @"xxx km from you";
 }
 
 @end
