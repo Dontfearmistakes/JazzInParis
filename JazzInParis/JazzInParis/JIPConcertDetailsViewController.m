@@ -101,7 +101,7 @@
     MKAnnotationView *view = [[JIPMyPinView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
     
     view.canShowCallout = YES;
-    view.image = [UIImage imageNamed:@"Venue"];
+    view.image = [[UIImage imageNamed:@"Venue"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
     UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     view.rightCalloutAccessoryView = disclosureButton;
@@ -109,6 +109,9 @@
     return view;
 }
 
-
+-(void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
+{
+    [mapView selectAnnotation:self.event animated:YES];
+}
 
 @end
