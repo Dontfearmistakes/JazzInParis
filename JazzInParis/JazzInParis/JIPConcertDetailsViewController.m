@@ -101,6 +101,7 @@
     MKAnnotationView *view = [[JIPMyPinView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
     
     view.canShowCallout = YES;
+    view.image = [UIImage imageNamed:@"Venue"];
     
     UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     view.rightCalloutAccessoryView = disclosureButton;
