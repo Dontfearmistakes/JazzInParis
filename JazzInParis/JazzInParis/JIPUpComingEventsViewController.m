@@ -46,13 +46,13 @@
     //////////////////////////
     //GET PRECISE DATE////////
     //////////////////////////
-    NSDateComponents *comps = [[NSDateComponents alloc] init];
-    [comps setDay:6];
-    [comps setMonth:5];
-    [comps setYear:2004];
+    NSDateComponents *compsForPastDate = [[NSDateComponents alloc] init];
+    [compsForPastDate setDay:6];
+    [compsForPastDate setMonth:5];
+    [compsForPastDate setYear:2004];
     NSCalendar *gregorian = [[NSCalendar alloc]
                              initWithCalendarIdentifier:NSGregorianCalendar];
-    //then use [gregorian dateFromComponents:comps]]
+    //then use [gregorian dateFromComponents:compsForPastDate]]
     
     //////////////////////////
     //GET SAME DATE///////////
@@ -70,7 +70,7 @@
     JIPEvent *event2 = [[JIPEvent alloc] initWithID:@1
                                                name:@"Brad Mehldau"
                                            location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
-                                               date:today10am];
+                                               date:[gregorian dateFromComponents:compsForPastDate]];
     event2.type = @"Concert";
     event2.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
     event2.ageRestriction = @"14+";
@@ -91,7 +91,21 @@
     event4.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
     event4.ageRestriction = @"14+";
     
-    self.upcomingEvents = @[event1, event2, event3, event4];
+    //////////////////////////
+    //FILTER PAST EVENTS//////
+    //////////////////////////
+    NSArray *beforeDateFilterUpcomingEvents = @[event1, event2, event3, event4];
+    NSMutableArray * filteredUpcomingEventsIntermediary = [[NSMutableArray alloc]init];
+    
+    for (JIPEvent *event in beforeDateFilterUpcomingEvents)
+    {
+        if ([event.date timeIntervalSinceDate:today10am] >= 0)
+        {
+            [filteredUpcomingEventsIntermediary addObject:event];
+        }
+    }
+    
+    self.upcomingEvents = filteredUpcomingEventsIntermediary;
     
 }
 
