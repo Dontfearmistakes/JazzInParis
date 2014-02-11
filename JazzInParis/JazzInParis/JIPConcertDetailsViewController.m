@@ -43,6 +43,7 @@
     CGRect frame = CGRectMake(0, 0, 320, 230);
     UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
     tableView.dataSource = self;
+    tableView.delegate = self;
     [self.view addSubview:tableView];
     
     
@@ -123,6 +124,28 @@
     }
     
     return cell;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Table View Delegate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //GO TO ARTIST DETAILS VC
+    if (indexPath.row == 0)
+    {
+
+    }
+    
+    //GO TO VENUE DETAILS VC
+    if (indexPath.row == 2)
+    {
+        JIPVenueDetailsViewController *venueDetailsVC = [[JIPVenueDetailsViewController alloc] init];
+        venueDetailsVC.venue = self.event.venue;
+        [self.navigationController pushViewController:venueDetailsVC animated:YES];
+    }
 }
 
 
