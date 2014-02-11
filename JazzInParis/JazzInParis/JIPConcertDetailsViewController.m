@@ -8,6 +8,7 @@
 
 #import "JIPConcertDetailsViewController.h"
 #import "JIPMyPinView.h"
+#import "JIPVenueDetailsViewController.h"
 
 @interface JIPConcertDetailsViewController ()
 
@@ -27,6 +28,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+
     }
     return self;
 }
@@ -36,7 +38,6 @@
 {
     [super viewDidLoad];
     self.title = [NSString stringWithFormat:@"%@ Concert", self.event.name];
-	// Do any additional setup after loading the view.
     
     ///////////////////////////////////////////////////// 1) TABLE VIEW WITH EVENT DETAILS
     CGRect frame = CGRectMake(0, 0, 320, 230);
@@ -98,7 +99,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    self.allEventProperties = @[self.event.name, self.event.type, self.event.uri, self.event.ageRestriction];
+    self.allEventProperties = @[[NSString stringWithFormat:@"When ? : %@", self.event.date],
+                                [NSString stringWithFormat:@"Where ? %@ : %@ in %@",self.event.venue.name, self.event.venue.street, self.event.venue.city],
+                                [NSString stringWithFormat:@"Check prices here : %@", self.event.uri],
+                                self.event.ageRestriction];
     return self.allEventProperties.count;
 }
 
@@ -136,6 +140,13 @@
 -(void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
 {
     [mapView selectAnnotation:self.event animated:YES];
+}
+
+-(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+    JIPVenueDetailsViewController *venueDetailsVC = [[JIPVenueDetailsViewController alloc] init];
+    venueDetailsVC.venue = self.event.venue;
+    [self.navigationController pushViewController:venueDetailsVC animated:YES];
 }
 
 @end

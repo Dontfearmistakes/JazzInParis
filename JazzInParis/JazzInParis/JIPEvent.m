@@ -61,7 +61,7 @@
 
 -(NSString *)title
 {
-    return @"Venue Name";
+    return self.venue.name;
 }
 
 -(NSString *)subtitle
