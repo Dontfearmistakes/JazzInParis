@@ -10,6 +10,7 @@
 		5015AAAE18A159ED000A7625 /* JIPConcertDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */; };
 		508598D418AA46330048D760 /* JIPVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D318AA46330048D760 /* JIPVenue.m */; };
 		508598D718AA551C0048D760 /* JIPVenueDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D618AA551C0048D760 /* JIPVenueDetailsViewController.m */; };
+		508598DA18AA74BF0048D760 /* JIPArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D918AA74BF0048D760 /* JIPArtist.m */; };
 		509759D118A900F800E1482E /* JIPMyPinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 509759D018A900F800E1482E /* JIPMyPinView.m */; };
 		50A52FA4189ED5D9001D9779 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A52FA3189ED5D9001D9779 /* Foundation.framework */; };
 		50A52FA6189ED5D9001D9779 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A52FA5189ED5D9001D9779 /* CoreGraphics.framework */; };
@@ -46,6 +47,8 @@
 		508598D318AA46330048D760 /* JIPVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPVenue.m; sourceTree = "<group>"; };
 		508598D518AA551C0048D760 /* JIPVenueDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPVenueDetailsViewController.h; sourceTree = "<group>"; };
 		508598D618AA551C0048D760 /* JIPVenueDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPVenueDetailsViewController.m; sourceTree = "<group>"; };
+		508598D818AA74BF0048D760 /* JIPArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPArtist.h; sourceTree = "<group>"; };
+		508598D918AA74BF0048D760 /* JIPArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPArtist.m; sourceTree = "<group>"; };
 		509759CF18A900F800E1482E /* JIPMyPinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPMyPinView.h; sourceTree = "<group>"; };
 		509759D018A900F800E1482E /* JIPMyPinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPMyPinView.m; sourceTree = "<group>"; };
 		50A52FA0189ED5D9001D9779 /* JazzInParis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JazzInParis.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -179,6 +182,8 @@
 				509759D018A900F800E1482E /* JIPMyPinView.m */,
 				50FB318E189EE02800137949 /* JIPEvent.h */,
 				50FB318F189EE02800137949 /* JIPEvent.m */,
+				508598D818AA74BF0048D760 /* JIPArtist.h */,
+				508598D918AA74BF0048D760 /* JIPArtist.m */,
 				508598D218AA46330048D760 /* JIPVenue.h */,
 				508598D318AA46330048D760 /* JIPVenue.m */,
 			);
@@ -299,6 +304,7 @@
 				50A52FB4189ED5D9001D9779 /* JIPAppDelegate.m in Sources */,
 				509759D118A900F800E1482E /* JIPMyPinView.m in Sources */,
 				50FB3190189EE02800137949 /* JIPEvent.m in Sources */,
+				508598DA18AA74BF0048D760 /* JIPArtist.m in Sources */,
 				508598D718AA551C0048D760 /* JIPVenueDetailsViewController.m in Sources */,
 				50A52FB0189ED5D9001D9779 /* main.m in Sources */,
 				5015AAAE18A159ED000A7625 /* JIPConcertDetailsViewController.m in Sources */,
