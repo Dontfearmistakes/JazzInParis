@@ -5,14 +5,10 @@
 //  Created by Max on 11/02/14.
 //  Copyright (c) 2014 Max. All rights reserved.
 //
-Create JIPVenueDetailsVC
 
-Copying JIPEventDetailsVC
--UITableView on the top
--MapView on the bottom
-+Make JIPVenue conform to <MKAnnottion>
 
 #import "JIPVenueDetailsViewController.h"
+#import "JIPMyPinView.h"
 
 @interface JIPVenueDetailsViewController ()
 
@@ -28,7 +24,7 @@ Copying JIPEventDetailsVC
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = [NSString stringWithFormat:@"%@", self.venue.name];
+        
     }
     return self;
 }
@@ -36,7 +32,7 @@ Copying JIPEventDetailsVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.title = [NSString stringWithFormat:@"%@", self.venue.name];
     ///////////////////////////////////////////////////// 1) TABLE VIEW WITH EVENT DETAILS
     CGRect frame = CGRectMake(0, 0, 320, 230);
     UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
@@ -118,5 +114,22 @@ Copying JIPEventDetailsVC
     return cell;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - MKMapViewDelegate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    
+    MKAnnotationView *view = [[JIPMyPinView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
+    
+    view.canShowCallout = YES;
+    
+    return view;
+}
 
+-(void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
+{
+    [mapView selectAnnotation:self.venue animated:YES];
+}
 @end
