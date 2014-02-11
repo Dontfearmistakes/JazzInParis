@@ -281,7 +281,7 @@
     //CELL GETS EVENT.NAME
     cell.textLabel.text = event.name;
     
-    //////2) CELL GETS US FORMATED EVENT.DATE
+    // CELL GETS US FORMATED EVENT.DATE
     cell.detailTextLabel.text  = [NSString stringWithFormat:@"@ %@", event.venue.name];
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

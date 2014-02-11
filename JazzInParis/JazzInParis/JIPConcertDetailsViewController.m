@@ -99,8 +99,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    self.allEventProperties = @[[NSString stringWithFormat:@"When ? : %@", self.event.date],
-                                [NSString stringWithFormat:@"Where ? %@ : %@ in %@",self.event.venue.name, self.event.venue.street, self.event.venue.city],
+    self.allEventProperties = @[[NSString stringWithFormat:@"Who ?  %@", self.event.artist.name],
+                                [NSString stringWithFormat:@"When ?  %@", self.event.date],
+                                [NSString stringWithFormat:@"Where ?  %@ : %@ in %@",self.event.venue.name, self.event.venue.street, self.event.venue.city],
                                 [NSString stringWithFormat:@"Check prices here : %@", self.event.uri],
                                 self.event.ageRestriction];
     return self.allEventProperties.count;
@@ -115,6 +116,11 @@
     cell.textLabel.text = [NSString stringWithFormat:@"%@", self.allEventProperties[indexPath.row]];
     cell.backgroundColor = [UIColor blueColor];
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
+    
+    if (indexPath.row == 0 || indexPath.row == 2)
+    {
+        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    }
     
     return cell;
 }
