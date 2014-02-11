@@ -9,6 +9,7 @@
 #import "JIPUpComingEventsViewController.h"
 #import "JIPEvent.h"
 #import "JIPConcertDetailsViewController.h"
+#import "JIPVenue.h"
 
 @interface JIPUpComingEventsViewController ()
 //ici les proprietés sont automatiquement privée
@@ -70,10 +71,29 @@
     //////////////////////////
     //[today10am dateByAddingTimeInterval:0]
     
+    
+    ////////////////////////////////////////////////////
+    //CREATE FAKE VENUE ////////////////////////////////
+    ////////////////////////////////////////////////////
+    JIPVenue *fakeVenue = [[JIPVenue alloc] initWithID:@1
+                                                  name:@"Baiser Salé"
+                                           description:@"Baiser Salé is an awesome Jazz Club with a Jam Session every Monday night"
+                                                  city:@"Paris"
+                                                street:@"58, rue des Lombards"
+                                                 phone:@"+33 1 42 33 37 71"
+                                               website:[NSURL URLWithString:@"http://www.lebaisersale.com"]
+                                              capacity:@100];
+    fakeVenue.location = CLLocationCoordinate2DMake(28.41871, -81.58121);
+    
+    
+    ////////////////////////////////////////////////////
+    //CREATE FAKE EVENT ////////////////////////////////
+    ////////////////////////////////////////////////////
     JIPEvent *event1 = [[JIPEvent alloc] initWithID:@1
                                               name:@"Vampire WeekEnd"
                                           location:CLLocationCoordinate2DMake(28.41871, -81.58121)
-                                               date:[today10am dateByAddingTimeInterval:0]];
+                                               date:[today10am dateByAddingTimeInterval:0]
+                                              venue:fakeVenue];
     event1.type = @"Concert";
     event1.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
     event1.ageRestriction = @"14+";
@@ -81,7 +101,8 @@
     JIPEvent *event2 = [[JIPEvent alloc] initWithID:@1
                                                name:@"Brad Mehldau"
                                            location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
-                                               date:[gregorian dateFromComponents:compsForPastDate]];
+                                               date:[gregorian dateFromComponents:compsForPastDate]
+                                              venue:fakeVenue];
     event2.type = @"Concert";
     event2.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
     event2.ageRestriction = @"14+";
@@ -89,7 +110,8 @@
     JIPEvent *event3 = [[JIPEvent alloc] initWithID:@3
                                                name:@"Bad Plus"
                                            location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
-                                               date:[today10am dateByAddingTimeInterval:0]];
+                                               date:[today10am dateByAddingTimeInterval:0]
+                                              venue:fakeVenue];
     event3.type = @"Concert";
     event3.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
     event3.ageRestriction = @"14+";
@@ -97,7 +119,8 @@
     JIPEvent *event4 = [[JIPEvent alloc] initWithID:@3
                                                name:@"Paris Combo"
                                            location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
-                                               date:dayAfterTomorrow ];
+                                               date:dayAfterTomorrow
+                                              venue:fakeVenue];
     event4.type = @"Concert";
     event4.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
     event4.ageRestriction = @"14+";

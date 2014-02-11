@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
+#import "JIPVenue.h"
 
 @interface JIPEvent : NSObject <MKAnnotation>
 
@@ -19,10 +20,16 @@
 @property (strong, nonatomic) NSString *ageRestriction;
 
 @property (nonatomic) CLLocationCoordinate2D location;
+@property (nonatomic) JIPVenue *venue;
+
 @property (nonatomic) double distanceFromUserToEvent;
 
 @property (strong, nonatomic) NSDate *date;
 
-- (instancetype)initWithID:(NSNumber *)id name:(NSString *)name location:(CLLocationCoordinate2D)location date:(NSDate *)date;
+- (instancetype)initWithID:(NSNumber *)id
+                      name:(NSString *)name
+                  location:(CLLocationCoordinate2D)location
+                      date:(NSDate *)date
+                     venue:(JIPVenue *)venue;
 
 @end
