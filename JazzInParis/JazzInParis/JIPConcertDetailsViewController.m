@@ -9,6 +9,7 @@
 #import "JIPConcertDetailsViewController.h"
 #import "JIPMyPinView.h"
 #import "JIPVenueDetailsViewController.h"
+#import "JIPArtistDetailsViewController.h"
 
 @interface JIPConcertDetailsViewController ()
 
@@ -136,7 +137,9 @@
     //GO TO ARTIST DETAILS VC
     if (indexPath.row == 0)
     {
-
+        JIPArtistDetailsViewController *artistDetailsVC = [[JIPArtistDetailsViewController alloc] init];
+        artistDetailsVC.artist = self.event.artist;
+        [self.navigationController pushViewController:artistDetailsVC animated:YES];
     }
     
     //GO TO VENUE DETAILS VC
