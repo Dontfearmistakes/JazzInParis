@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 
-@interface JIPVenue : NSObject
+@interface JIPVenue : NSObject <MKAnnotation>
 
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *name;
@@ -20,6 +21,18 @@
 @property (nonatomic) CLLocationCoordinate2D location;
 @property (strong, nonatomic) NSURL *website;
 @property (strong, nonatomic) NSNumber *capacity;
+
+@property (nonatomic) double distanceFromUserToVenue;
+
+- (instancetype)initWithID:(NSNumber *)id
+                      name:(NSString *)name
+               description:(NSString *) description
+                      city:(NSString *) city
+                    street:(NSString *) street
+                     phone:(NSString *) phone
+                   website:(NSURL *) website
+                  capacity:(NSNumber *) capacity;
+
 
 
 @end
