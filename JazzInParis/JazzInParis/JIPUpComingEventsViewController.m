@@ -33,7 +33,6 @@
     if (self) {
         self.title = @"All Concerts";
         self.tabBarItem.image = [UIImage imageNamed:@"Venue"];
-        
     }
     return self;
 }
@@ -249,7 +248,7 @@
     cell.textLabel.text = event.name;
     
     //////2) CELL GETS US FORMATED EVENT.DATE
-    cell.detailTextLabel.text  = event.type;
+    cell.detailTextLabel.text  = @"Venue to be specified";
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     

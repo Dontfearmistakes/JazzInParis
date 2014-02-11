@@ -38,14 +38,14 @@
     self.title = [NSString stringWithFormat:@"%@ Concert", self.event.name];
 	// Do any additional setup after loading the view.
     
-    /////////////////////////////////////////////////////TABLE VIEW WITH EVENT DETAILS//
+    ///////////////////////////////////////////////////// 1) TABLE VIEW WITH EVENT DETAILS
     CGRect frame = CGRectMake(0, 0, 320, 230);
     UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
     tableView.dataSource = self;
     [self.view addSubview:tableView];
     
     
-    /////////////////////////////////////////////////////DESSINE MAPVIEW//
+    ///////////////////////////////////////////////////// 2) DESSINE MAPVIEW
     self.venueMap = [[MKMapView alloc] init];
     self.venueMap.delegate = self;
     self.venueMap.frame = CGRectMake(0, 235, 320, 200);
@@ -62,12 +62,15 @@
                   animated:YES];
 
     
-    //CENTRER SUR LE VENUE ET NE PAS MONTRER LA POSITION SYSTEME
+    //CENTRER SUR LE VENUE ET TRACK USER
     [self.venueMap setCenterCoordinate:eventCoordinate animated:YES];
     self.venueMap.showsUserLocation = YES;
     
-    //ADD ANNOTATION
+    //PASS distanceFromUserLocationToEvent to adhoc event @property to display it
+    //as subtitle of the annotation (called by -viewForAnnotation below)
     self.event.distanceFromUserToEvent = [self distanceFromUserLocationToEvent];
+    
+    //ADD ANNOTATION
     [self.venueMap addAnnotation:self.event];
     
 }
@@ -83,8 +86,8 @@
     
     double distance = [self.venueMap.userLocation.location distanceFromLocation:eventLocation];
     NSLog(@"%@", self.venueMap.userLocation);
-    NSLog(@"%@", self.venueMap.userLocation.location);
-    NSLog(@"%@", eventLocation);
+    NSLog(@"%f", self.venueMap.userLocation.location.coordinate.longitude);
+    NSLog(@"%f", eventLocation.coordinate.longitude);
     NSLog(@"%f", distance);
     return distance;
 }
@@ -123,7 +126,6 @@
     MKAnnotationView *view = [[JIPMyPinView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
     
     view.canShowCallout = YES;
-    view.image = [[UIImage imageNamed:@"Venue"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
     UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     view.rightCalloutAccessoryView = disclosureButton;

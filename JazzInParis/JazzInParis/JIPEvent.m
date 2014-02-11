@@ -47,6 +47,10 @@
     return _name;
 }
 
+//@property location est remplie lors de l'appel à l'API
+//@property coordinate est juste required par <MKAnnotation> mais readonly donc il suffit d'implémenter le getter
+//Dans JIPConcertDetailsVC (conforme à <MKMapViewDelegate>), c'est -viewForAnnotation qui réclame un object conforme à <MKAnnotation>
+//et qui va donc chercher la @property "coordinate", on lui renvoie @property location qui est du même type
 -(CLLocationCoordinate2D)coordinate
 {
     return self.location;
