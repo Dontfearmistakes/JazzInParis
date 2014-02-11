@@ -17,7 +17,8 @@
                        name:NSLocalizedString(@"event", @"Default event title")
                    location:CLLocationCoordinate2DMake(0, 0)
                        date:[NSDate date]
-                      venue:[[JIPVenue alloc]init]];
+                      venue:[[JIPVenue alloc]init]
+                     artist:[[JIPArtist alloc]init]    ];
 }
 
 ////////////////////////////////////////
@@ -26,6 +27,7 @@
                   location:(CLLocationCoordinate2D)location
                       date:(NSDate *)date
                      venue:(JIPVenue *)venue
+                    artist:(JIPArtist *)artist
 {
     self = [super init];
     if (self)
@@ -35,6 +37,7 @@
         self.location = location;
         self.date = date;
         self.venue = venue;
+        self.artist = artist;
     }
     return self;
 }

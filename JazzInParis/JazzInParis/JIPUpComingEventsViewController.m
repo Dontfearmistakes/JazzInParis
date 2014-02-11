@@ -10,6 +10,7 @@
 #import "JIPEvent.h"
 #import "JIPConcertDetailsViewController.h"
 #import "JIPVenue.h"
+#import "JIPArtist.h"
 
 @interface JIPUpComingEventsViewController ()
 //ici les proprietés sont automatiquement privée
@@ -85,6 +86,12 @@
                                               capacity:@100];
     fakeVenue.location = CLLocationCoordinate2DMake(28.41871, -81.58121);
     
+    ////////////////////////////////////////////////////
+    //CREATE FAKE ARTIST ///////////////////////////////
+    ////////////////////////////////////////////////////
+    JIPArtist *BradMehldau = [[JIPArtist alloc]initWithID:@1
+                                                    name:@"Brad Mehldau"
+                                             songkickUri:[NSURL URLWithString:@"http://www.songkick.com/artists/7723079-maxxximus"]];
     
     ////////////////////////////////////////////////////
     //CREATE FAKE EVENT ////////////////////////////////
@@ -93,7 +100,8 @@
                                               name:@"Vampire WeekEnd"
                                           location:CLLocationCoordinate2DMake(28.41871, -81.58121)
                                                date:[today10am dateByAddingTimeInterval:0]
-                                              venue:fakeVenue];
+                                              venue:fakeVenue
+                                             artist:BradMehldau];
     event1.type = @"Concert";
     event1.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
     event1.ageRestriction = @"14+";
@@ -102,7 +110,8 @@
                                                name:@"Brad Mehldau"
                                            location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
                                                date:[gregorian dateFromComponents:compsForPastDate]
-                                              venue:fakeVenue];
+                                              venue:fakeVenue
+                                             artist:BradMehldau];
     event2.type = @"Concert";
     event2.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
     event2.ageRestriction = @"14+";
@@ -111,7 +120,8 @@
                                                name:@"Bad Plus"
                                            location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
                                                date:[today10am dateByAddingTimeInterval:0]
-                                              venue:fakeVenue];
+                                              venue:fakeVenue
+                                             artist:BradMehldau];
     event3.type = @"Concert";
     event3.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
     event3.ageRestriction = @"14+";
@@ -120,7 +130,8 @@
                                                name:@"Paris Combo"
                                            location:CLLocationCoordinate2DMake(-0.1150322,51.4650846)
                                                date:dayAfterTomorrow
-                                              venue:fakeVenue];
+                                              venue:fakeVenue
+                                             artist:BradMehldau];
     event4.type = @"Concert";
     event4.uri = [NSURL URLWithString:@"www.dontfearmistakes.com"];
     event4.ageRestriction = @"14+";
