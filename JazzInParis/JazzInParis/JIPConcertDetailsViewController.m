@@ -10,6 +10,7 @@
 #import "JIPMyPinView.h"
 #import "JIPVenueDetailsViewController.h"
 #import "JIPArtistDetailsViewController.h"
+#import "NSDate+Formatting.h"
 
 @interface JIPConcertDetailsViewController ()
 
@@ -102,7 +103,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     self.allEventProperties = @[[NSString stringWithFormat:@"Who ?  %@", self.event.artist.name],
-                                [NSString stringWithFormat:@"When ?  %@", self.event.date],
+                                [NSString stringWithFormat:@"When ?  %@", [NSDate stringFromDate:self.event.date]],
                                 [NSString stringWithFormat:@"Where ?  %@ : %@ in %@",self.event.venue.name, self.event.venue.street, self.event.venue.city],
                                 [NSString stringWithFormat:@"Check prices here : %@", self.event.uri],
                                 self.event.ageRestriction];

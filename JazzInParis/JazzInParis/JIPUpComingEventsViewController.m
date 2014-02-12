@@ -7,18 +7,17 @@
 //
 
 #import "JIPUpComingEventsViewController.h"
-#import "JIPEvent.h"
 #import "JIPConcertDetailsViewController.h"
 #import "JIPVenue.h"
 #import "JIPArtist.h"
+#import "JIPEvent.h"
+#import "NSDate+Formatting.h"
 
 @interface JIPUpComingEventsViewController ()
 //ici les proprietés sont automatiquement privée
 //@property = crée var d'instance + getter (return _ivar) + setter _ivar = smthg)
 @property (strong, nonatomic) NSDictionary *groupedUpcomingEvents;
 @property (strong, nonatomic) NSArray *orderedDates;
-
--(NSString *)stringFromDate:(NSDate *)date;
 
 @end
 
@@ -229,18 +228,6 @@
 }
 
 
-////////////////////////////////////////////
-//////////// DATE FORMAT METHOD ////////////
-///////////////////////////////////////////
--(NSString *)stringFromDate:(NSDate *)date
-{
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateStyle = NSDateFormatterLongStyle;
-    NSString *string = [dateFormatter stringFromDate:date];
-    return string;
-}
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Table View Data Source
@@ -264,7 +251,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [self stringFromDate:self.orderedDates[section]];
+    return [NSDate stringFromDate:self.orderedDates[section]];
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
