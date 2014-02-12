@@ -7,10 +7,13 @@
 //
 
 #import "JIPJazzClubsViewController.h"
+#import "JIPVenue.h"
+#import "JIPMyPinView.h"
 
 @interface JIPJazzClubsViewController ()
 
 @property (strong, nonatomic) MKMapView *parisMap;
+-(NSArray*)arrayFromJazzClubs;
 
 @end
 
@@ -25,6 +28,27 @@
         //self.tabBarItem.image = [UIImage imageNamed:@"Venue"];
     }
     return self;
+}
+
+-(NSArray*)arrayFromJazzClubs
+{
+    NSMutableArray *mutArray = [[NSMutableArray alloc] init];
+    
+    JIPVenue *baiserSale = [[JIPVenue alloc] initWithID:@1
+                                                  name:@"Baiser Salé"
+                                           description:@"Baiser Salé is an awesome Jazz Club with a Jam Session every Monday night"
+                                                  city:@"Paris"
+                                                street:@"58, rue des Lombards"
+                                                 phone:@"+33 1 42 33 37 71"
+                                               website:[NSURL URLWithString:@"http://www.lebaisersale.com"]
+                                              capacity:@100];
+    baiserSale.location = CLLocationCoordinate2DMake(48.859722222222224, 2.348055555555556);
+    
+    [mutArray addObject:baiserSale];
+    
+    NSArray *allJazzClubs = [[NSArray alloc]initWithArray:mutArray];
+    return allJazzClubs;
+    
 }
 
 - (void)viewDidLoad
@@ -49,7 +73,29 @@
     
     //CENTRER SUR LE VENUE ET TRACK USER
     self.parisMap.showsUserLocation = YES;
+
+    [self.parisMap addAnnotations:[self arrayFromJazzClubs]];
+    
 }
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - MKMapViewDelegate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    //We want to display UserLocation as classic blue dot, not custom
+    if([annotation isKindOfClass:[MKUserLocation class]]) {return nil;}
+    
+    MKAnnotationView *view = [[JIPMyPinView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
+    
+    view.canShowCallout = YES;
+    
+    UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    view.rightCalloutAccessoryView = disclosureButton;
+    
+    return view;
+}
 
 @end
