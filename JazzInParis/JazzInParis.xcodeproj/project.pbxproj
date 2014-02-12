@@ -19,7 +19,7 @@
 		50A52FBF189ED5D9001D9779 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A52FA7189ED5D9001D9779 /* UIKit.framework */; };
 		50A52FC7189ED5D9001D9779 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50A52FC5189ED5D9001D9779 /* InfoPlist.strings */; };
 		50A52FC9189ED5D9001D9779 /* JazzInParisTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A52FC8189ED5D9001D9779 /* JazzInParisTests.m */; };
-		50A52FD4189ED91C001D9779 /* JIPUpComingEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */; };
+		50DAA79518AB96CE003DDADA /* JIPJazzClubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DAA79418AB96CE003DDADA /* JIPJazzClubsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,8 +49,8 @@
 		50A52FC4189ED5D9001D9779 /* JazzInParisTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JazzInParisTests-Info.plist"; sourceTree = "<group>"; };
 		50A52FC6189ED5D9001D9779 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50A52FC8189ED5D9001D9779 /* JazzInParisTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JazzInParisTests.m; sourceTree = "<group>"; };
-		50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPUpComingEventsViewController.h; sourceTree = "<group>"; };
-		50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPUpComingEventsViewController.m; sourceTree = "<group>"; };
+		50DAA79318AB96CE003DDADA /* JIPJazzClubsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPJazzClubsViewController.h; sourceTree = "<group>"; };
+		50DAA79418AB96CE003DDADA /* JIPJazzClubsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPJazzClubsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,8 +112,8 @@
 			children = (
 				50A52FB2189ED5D9001D9779 /* JIPAppDelegate.h */,
 				50A52FB3189ED5D9001D9779 /* JIPAppDelegate.m */,
-				50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */,
-				50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */,
+				50DAA79318AB96CE003DDADA /* JIPJazzClubsViewController.h */,
+				50DAA79418AB96CE003DDADA /* JIPJazzClubsViewController.m */,
 				50A52FB5189ED5D9001D9779 /* Images.xcassets */,
 				50A52FAA189ED5D9001D9779 /* Supporting Files */,
 			);
@@ -245,7 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50A52FD4189ED91C001D9779 /* JIPUpComingEventsViewController.m in Sources */,
+				50DAA79518AB96CE003DDADA /* JIPJazzClubsViewController.m in Sources */,
 				50A52FB4189ED5D9001D9779 /* JIPAppDelegate.m in Sources */,
 				50A52FB0189ED5D9001D9779 /* main.m in Sources */,
 			);
@@ -448,6 +448,7 @@
 				50A52FCE189ED5D9001D9779 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		50A52FCF189ED5D9001D9779 /* Build configuration list for PBXNativeTarget "JazzInParisTests" */ = {
 			isa = XCConfigurationList;
@@ -456,6 +457,7 @@
 				50A52FD1189ED5D9001D9779 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -7,7 +7,7 @@
 //
 
 #import "JIPAppDelegate.h"
-#import "JIPUpComingEventsViewController.h"
+#include "JIPJazzClubsViewController.h"
 
 @implementation JIPAppDelegate
 
@@ -15,11 +15,14 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    
-    JIPUpComingEventsViewController *upcomingEventVC = [[JIPUpComingEventsViewController alloc] init];
+
+
+    JIPJazzClubsViewController *allJazzClubsVC = [[JIPJazzClubsViewController alloc]init];
+    UINavigationController *allJazzClubsNavController = [[UINavigationController alloc] initWithRootViewController:allJazzClubsVC];
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[upcomingEventVC];
+    tabBarController.viewControllers = @[allJazzClubsNavController];
+    tabBarController.selectedViewController = allJazzClubsNavController;
     
     self.window.rootViewController = tabBarController;
     
