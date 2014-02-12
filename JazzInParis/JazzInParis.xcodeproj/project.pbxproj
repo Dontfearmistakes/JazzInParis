@@ -20,6 +20,8 @@
 		50A52FC7189ED5D9001D9779 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50A52FC5189ED5D9001D9779 /* InfoPlist.strings */; };
 		50A52FC9189ED5D9001D9779 /* JazzInParisTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A52FC8189ED5D9001D9779 /* JazzInParisTests.m */; };
 		50DAA79518AB96CE003DDADA /* JIPJazzClubsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DAA79418AB96CE003DDADA /* JIPJazzClubsViewController.m */; };
+		50DAA79818ABA123003DDADA /* JIPVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DAA79718ABA123003DDADA /* JIPVenue.m */; };
+		50DAA79B18ABA208003DDADA /* JIPMyPinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DAA79A18ABA208003DDADA /* JIPMyPinView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,10 @@
 		50A52FC8189ED5D9001D9779 /* JazzInParisTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JazzInParisTests.m; sourceTree = "<group>"; };
 		50DAA79318AB96CE003DDADA /* JIPJazzClubsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPJazzClubsViewController.h; sourceTree = "<group>"; };
 		50DAA79418AB96CE003DDADA /* JIPJazzClubsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPJazzClubsViewController.m; sourceTree = "<group>"; };
+		50DAA79618ABA123003DDADA /* JIPVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPVenue.h; sourceTree = "<group>"; };
+		50DAA79718ABA123003DDADA /* JIPVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPVenue.m; sourceTree = "<group>"; };
+		50DAA79918ABA208003DDADA /* JIPMyPinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPMyPinView.h; sourceTree = "<group>"; };
+		50DAA79A18ABA208003DDADA /* JIPMyPinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPMyPinView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +120,10 @@
 				50A52FB3189ED5D9001D9779 /* JIPAppDelegate.m */,
 				50DAA79318AB96CE003DDADA /* JIPJazzClubsViewController.h */,
 				50DAA79418AB96CE003DDADA /* JIPJazzClubsViewController.m */,
+				50DAA79618ABA123003DDADA /* JIPVenue.h */,
+				50DAA79718ABA123003DDADA /* JIPVenue.m */,
+				50DAA79918ABA208003DDADA /* JIPMyPinView.h */,
+				50DAA79A18ABA208003DDADA /* JIPMyPinView.m */,
 				50A52FB5189ED5D9001D9779 /* Images.xcassets */,
 				50A52FAA189ED5D9001D9779 /* Supporting Files */,
 			);
@@ -248,6 +258,8 @@
 				50DAA79518AB96CE003DDADA /* JIPJazzClubsViewController.m in Sources */,
 				50A52FB4189ED5D9001D9779 /* JIPAppDelegate.m in Sources */,
 				50A52FB0189ED5D9001D9779 /* main.m in Sources */,
+				50DAA79818ABA123003DDADA /* JIPVenue.m in Sources */,
+				50DAA79B18ABA208003DDADA /* JIPMyPinView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
