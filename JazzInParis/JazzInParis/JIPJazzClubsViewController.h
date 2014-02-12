@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
-@interface JIPJazzClubsViewController : UIViewController
+@interface JIPJazzClubsViewController : UIViewController <MKMapViewDelegate>
+
+@property (strong, nonatomic) NSArray * allJazzClubs;
 
 @end
