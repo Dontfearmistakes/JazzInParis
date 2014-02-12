@@ -10,7 +10,7 @@
 #import <MapKit/MapKit.h>
 #import "JIPVenue.h"
 
-@interface JIPVenueDetailsViewController : UIViewController <UITableViewDataSource, MKMapViewDelegate>
+@interface JIPVenueDetailsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate>
 
 @property (strong, nonatomic) JIPVenue *venue;
 @property (strong, nonatomic) MKMapView *venueMap;

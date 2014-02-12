@@ -149,6 +149,12 @@
         venueDetailsVC.venue = self.event.venue;
         [self.navigationController pushViewController:venueDetailsVC animated:YES];
     }
+    
+    //Go to Songkick's event page to check prices
+    if (indexPath.row == 3)
+    {
+        [[UIApplication sharedApplication] openURL:self.event.uri];
+    }
 }
 
 //REPLICATE didSelectRow BEHAVIOR (above) FOR ACCESSORY BUTTON
@@ -156,6 +162,8 @@
 {
     [self tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
