@@ -70,6 +70,11 @@
     [self.venueMap addAnnotation:self.venue];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.venueMap selectAnnotation:self.venue animated:YES];
+}
+
 //////////////////////////////////////////////
 ///USE CURRENT USER LOCATION TO CALCULATE DISTANCE TO eventCoordinare
 //////////////////////////////////////////////
@@ -141,10 +146,5 @@
     view.canShowCallout = YES;
     
     return view;
-}
-
--(void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
-{
-    [mapView selectAnnotation:self.venue animated:YES];
 }
 @end

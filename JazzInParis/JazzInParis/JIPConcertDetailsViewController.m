@@ -96,6 +96,11 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.venueMap selectAnnotation:self.event animated:YES];
+}
+
 //////////////////////////////////////////////
 ///USE CURRENT USER LOCATION TO CALCULATE DISTANCE TO eventCoordinare
 //////////////////////////////////////////////
@@ -127,6 +132,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 }
 
 //////////////////////////////////////////////////////
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"id"];
@@ -210,11 +216,6 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     view.rightCalloutAccessoryView = disclosureButton;
     
     return view;
-}
-
--(void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
-{
-    [mapView selectAnnotation:self.event animated:YES];
 }
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
