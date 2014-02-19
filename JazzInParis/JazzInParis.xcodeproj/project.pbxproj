@@ -26,6 +26,7 @@
 		50A52FC7189ED5D9001D9779 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50A52FC5189ED5D9001D9779 /* InfoPlist.strings */; };
 		50A52FC9189ED5D9001D9779 /* JazzInParisTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A52FC8189ED5D9001D9779 /* JazzInParisTests.m */; };
 		50A52FD4189ED91C001D9779 /* JIPUpComingEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */; };
+		50D4BB3118B49D0700E7CF12 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50D4BB2F18B49D0700E7CF12 /* Model.xcdatamodeld */; };
 		50DAA79118AB8E52003DDADA /* NSDate+Formatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DAA79018AB8E52003DDADA /* NSDate+Formatting.m */; };
 		50FB3190189EE02800137949 /* JIPEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FB318F189EE02800137949 /* JIPEvent.m */; };
 		50FB3194189EE27D00137949 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FB3193189EE27D00137949 /* MapKit.framework */; };
@@ -73,6 +74,7 @@
 		50A52FC8189ED5D9001D9779 /* JazzInParisTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JazzInParisTests.m; sourceTree = "<group>"; };
 		50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPUpComingEventsViewController.h; sourceTree = "<group>"; };
 		50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPUpComingEventsViewController.m; sourceTree = "<group>"; };
+		50D4BB3018B49D0700E7CF12 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		50DAA78F18AB8E52003DDADA /* NSDate+Formatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Formatting.h"; sourceTree = "<group>"; };
 		50DAA79018AB8E52003DDADA /* NSDate+Formatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Formatting.m"; sourceTree = "<group>"; };
 		50FB318E189EE02800137949 /* JIPEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPEvent.h; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 		50FB3191189EE04500137949 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				50D4BB2F18B49D0700E7CF12 /* Model.xcdatamodeld */,
 				509759CF18A900F800E1482E /* JIPMyPinView.h */,
 				509759D018A900F800E1482E /* JIPMyPinView.m */,
 				50FB318E189EE02800137949 /* JIPEvent.h */,
@@ -328,6 +331,7 @@
 				508598D718AA551C0048D760 /* JIPVenueDetailsViewController.m in Sources */,
 				50A52FB0189ED5D9001D9779 /* main.m in Sources */,
 				5015AAAE18A159ED000A7625 /* JIPConcertDetailsViewController.m in Sources */,
+				50D4BB3118B49D0700E7CF12 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,6 +544,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		50D4BB2F18B49D0700E7CF12 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				50D4BB3018B49D0700E7CF12 /* Model.xcdatamodel */,
+			);
+			currentVersion = 50D4BB3018B49D0700E7CF12 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 50A52F98189ED5D9001D9779 /* Project object */;
 }
