@@ -12,11 +12,12 @@
 #import "JIPArtistDetailsViewController.h"
 #import "NSDate+Formatting.h"
 
-const CGFloat JIPConcertDetailsTableViewHeight = 230;
+const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 
 @interface JIPConcertDetailsViewController ()
 
 @property (strong, nonatomic) NSArray *allEventProperties;
+@property (nonatomic) CGFloat tableViewHeight;
 
 -(double)distanceFromUserLocationToEvent;
 
@@ -43,28 +44,35 @@ const CGFloat JIPConcertDetailsTableViewHeight = 230;
     
     [super viewDidLoad];
     
-    CGFloat viewWidth = self.view.bounds.size.width;
     self.title = [NSString stringWithFormat:@"%@ Concert", self.event.name];
     
     ///////////////////////////////////////////////////// 1) TABLE VIEW WITH EVENT DETAILS
-    CGRect frame = CGRectMake(0, 0, viewWidth, JIPConcertDetailsTableViewHeight);
+    CGFloat superViewWidth = self.view.bounds.size.width;
+    CGFloat superViewHeight = self.view.bounds.size.height;
+    self.tableViewHeight = superViewHeight * JIPConcertDetailsTableViewHeightPercenatge;
+
+    CGRect frame = CGRectMake(0, 0, superViewWidth, self.tableViewHeight);
     UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
     tableView.dataSource = self;
     tableView.delegate = self;
     [self.view addSubview:tableView];
     
-    tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+    //Resizing when super view redraw itself (rotation for example)
+    tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
+    
     
     ///////////////////////////////////////////////////// 2) DESSINE MAPVIEW
     self.venueMap = [[MKMapView alloc] init];
     self.venueMap.delegate = self;
-    CGFloat venueMapHeight = self.view.bounds.size.height - JIPConcertDetailsTableViewHeight;
-    self.venueMap.frame = CGRectMake(0, JIPConcertDetailsTableViewHeight, viewWidth, venueMapHeight);
+    CGFloat venueMapHeight = superViewHeight - self.tableViewHeight;
+    NSLog(@"venueMapHeight : %f", venueMapHeight);
+    self.venueMap.frame = CGRectMake(0, superViewHeight*JIPConcertDetailsTableViewHeightPercenatge, superViewWidth, venueMapHeight);
     self.venueMap.scrollEnabled = YES;
     self.venueMap.zoomEnabled = NO;
     [self.view addSubview:self.venueMap];
     
     self.venueMap.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
     
     ////////////////////////////////////////////POSITIONNE MAPVIEW DANS L'ESPACE AVEC eventCoordinate COMME CENTRE
     CLLocationCoordinate2D eventCoordinate = CLLocationCoordinate2DMake(self.event.location.latitude, self.event.location.longitude);
@@ -93,15 +101,14 @@ const CGFloat JIPConcertDetailsTableViewHeight = 230;
 //////////////////////////////////////////////
 -(double)distanceFromUserLocationToEvent
 {
-
     CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:self.event.location.latitude
                                                            longitude:self.event.location.longitude];
     
-    double distance = [self.venueMap.userLocation.location distanceFromLocation:eventLocation];
     NSLog(@"%@", self.venueMap.userLocation);
-    NSLog(@"%f", self.venueMap.userLocation.location.coordinate.longitude);
-    NSLog(@"%f", eventLocation.coordinate.longitude);
-    NSLog(@"%f", distance);
+    double distance = [self.venueMap.userLocation.location distanceFromLocation:eventLocation];
+    NSLog(@"self.venueMap.userLocation.location.coordinate.longitude : %f", self.venueMap.userLocation.location.coordinate.longitude);
+    NSLog(@"eventLocation.coordinate.longitude : %f", eventLocation.coordinate.longitude);
+    NSLog(@"distance : %f", distance);
     return distance;
 }
 
@@ -174,7 +181,6 @@ const CGFloat JIPConcertDetailsTableViewHeight = 230;
 }
 
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - MKMapViewDelegate
@@ -202,6 +208,16 @@ const CGFloat JIPConcertDetailsTableViewHeight = 230;
     JIPVenueDetailsViewController *venueDetailsVC = [[JIPVenueDetailsViewController alloc] init];
     venueDetailsVC.venue = self.event.venue;
     [self.navigationController pushViewController:venueDetailsVC animated:YES];
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    if (fromInterfaceOrientation == UIDeviceOrientationPortrait)
+    {
+        NSLog(@"rotate !");
+    }
 }
 
 @end
