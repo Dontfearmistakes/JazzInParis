@@ -135,6 +135,10 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     cell.textLabel.text = [NSString stringWithFormat:@"%@", self.allEventProperties[indexPath.row]];
     cell.backgroundColor = [UIColor blueColor];
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+    {
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:12.0f];
+    }
     
     if (indexPath.row == 0 || indexPath.row == 2)
     {
@@ -142,6 +146,16 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     }
     
     return cell;
+}
+
+//////////////////////////////////////////////////////
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+    {
+        return self.tableViewHeight/10;
+    }
+    return self.tableViewHeight/6;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
