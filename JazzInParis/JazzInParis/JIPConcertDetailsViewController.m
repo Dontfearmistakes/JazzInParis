@@ -12,6 +12,8 @@
 #import "JIPArtistDetailsViewController.h"
 #import "NSDate+Formatting.h"
 
+const CGFloat JIPConcertDetailsTableViewHeight = 230;
+
 @interface JIPConcertDetailsViewController ()
 
 @property (strong, nonatomic) NSArray *allEventProperties;
@@ -38,24 +40,31 @@
 //////////////////////////////////////////////////////////////////////
 - (void)viewDidLoad
 {
+    
     [super viewDidLoad];
+    
+    CGFloat viewWidth = self.view.bounds.size.width;
     self.title = [NSString stringWithFormat:@"%@ Concert", self.event.name];
     
     ///////////////////////////////////////////////////// 1) TABLE VIEW WITH EVENT DETAILS
-    CGRect frame = CGRectMake(0, 0, 320, 230);
+    CGRect frame = CGRectMake(0, 0, viewWidth, JIPConcertDetailsTableViewHeight);
     UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
     tableView.dataSource = self;
     tableView.delegate = self;
     [self.view addSubview:tableView];
     
+    tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     
     ///////////////////////////////////////////////////// 2) DESSINE MAPVIEW
     self.venueMap = [[MKMapView alloc] init];
     self.venueMap.delegate = self;
-    self.venueMap.frame = CGRectMake(0, 235, 320, 200);
+    CGFloat venueMapHeight = self.view.bounds.size.height - JIPConcertDetailsTableViewHeight;
+    self.venueMap.frame = CGRectMake(0, JIPConcertDetailsTableViewHeight, viewWidth, venueMapHeight);
     self.venueMap.scrollEnabled = YES;
     self.venueMap.zoomEnabled = NO;
     [self.view addSubview:self.venueMap];
+    
+    self.venueMap.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     ////////////////////////////////////////////POSITIONNE MAPVIEW DANS L'ESPACE AVEC eventCoordinate COMME CENTRE
     CLLocationCoordinate2D eventCoordinate = CLLocationCoordinate2DMake(self.event.location.latitude, self.event.location.longitude);

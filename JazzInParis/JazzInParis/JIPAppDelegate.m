@@ -19,7 +19,10 @@
     ////////////////////////////////////
     //////////UPCOMING EVENTS VC////////
     ///////////////////////////////////
+    NSLog(@"bug");
+    
     JIPUpComingEventsViewController *upcomingEventVC = [[JIPUpComingEventsViewController alloc] init];
+    
     [upcomingEventVC createFakeUpcomingEvents];
     UINavigationController *upcomingEventsNavVC = [[UINavigationController alloc] initWithRootViewController:upcomingEventVC];
     
@@ -31,11 +34,7 @@
     tabBarController.viewControllers = @[upcomingEventsNavVC];
     
     self.window.rootViewController = tabBarController;
-    
 
-    
-    
-    
     
     
     self.window.backgroundColor = [UIColor whiteColor];
