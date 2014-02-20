@@ -66,7 +66,7 @@
 
 -(NSString *)subtitle
 {
-    return [NSString stringWithFormat:@"%f meters away", self.distanceFromUserToVenue];
+    return [NSString stringWithFormat:@"%ld meters away", lroundf(self.distanceFromUserToVenue)];
 }
 
 @end
