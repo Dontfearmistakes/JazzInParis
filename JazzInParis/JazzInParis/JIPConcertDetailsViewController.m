@@ -110,8 +110,8 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     
     NSLog(@"%@", self.venueMap.userLocation);
     double distance = [self.venueMap.userLocation.location distanceFromLocation:eventLocation];
-    NSLog(@"self.venueMap.userLocation.location.coordinate.longitude : %f", self.venueMap.userLocation.location.coordinate.longitude);
-    NSLog(@"eventLocation.coordinate.longitude : %f", eventLocation.coordinate.longitude);
+    NSLog(@"self.venueMap.userLocation.location.coordinate.longitude : %f / %f", self.venueMap.userLocation.location.coordinate.longitude, self.venueMap.userLocation.location.coordinate.latitude);
+    NSLog(@"eventLocation.coordinate.longitude/latitude : %f / %f", eventLocation.coordinate.longitude, eventLocation.coordinate.latitude);
     NSLog(@"distance : %f", distance);
     return distance;
 }
