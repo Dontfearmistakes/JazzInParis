@@ -16,6 +16,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
+    self.window.tintColor = [UIColor blueColor];
+    
     ////////////////////////////////////
     //////////UPCOMING EVENTS VC////////
     ///////////////////////////////////
@@ -25,6 +27,8 @@
     
     [upcomingEventVC createFakeUpcomingEvents];
     UINavigationController *upcomingEventsNavVC = [[UINavigationController alloc] initWithRootViewController:upcomingEventVC];
+    upcomingEventsNavVC.navigationBar.barStyle = UIBarStyleBlack;
+    upcomingEventsNavVC.navigationBar.tintColor = [UIColor cyanColor];
     
     
     ////////////////////////////////////////////
@@ -32,6 +36,7 @@
     ///////////////////////////////////////////
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
     tabBarController.viewControllers = @[upcomingEventsNavVC];
+
     
     self.window.rootViewController = tabBarController;
 
