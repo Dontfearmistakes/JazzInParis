@@ -10,13 +10,22 @@
 #import "JIPVenueDetailsViewController.h"
 #import "JIPMyPinView.h"
 
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
+
 @interface JIPVenueDetailsViewController ()
 
 @property (strong, nonatomic) NSArray *allVenueProperties;
+@property (strong, nonatomic) UITableView *topTableView;
 -(double)distanceFromUserLocationToEvent;
 
 @end
 
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 @implementation JIPVenueDetailsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -33,21 +42,35 @@
 {
     [super viewDidLoad];
     self.title = [NSString stringWithFormat:@"%@", self.venue.name];
-    ///////////////////////////////////////////////////// 1) TABLE VIEW WITH EVENT DETAILS
-    CGRect frame = CGRectMake(0, 0, 320, 230);
-    UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
-    tableView.dataSource = self;
-    tableView.delegate = self;
-    [self.view addSubview:tableView];
     
+    ///////////////////////////////////////////////////// 1) TABLE VIEW WITH EVENT DETAILS
+    //////////////////////////////////////////////////////////////////////////////////////
+    CGFloat superViewWidth = self.view.bounds.size.width;
+    CGFloat superViewHeight = self.view.bounds.size.height;
+    CGFloat tableViewHeight = superViewHeight * JIPVenueDetailsTableViewHeightPercenatge;
+    NSLog(@"tableViewHeight = %f", tableViewHeight);
+    
+    CGRect frame = CGRectMake(0, 0, superViewWidth, tableViewHeight);
+    self.topTableView = [[UITableView alloc] initWithFrame:frame];
+    
+    //Resizing when super view redraw itself (rotation for example)
+    self.topTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    NSLog(@"FRAME : %f, %f", frame.size.height, frame.size.width);
+
+    self.topTableView.dataSource = self;
+    self.topTableView.delegate = self;
+    [self.view addSubview:self.topTableView];
     
     ///////////////////////////////////////////////////// 2) DESSINE MAPVIEW
+    ////////////////////////////////////////////////////////////////////////
     self.venueMap = [[MKMapView alloc] init];
     self.venueMap.delegate = self;
-    self.venueMap.frame = CGRectMake(0, 235, 320, 200);
+    self.venueMap.frame = CGRectMake(0, tableViewHeight, superViewWidth, superViewHeight-tableViewHeight);
     self.venueMap.scrollEnabled = YES;
     self.venueMap.zoomEnabled = NO;
     [self.view addSubview:self.venueMap];
+    
+    self.venueMap.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     ////////////////////////////////////////////POSITIONNE MAPVIEW DANS L'ESPACE AVEC eventCoordinate COMME CENTRE
     CLLocationCoordinate2D venueCoordinate = CLLocationCoordinate2DMake(self.venue.location.latitude, self.venue.location.longitude);
@@ -70,6 +93,20 @@
     [self.venueMap addAnnotation:self.venue];
 }
 
+
+//////////////////////////////////////////////
+///Automatically show Callout
+//////////////////////////////////////////////
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    NSLog(@"AFTER ROTATION VIEW HEIGHT * JIPVenueDetailsTableViewHeightPercenatge : %f", self.view.bounds.size.height * JIPVenueDetailsTableViewHeightPercenatge);
+    NSLog(@"AFTER ROTATION TABLEVIEW HEIGHT/WIDTH : %f / %f", self.topTableView.frame.size.height, self.topTableView.frame.size.width);
+    NSLog(@"AFTER ROTATION MAPVIEW HEIGHT/WIDTH : %f / %f", self.venueMap.frame.size.height, self.venueMap.frame.size.width);
+}
+
+//////////////////////////////////////////////
+///Automatically show Callout
+//////////////////////////////////////////////
 -(void)viewDidAppear:(BOOL)animated
 {
     [self.venueMap selectAnnotation:self.venue animated:YES];

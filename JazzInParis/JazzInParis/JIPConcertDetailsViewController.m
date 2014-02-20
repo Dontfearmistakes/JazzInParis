@@ -48,32 +48,30 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     self.title = [NSString stringWithFormat:@"%@ Concert", self.event.name];
     
     ///////////////////////////////////////////////////// 1) TABLE VIEW WITH EVENT DETAILS
+    //////////////////////////////////////////////////////////////////////////////////////
     CGFloat superViewWidth = self.view.bounds.size.width;
     CGFloat superViewHeight = self.view.bounds.size.height;
     self.tableViewHeight = superViewHeight * JIPConcertDetailsTableViewHeightPercenatge;
 
     CGRect frame = CGRectMake(0, 0, superViewWidth, self.tableViewHeight);
     self.topTableView = [[UITableView alloc] initWithFrame:frame];
+    //Resizing when super view redraw itself (rotation for example)
+    self.topTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
+    
     self.topTableView.dataSource = self;
     self.topTableView.delegate = self;
     [self.view addSubview:self.topTableView];
     
-    //Resizing when super view redraw itself (rotation for example)
-    self.topTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
-    
-    
     ///////////////////////////////////////////////////// 2) DESSINE MAPVIEW
+    ////////////////////////////////////////////////////////////////////////
     self.venueMap = [[MKMapView alloc] init];
+    self.venueMap.frame = CGRectMake(0, self.tableViewHeight, superViewWidth, superViewHeight - self.tableViewHeight);
+    self.venueMap.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+
     self.venueMap.delegate = self;
-    CGFloat venueMapHeight = superViewHeight - self.tableViewHeight;
-    NSLog(@"venueMapHeight : %f", venueMapHeight);
-    self.venueMap.frame = CGRectMake(0, superViewHeight*JIPConcertDetailsTableViewHeightPercenatge, superViewWidth, venueMapHeight);
     self.venueMap.scrollEnabled = YES;
     self.venueMap.zoomEnabled = NO;
     [self.view addSubview:self.venueMap];
-    
-    self.venueMap.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
     
     ////////////////////////////////////////////POSITIONNE MAPVIEW DANS L'ESPACE AVEC eventCoordinate COMME CENTRE
     CLLocationCoordinate2D eventCoordinate = CLLocationCoordinate2DMake(self.event.location.latitude, self.event.location.longitude);
