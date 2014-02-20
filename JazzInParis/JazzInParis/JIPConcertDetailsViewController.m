@@ -95,9 +95,24 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     
 }
 
+//////////////////////////////////////////////
+///Automatically show Callout
+//////////////////////////////////////////////
 -(void)viewDidAppear:(BOOL)animated
 {
     [self.venueMap selectAnnotation:self.event animated:YES];
+}
+
+
+//////////////////////////////////////////////
+///ROTATION
+//////////////////////////////////////////////
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    NSLog(@"ROTATION !!!!");
+    NSLog(@"fromInterfaceOrientation : %d", fromInterfaceOrientation);
+    [self.topTableView reloadData];
 }
 
 //////////////////////////////////////////////
@@ -227,16 +242,6 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     JIPVenueDetailsViewController *venueDetailsVC = [[JIPVenueDetailsViewController alloc] init];
     venueDetailsVC.venue = self.event.venue;
     [self.navigationController pushViewController:venueDetailsVC animated:YES];
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
--(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    NSLog(@"ROTATION !!!!");
-    NSLog(@"fromInterfaceOrientation : %d", fromInterfaceOrientation);
-    [self.topTableView reloadData];
 }
 
 @end
