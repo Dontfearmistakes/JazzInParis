@@ -18,6 +18,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 
 @property (strong, nonatomic) NSArray *allEventProperties;
 @property (nonatomic) CGFloat tableViewHeight;
+@property (strong, nonatomic) UITableView *topTableView;
 
 -(double)distanceFromUserLocationToEvent;
 
@@ -52,13 +53,13 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     self.tableViewHeight = superViewHeight * JIPConcertDetailsTableViewHeightPercenatge;
 
     CGRect frame = CGRectMake(0, 0, superViewWidth, self.tableViewHeight);
-    UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
-    tableView.dataSource = self;
-    tableView.delegate = self;
-    [self.view addSubview:tableView];
+    self.topTableView = [[UITableView alloc] initWithFrame:frame];
+    self.topTableView.dataSource = self;
+    self.topTableView.delegate = self;
+    [self.view addSubview:self.topTableView];
     
     //Resizing when super view redraw itself (rotation for example)
-    tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
+    self.topTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
     
     
     ///////////////////////////////////////////////////// 2) DESSINE MAPVIEW
@@ -140,12 +141,15 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     //CELL GETS EVENT.NAME
     cell.textLabel.text = [NSString stringWithFormat:@"%@", self.allEventProperties[indexPath.row]];
     cell.backgroundColor = [UIColor blueColor];
+    
+    //CHANGE FONT UPON ROTATION
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
     if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
     {
         cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:12.0f];
     }
     
+    //BUTTONS ON CELL 0 AND 2
     if (indexPath.row == 0 || indexPath.row == 2)
     {
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
@@ -194,7 +198,8 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     }
 }
 
-//REPLICATE didSelectRow BEHAVIOR (above) FOR ACCESSORY BUTTON
+
+////////////////REPLICATE didSelectRow BEHAVIOR (above) FOR ACCESSORY BUTTON///////////////////////////////
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     [self tableView:tableView didSelectRowAtIndexPath:indexPath];
@@ -204,6 +209,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - MKMapViewDelegate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
@@ -229,10 +235,10 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    if (fromInterfaceOrientation == UIDeviceOrientationPortrait)
-    {
-        NSLog(@"rotate !");
-    }
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    NSLog(@"ROTATION !!!!");
+    NSLog(@"fromInterfaceOrientation : %d", fromInterfaceOrientation);
+    [self.topTableView reloadData];
 }
 
 @end
