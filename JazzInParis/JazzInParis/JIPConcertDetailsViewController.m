@@ -34,9 +34,14 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-
+        self.title = [NSString stringWithFormat:@"%@ Concert", self.event.name];
     }
     return self;
+}
+
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -45,7 +50,6 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     
     [super viewDidLoad];
     
-    self.title = [NSString stringWithFormat:@"%@ Concert", self.event.name];
     
     ///////////////////////////////////////////////////// 1) TABLE VIEW WITH EVENT DETAILS
     //////////////////////////////////////////////////////////////////////////////////////
