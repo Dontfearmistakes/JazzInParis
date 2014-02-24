@@ -69,7 +69,14 @@
 
 -(NSString *)subtitle
 {
-    return [NSString stringWithFormat:@"%ld meters away", lroundf(self.distanceFromUserToEvent)];
+    if (!self.shouldDisplayDistanceToFromUserToEvent)
+    {
+        return nil;
+    }
+    else
+    {
+        return [NSString stringWithFormat:@"%ld meters away", lroundf(self.distanceFromUserToEvent)];
+    }
 }
 
 @end

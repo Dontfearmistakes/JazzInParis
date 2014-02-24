@@ -90,13 +90,35 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     [self.venueMap setCenterCoordinate:eventCoordinate animated:YES];
     self.venueMap.showsUserLocation = YES;
     
-    //PASS distanceFromUserLocationToEvent to adhoc event @property to display it
-    //as subtitle of the annotation (called by -viewForAnnotation below)
-    self.event.distanceFromUserToEvent = [self distanceFromUserLocationToEvent];
+    self.event.distanceFromUserToEvent = 0;
+    self.event.shouldDisplayDistanceToFromUserToEvent = NO;
     
     //ADD ANNOTATION
     [self.venueMap addAnnotation:self.event];
     
+}
+
+//////////////////////////////////////////////
+///Called when userLocation updated
+//////////////////////////////////////////////
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    if (!userLocation)
+    {
+        self.event.shouldDisplayDistanceToFromUserToEvent = NO;
+        self.event.distanceFromUserToEvent = 0;
+    }
+    else
+    {
+        //PASS distanceFromUserLocationToEvent to adhoc event @property to display it
+        //as subtitle of the annotation (called by -viewForAnnotation below)
+        self.event.shouldDisplayDistanceToFromUserToEvent = YES;
+        self.event.distanceFromUserToEvent = [self distanceFromUserLocationToEvent];
+    }
+    
+    [mapView removeAnnotation:self.event];
+    [self.venueMap addAnnotation:self.event];
+    [self.venueMap selectAnnotation:self.event animated:YES];
 }
 
 //////////////////////////////////////////////

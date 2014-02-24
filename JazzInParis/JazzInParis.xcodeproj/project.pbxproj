@@ -112,6 +112,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50726F2F18BB56A8008F2578 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				50D334D818B6573F00E21622 /* JIPExtendNSLogFunctionality.h */,
+				50D334D918B6573F00E21622 /* JIPExtendNSLogFunctionality.m */,
+			);
+			name = Extension;
+			sourceTree = "<group>";
+		};
 		50A52F97189ED5D9001D9779 = {
 			isa = PBXGroup;
 			children = (
@@ -150,10 +159,10 @@
 				50A52FB2189ED5D9001D9779 /* JIPAppDelegate.h */,
 				50A52FB3189ED5D9001D9779 /* JIPAppDelegate.m */,
 				50FB3192189EE04F00137949 /* ViewControllers */,
+				50CE606418BA9C540079F0EF /* Views */,
 				50FB3191189EE04500137949 /* Models */,
 				50DAA79218AB8E57003DDADA /* Categories */,
-				50D334D818B6573F00E21622 /* JIPExtendNSLogFunctionality.h */,
-				50D334D918B6573F00E21622 /* JIPExtendNSLogFunctionality.m */,
+				50726F2F18BB56A8008F2578 /* Extension */,
 				50A52FB5189ED5D9001D9779 /* Images.xcassets */,
 				50A52FAA189ED5D9001D9779 /* Supporting Files */,
 			);
@@ -189,6 +198,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		50CE606418BA9C540079F0EF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				509759CF18A900F800E1482E /* JIPMyPinView.h */,
+				509759D018A900F800E1482E /* JIPMyPinView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		50DAA79218AB8E57003DDADA /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,8 +220,6 @@
 			isa = PBXGroup;
 			children = (
 				50D4BB2F18B49D0700E7CF12 /* Model.xcdatamodeld */,
-				509759CF18A900F800E1482E /* JIPMyPinView.h */,
-				509759D018A900F800E1482E /* JIPMyPinView.m */,
 				50FB318E189EE02800137949 /* JIPEvent.h */,
 				50FB318F189EE02800137949 /* JIPEvent.m */,
 				508598D818AA74BF0048D760 /* JIPArtist.h */,

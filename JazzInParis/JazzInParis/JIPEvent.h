@@ -27,6 +27,8 @@
 
 @property (nonatomic) double distanceFromUserToEvent;
 
+@property (nonatomic) BOOL shouldDisplayDistanceToFromUserToEvent;
+
 @property (strong, nonatomic) NSDate *date;
 
 - (instancetype)initWithID:(NSNumber *)id
