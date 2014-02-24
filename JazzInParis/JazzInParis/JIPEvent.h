@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
+#import <CoreData/CoreData.h>
 #import "JIPVenue.h"
 #import "JIPArtist.h"
 
-@interface JIPEvent : NSObject <MKAnnotation>
+@interface JIPEvent : NSManagedObject <MKAnnotation>
 
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *type;

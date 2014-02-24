@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface JIPArtist : NSObject
+
+@interface JIPArtist : NSManagedObject
 
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *name;

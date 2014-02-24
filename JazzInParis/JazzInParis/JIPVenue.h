@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
+#import <CoreData/CoreData.h>
 
-@interface JIPVenue : NSObject <MKAnnotation>
+@interface JIPVenue : NSManagedObject <MKAnnotation>
 
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSString *description;
+@property (strong, nonatomic) NSString *desc;
 @property (strong, nonatomic) NSString *city;
 @property (strong, nonatomic) NSString *street;
 @property (strong, nonatomic) NSString *phone;
