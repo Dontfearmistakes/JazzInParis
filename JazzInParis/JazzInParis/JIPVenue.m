@@ -10,15 +10,15 @@
 
 @implementation JIPVenue
 
-@dynamic id;
-@dynamic name;
-@dynamic desc;
-@dynamic city;
-@dynamic street;
-@dynamic phone;
-@dynamic location;
-@dynamic website;
-@dynamic capacity;
+//@dynamic id;
+//@dynamic name;
+//@dynamic desc;
+//@dynamic city;
+//@dynamic street;
+//@dynamic phone;
+//@dynamic location;
+//@dynamic website;
+//@dynamic capacity;
 @synthesize distanceFromUserToVenue;
 
 ////////////////////////////////////////

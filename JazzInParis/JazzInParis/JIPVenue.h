@@ -11,7 +11,7 @@
 #import <MapKit/MapKit.h>
 #import <CoreData/CoreData.h>
 
-@interface JIPVenue : NSManagedObject <MKAnnotation>
+@interface JIPVenue : NSObject <MKAnnotation>
 
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *name;

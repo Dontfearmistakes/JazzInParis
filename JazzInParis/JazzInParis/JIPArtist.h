@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface JIPArtist : NSManagedObject
+@interface JIPArtist : NSObject
 
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *name;

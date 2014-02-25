@@ -10,15 +10,15 @@
 
 @implementation JIPEvent
 
-@dynamic id;
-@dynamic type;
-
-@dynamic uri;
-@dynamic ageRestriction;
-@dynamic location;
-@dynamic venue;
-@dynamic artist;
-@dynamic date;
+//@dynamic id;
+//@dynamic type;
+//
+//@dynamic uri;
+//@dynamic ageRestriction;
+//@dynamic location;
+//@dynamic venue;
+//@dynamic artist;
+//@dynamic date;
 @synthesize distanceFromUserToEvent;
 @synthesize shouldDisplayDistanceToFromUserToEvent;
 
