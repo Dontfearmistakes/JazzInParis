@@ -13,7 +13,7 @@
 #import "JIPVenue.h"
 #import "JIPArtist.h"
 
-@interface JIPEvent : NSManagedObject <MKAnnotation>
+@interface JIPEvent : NSObject <MKAnnotation>
 
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *type;

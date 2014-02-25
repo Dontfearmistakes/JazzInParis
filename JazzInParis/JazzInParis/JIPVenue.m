@@ -10,6 +10,17 @@
 
 @implementation JIPVenue
 
+@dynamic id;
+@dynamic name;
+@dynamic desc;
+@dynamic city;
+@dynamic street;
+@dynamic phone;
+@dynamic location;
+@dynamic website;
+@dynamic capacity;
+@synthesize distanceFromUserToVenue;
+
 ////////////////////////////////////////
 -(id)init
 {
@@ -26,7 +37,7 @@
 ////////////////////////////////////////
 - (instancetype)initWithID:(NSNumber *)id
                        name:(NSString *)name
-                description:(NSString *)description
+                description:(NSString *)desc
                        city:(NSString *)city
                      street:(NSString *)street
                       phone:(NSString *)phone
@@ -38,7 +49,7 @@
     {
         self.id = id;
         self.name = name;
-        self.description = description;
+        self.desc = desc;
         self.city = city;
         self.street = street;
         self.phone = phone;
