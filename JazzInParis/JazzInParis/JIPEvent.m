@@ -9,7 +9,7 @@
 #import "JIPEvent.h"
 
 @implementation JIPEvent
-
+//@dynamic : dit au compilateur = pas de getter pas de setter pas de ivar
 //@dynamic id;
 //@dynamic type;
 //
@@ -19,8 +19,9 @@
 //@dynamic venue;
 //@dynamic artist;
 //@dynamic date;
-@synthesize distanceFromUserToEvent;
-@synthesize shouldDisplayDistanceToFromUserToEvent;
+@synthesize name = _name;
+@synthesize distanceFromUserToEvent = _distanceFromUserToEvent;
+@synthesize shouldDisplayDistanceFromUserToEvent = _shouldDisplayDistanceFromUserToEvent;
 
 //////////////////////////////////////// ici il f
 -(id)init
@@ -60,7 +61,7 @@
 - (NSString *)name
 {
     if (!_name && [_name isEqualToString:@""]) {
-        _name = @"Artist name"; // TODO: change it to the artist's name
+        _name = [NSString stringWithFormat:@"%@ at %@", self.artist.name, self.venue.name];
     }
     return _name;
 }
@@ -76,12 +77,37 @@
 
 -(NSString *)title
 {
-    return self.venue.name;
+    return self.name;
+}
+
+-(void)setName:(NSString *)name
+{
+    [self willChangeValueForKey:@"title"];
+    [self willChangeValueForKey:@"name"];
+    _name = name;
+    [self didChangeValueForKey:@"title"];
+    [self didChangeValueForKey:@"name"];
+}
+
+-(void)setShouldDisplayDistanceFromUserToEvent:(BOOL)shouldDisplayDistanceFromUserToEvent
+{
+    [self willChangeValueForKey:@"subtitle"];
+    [self willChangeValueForKey:@"shouldDisplayDistanceFromUserToEvent"];
+    _shouldDisplayDistanceFromUserToEvent = shouldDisplayDistanceFromUserToEvent;
+    [self didChangeValueForKey:@"shouldDisplayDistanceFromUserToEvent"];
+    [self didChangeValueForKey:@"subtitle"];
+}
+
+-(void)setDistanceFromUserToEvent:(double)distanceFromUserToEvent
+{
+    [self willChangeValueForKey:@"subtitle"];
+    _distanceFromUserToEvent = distanceFromUserToEvent;
+    [self didChangeValueForKey:@"subtitle"];
 }
 
 -(NSString *)subtitle
 {
-    if (!self.shouldDisplayDistanceToFromUserToEvent)
+    if (!self.shouldDisplayDistanceFromUserToEvent)
     {
         return nil;
     }

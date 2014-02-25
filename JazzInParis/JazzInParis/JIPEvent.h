@@ -28,7 +28,7 @@
 
 @property (nonatomic) double distanceFromUserToEvent;
 
-@property (nonatomic) BOOL shouldDisplayDistanceToFromUserToEvent;
+@property (nonatomic) BOOL shouldDisplayDistanceFromUserToEvent;
 
 @property (strong, nonatomic) NSDate *date;
 

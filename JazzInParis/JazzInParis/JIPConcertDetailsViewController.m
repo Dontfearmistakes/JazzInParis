@@ -47,20 +47,13 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 //////////////////////////////////////////////////////////////////////
 - (void)viewDidLoad
 {
-    
     [super viewDidLoad];
-    
     
     ///////////////////////////////////////////////////// 1) TABLE VIEW WITH EVENT DETAILS
     //////////////////////////////////////////////////////////////////////////////////////
-    CGFloat superViewWidth = self.view.bounds.size.width;
-    CGFloat superViewHeight = self.view.bounds.size.height;
-    self.tableViewHeight = superViewHeight * JIPConcertDetailsTableViewHeightPercenatge;
-
-    CGRect frame = CGRectMake(0, 0, superViewWidth, self.tableViewHeight);
-    self.topTableView = [[UITableView alloc] initWithFrame:frame];
+    
+    self.topTableView = [[UITableView alloc] initWithFrame:CGRectZero];
     //Resizing when super view redraw itself (rotation for example)
-    self.topTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin;
     
     self.topTableView.dataSource = self;
     self.topTableView.delegate = self;
@@ -68,9 +61,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     
     ///////////////////////////////////////////////////// 2) DESSINE MAPVIEW
     ////////////////////////////////////////////////////////////////////////
-    self.venueMap = [[MKMapView alloc] init];
-    self.venueMap.frame = CGRectMake(0, self.tableViewHeight, superViewWidth, superViewHeight - self.tableViewHeight);
-    self.venueMap.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.venueMap = [[MKMapView alloc] initWithFrame:CGRectZero];
 
     self.venueMap.delegate = self;
     self.venueMap.scrollEnabled = YES;
@@ -91,11 +82,24 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     self.venueMap.showsUserLocation = YES;
     
     self.event.distanceFromUserToEvent = 0;
-    self.event.shouldDisplayDistanceToFromUserToEvent = NO;
+    self.event.shouldDisplayDistanceFromUserToEvent = NO;
     
     //ADD ANNOTATION
     [self.venueMap addAnnotation:self.event];
     
+}
+
+-(void)viewDidLayoutSubviews
+//called when bounds are redrawn
+{
+    CGFloat superViewWidth = self.view.bounds.size.width;
+    CGFloat superViewHeight = self.view.bounds.size.height;
+    self.tableViewHeight = superViewHeight * JIPConcertDetailsTableViewHeightPercenatge;
+    
+    self.topTableView.frame = CGRectMake(0, 0, superViewWidth, self.tableViewHeight);
+    
+    self.venueMap.frame = CGRectMake(0, self.tableViewHeight, superViewWidth, superViewHeight - self.tableViewHeight);
+
 }
 
 //////////////////////////////////////////////
@@ -105,20 +109,22 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 {
     if (!userLocation)
     {
-        self.event.shouldDisplayDistanceToFromUserToEvent = NO;
+        self.event.shouldDisplayDistanceFromUserToEvent = NO;
         self.event.distanceFromUserToEvent = 0;
     }
     else
     {
         //PASS distanceFromUserLocationToEvent to adhoc event @property to display it
         //as subtitle of the annotation (called by -viewForAnnotation below)
-        self.event.shouldDisplayDistanceToFromUserToEvent = YES;
+        self.event.shouldDisplayDistanceFromUserToEvent = YES;
         self.event.distanceFromUserToEvent = [self distanceFromUserLocationToEvent];
     }
-    
-    [mapView removeAnnotation:self.event];
-    [self.venueMap addAnnotation:self.event];
-    [self.venueMap selectAnnotation:self.event animated:YES];
+}
+
+-(void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
+{
+    self.event.shouldDisplayDistanceFromUserToEvent = NO;
+    self.event.distanceFromUserToEvent = 0;
 }
 
 //////////////////////////////////////////////
