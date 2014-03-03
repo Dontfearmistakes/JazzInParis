@@ -10,9 +10,10 @@
 
 @implementation JIPArtist
 
-//@dynamic id;
-//@dynamic name;
-//@dynamic songkickUri;
+@dynamic id;
+@dynamic name;
+@dynamic songkickUri;
+@dynamic events;
 
 //////////////////////////////////////////////////////////////////
 - (id)init

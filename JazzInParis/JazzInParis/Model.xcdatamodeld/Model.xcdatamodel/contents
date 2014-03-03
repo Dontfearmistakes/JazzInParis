@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="12F45" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="JIPArtist" syncable="YES">
+    <entity name="JIPArtist" representedClassName="JIPArtist" syncable="YES">
         <attribute name="id" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="songkickUri" optional="YES" attributeType="String" syncable="YES"/>
@@ -17,7 +17,7 @@
         <relationship name="artist" maxCount="1" deletionRule="Nullify" destinationEntity="JIPArtist" inverseName="events" inverseEntity="JIPArtist" syncable="YES"/>
         <relationship name="venue" maxCount="1" deletionRule="Nullify" destinationEntity="JIPVenue" inverseName="events" inverseEntity="JIPVenue" syncable="YES"/>
     </entity>
-    <entity name="JIPVenue" syncable="YES">
+    <entity name="JIPVenue" representedClassName="JIPVenue" syncable="YES">
         <attribute name="capacity" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
@@ -32,6 +32,6 @@
     <elements>
         <element name="JIPArtist" positionX="0" positionY="0" width="128" height="105"/>
         <element name="JIPEvent" positionX="-297" positionY="-153" width="128" height="180"/>
-        <element name="JIPVenue" positionX="-603" positionY="-42" width="128" height="195"/>
+        <element name="JIPVenue" positionX="-576" positionY="-42" width="128" height="193"/>
     </elements>
 </model>

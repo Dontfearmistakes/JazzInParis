@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5015AAAE18A159ED000A7625 /* JIPConcertDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */; };
+		50726F3518C4A321008F2578 /* JIPUIManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 50726F3418C4A321008F2578 /* JIPUIManagedDocument.m */; };
 		508598D418AA46330048D760 /* JIPVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D318AA46330048D760 /* JIPVenue.m */; };
 		508598D718AA551C0048D760 /* JIPVenueDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D618AA551C0048D760 /* JIPVenueDetailsViewController.m */; };
 		508598DA18AA74BF0048D760 /* JIPArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D918AA74BF0048D760 /* JIPArtist.m */; };
@@ -47,6 +48,8 @@
 /* Begin PBXFileReference section */
 		5015AAAC18A159ED000A7625 /* JIPConcertDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPConcertDetailsViewController.h; sourceTree = "<group>"; };
 		5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPConcertDetailsViewController.m; sourceTree = "<group>"; };
+		50726F3318C4A321008F2578 /* JIPUIManagedDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPUIManagedDocument.h; sourceTree = "<group>"; };
+		50726F3418C4A321008F2578 /* JIPUIManagedDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPUIManagedDocument.m; sourceTree = "<group>"; };
 		508598D218AA46330048D760 /* JIPVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPVenue.h; sourceTree = "<group>"; };
 		508598D318AA46330048D760 /* JIPVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPVenue.m; sourceTree = "<group>"; };
 		508598D518AA551C0048D760 /* JIPVenueDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPVenueDetailsViewController.h; sourceTree = "<group>"; };
@@ -220,6 +223,8 @@
 			isa = PBXGroup;
 			children = (
 				50D4BB2F18B49D0700E7CF12 /* Model.xcdatamodeld */,
+				50726F3318C4A321008F2578 /* JIPUIManagedDocument.h */,
+				50726F3418C4A321008F2578 /* JIPUIManagedDocument.m */,
 				50FB318E189EE02800137949 /* JIPEvent.h */,
 				50FB318F189EE02800137949 /* JIPEvent.m */,
 				508598D818AA74BF0048D760 /* JIPArtist.h */,
@@ -351,6 +356,7 @@
 				50FB3190189EE02800137949 /* JIPEvent.m in Sources */,
 				508598DA18AA74BF0048D760 /* JIPArtist.m in Sources */,
 				508598D718AA551C0048D760 /* JIPVenueDetailsViewController.m in Sources */,
+				50726F3518C4A321008F2578 /* JIPUIManagedDocument.m in Sources */,
 				50A52FB0189ED5D9001D9779 /* main.m in Sources */,
 				5015AAAE18A159ED000A7625 /* JIPConcertDetailsViewController.m in Sources */,
 				50D4BB3118B49D0700E7CF12 /* Model.xcdatamodeld in Sources */,

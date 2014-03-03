@@ -13,24 +13,25 @@
 #import "JIPVenue.h"
 #import "JIPArtist.h"
 
-@interface JIPEvent : NSObject <MKAnnotation>
+@interface JIPEvent : NSManagedObject <MKAnnotation>
 
+//TO BE STORED
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *type;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSURL *uri;
 @property (strong, nonatomic) NSString *ageRestriction;
-
 @property (nonatomic) CLLocationCoordinate2D location;
+@property (strong, nonatomic) NSDate *date;
 
+//TO ONE RELATIONSHIP TO BE STORED
 @property (strong, nonatomic) JIPVenue *venue;
 @property (strong, nonatomic) JIPArtist *artist;
 
+//NOT TO BE STORED (so no need to @ dynamic in the .m file
 @property (nonatomic) double distanceFromUserToEvent;
-
 @property (nonatomic) BOOL shouldDisplayDistanceFromUserToEvent;
 
-@property (strong, nonatomic) NSDate *date;
 
 - (instancetype)initWithID:(NSNumber *)id
                       name:(NSString *)name

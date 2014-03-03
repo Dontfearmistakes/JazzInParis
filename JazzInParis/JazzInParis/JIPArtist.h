@@ -9,19 +9,26 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class JIPEvent;
 
-@interface JIPArtist : NSObject
+@interface JIPArtist : NSManagedObject
 
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSURL *songkickUri;
+@property (nonatomic, retain) NSSet *events;
 
 -(instancetype)initWithID: (NSNumber *)id
-                     name: (NSString *)name
-              songkickUri: (NSURL *)songkickUri;
+name: (NSString *)name
+songkickUri: (NSURL *)songkickUri;
 
+@end
 
+@interface JIPArtist (CoreDataGeneratedAccessors)
 
-
+- (void)addEventsObject:(JIPEvent *)event;
+- (void)removeEventsObject:(JIPEvent *)event;
+- (void)addEvents:(NSSet *)events;
+- (void)removeEvents:(NSSet *)events;
 
 @end

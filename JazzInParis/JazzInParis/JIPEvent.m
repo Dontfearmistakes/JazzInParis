@@ -9,21 +9,23 @@
 #import "JIPEvent.h"
 
 @implementation JIPEvent
+
 //@dynamic : dit au compilateur = pas de getter pas de setter pas de ivar
-//@dynamic id;
-//@dynamic type;
-//
-//@dynamic uri;
-//@dynamic ageRestriction;
-//@dynamic location;
-//@dynamic venue;
-//@dynamic artist;
-//@dynamic date;
+//but don't freak out
+@dynamic id;
+@dynamic type;
+@dynamic uri;
+@dynamic ageRestriction;
+@dynamic location;
+@dynamic venue;
+@dynamic artist;
+@dynamic date;
+
 @synthesize name = _name;
 @synthesize distanceFromUserToEvent = _distanceFromUserToEvent;
 @synthesize shouldDisplayDistanceFromUserToEvent = _shouldDisplayDistanceFromUserToEvent;
 
-//////////////////////////////////////// ici il f
+////////////////////////////////////////
 -(id)init
 {
     return [self initWithID:@0
@@ -66,6 +68,14 @@
     return _name;
 }
 
+-(void)setName:(NSString *)name
+{
+    [self willChangeValueForKey:@"title"];
+    [self willChangeValueForKey:@"name"];
+    _name = name;
+    [self didChangeValueForKey:@"title"];
+    [self didChangeValueForKey:@"name"];
+}
 //@property location est remplie lors de l'appel à l'API
 //@property coordinate est juste required par <MKAnnotation> mais readonly donc il suffit d'implémenter le getter
 //Dans JIPConcertDetailsVC (conforme à <MKMapViewDelegate>), c'est -viewForAnnotation qui réclame un object conforme à <MKAnnotation>
@@ -80,13 +90,16 @@
     return self.name;
 }
 
--(void)setName:(NSString *)name
+-(NSString *)subtitle
 {
-    [self willChangeValueForKey:@"title"];
-    [self willChangeValueForKey:@"name"];
-    _name = name;
-    [self didChangeValueForKey:@"title"];
-    [self didChangeValueForKey:@"name"];
+    if (!self.shouldDisplayDistanceFromUserToEvent)
+    {
+        return nil;
+    }
+    else
+    {
+        return [NSString stringWithFormat:@"%ld meters away", lroundf(self.distanceFromUserToEvent)];
+    }
 }
 
 -(void)setShouldDisplayDistanceFromUserToEvent:(BOOL)shouldDisplayDistanceFromUserToEvent
@@ -105,16 +118,5 @@
     [self didChangeValueForKey:@"subtitle"];
 }
 
--(NSString *)subtitle
-{
-    if (!self.shouldDisplayDistanceFromUserToEvent)
-    {
-        return nil;
-    }
-    else
-    {
-        return [NSString stringWithFormat:@"%ld meters away", lroundf(self.distanceFromUserToEvent)];
-    }
-}
 
 @end

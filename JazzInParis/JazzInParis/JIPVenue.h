@@ -11,7 +11,9 @@
 #import <MapKit/MapKit.h>
 #import <CoreData/CoreData.h>
 
-@interface JIPVenue : NSObject <MKAnnotation>
+@class JIPEvent;
+
+@interface JIPVenue : NSManagedObject <MKAnnotation>
 
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *name;
@@ -20,8 +22,9 @@
 @property (strong, nonatomic) NSString *street;
 @property (strong, nonatomic) NSString *phone;
 @property (nonatomic) CLLocationCoordinate2D location;
-@property (strong, nonatomic) NSURL *website;
+@property (strong, nonatomic) NSURL *websiteString;
 @property (strong, nonatomic) NSNumber *capacity;
+@property (nonatomic, retain) NSSet *events;
 
 @property (nonatomic) double distanceFromUserToVenue;
 
@@ -33,7 +36,13 @@
                      phone:(NSString *) phone
                    website:(NSURL *) website
                   capacity:(NSNumber *) capacity;
+@end
 
+@interface JIPVenue (CoreDataGeneratedAccessors)
 
+- (void)addEventsObject:(JIPEvent *)value;
+- (void)removeEventsObject:(JIPEvent *)value;
+- (void)addEvents:(NSSet *)values;
+- (void)removeEvents:(NSSet *)values;
 
 @end

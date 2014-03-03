@@ -10,16 +10,17 @@
 
 @implementation JIPVenue
 
-//@dynamic id;
-//@dynamic name;
-//@dynamic desc;
-//@dynamic city;
-//@dynamic street;
-//@dynamic phone;
-//@dynamic location;
-//@dynamic website;
-//@dynamic capacity;
-@synthesize distanceFromUserToVenue;
+@dynamic id;
+@dynamic name;
+@dynamic desc;
+@dynamic city;
+@dynamic street;
+@dynamic phone;
+@dynamic location;
+@dynamic websiteString;
+@dynamic capacity;
+@dynamic events;
+@dynamic distanceFromUserToVenue;
 
 ////////////////////////////////////////
 -(id)init
@@ -53,7 +54,7 @@
         self.city = city;
         self.street = street;
         self.phone = phone;
-        self.website = website;
+        self.websiteString = website;
         self.capacity = capacity;
     }
     return self;
