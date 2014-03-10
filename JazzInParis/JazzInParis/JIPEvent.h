@@ -19,7 +19,7 @@
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *type;
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSURL *uri;
+@property (strong, nonatomic) NSURL *uriString;
 @property (strong, nonatomic) NSString *ageRestriction;
 @property (nonatomic) CLLocationCoordinate2D location;
 @property (strong, nonatomic) NSDate *date;
@@ -28,7 +28,7 @@
 @property (strong, nonatomic) JIPVenue *venue;
 @property (strong, nonatomic) JIPArtist *artist;
 
-//NOT TO BE STORED (so no need to @ dynamic in the .m file
+//NOT TO BE STORED (so no need to @ dynamic in the .m file)
 @property (nonatomic) double distanceFromUserToEvent;
 @property (nonatomic) BOOL shouldDisplayDistanceFromUserToEvent;
 

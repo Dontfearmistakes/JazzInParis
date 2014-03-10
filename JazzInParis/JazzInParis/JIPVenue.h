@@ -15,6 +15,7 @@
 
 @interface JIPVenue : NSManagedObject <MKAnnotation>
 
+//TO BE STORED
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *desc;
@@ -24,8 +25,11 @@
 @property (nonatomic) CLLocationCoordinate2D location;
 @property (strong, nonatomic) NSURL *websiteString;
 @property (strong, nonatomic) NSNumber *capacity;
+
+//TO MANY RELATIONSHIP TO BE STORED
 @property (nonatomic, retain) NSSet *events;
 
+//NOT TO BE STORED
 @property (nonatomic) double distanceFromUserToVenue;
 
 - (instancetype)initWithID:(NSNumber *)id

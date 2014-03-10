@@ -13,9 +13,12 @@
 
 @interface JIPArtist : NSManagedObject
 
+// TO BE STORED
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSURL *songkickUri;
+
+//TO MANY RELATIONSHIP TO BE STORED
 @property (nonatomic, retain) NSSet *events;
 
 -(instancetype)initWithID: (NSNumber *)id

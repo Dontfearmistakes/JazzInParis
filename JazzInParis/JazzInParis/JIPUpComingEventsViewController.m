@@ -102,7 +102,7 @@
                                               venue:fakeVenue
                                              artist:BradMehldau];
     event1.type = @"Concert";
-    event1.uri = [NSURL URLWithString:@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale"];
+    event1.uriString = [NSURL URLWithString:@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale"];
     event1.ageRestriction = @"14+";
     
     JIPEvent *event2 = [[JIPEvent alloc] initWithID:@1
@@ -112,7 +112,7 @@
                                               venue:fakeVenue
                                              artist:BradMehldau];
     event2.type = @"Concert";
-    event2.uri = [NSURL URLWithString:@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale"];
+    event2.uriString = [NSURL URLWithString:@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale"];
     event2.ageRestriction = @"14+";
     
     JIPEvent *event3 = [[JIPEvent alloc] initWithID:@3
@@ -122,7 +122,7 @@
                                               venue:fakeVenue
                                              artist:BradMehldau];
     event3.type = @"Concert";
-    event3.uri = [NSURL URLWithString:@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale"];
+    event3.uriString = [NSURL URLWithString:@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale"];
     event3.ageRestriction = @"14+";
     
     JIPEvent *event4 = [[JIPEvent alloc] initWithID:@3
@@ -132,7 +132,7 @@
                                               venue:fakeVenue
                                              artist:BradMehldau];
     event4.type = @"Concert";
-    event4.uri = [NSURL URLWithString:@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale"];
+    event4.uriString = [NSURL URLWithString:@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale"];
     event4.ageRestriction = @"14+";
     
     //////////////////////////

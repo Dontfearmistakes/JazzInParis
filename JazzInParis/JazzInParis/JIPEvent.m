@@ -10,16 +10,15 @@
 
 @implementation JIPEvent
 
-//@dynamic : dit au compilateur = pas de getter pas de setter pas de ivar
-//but don't freak out
+//@dynamic : dit au compilateur = pas de getter pas de setter pas de ivar but don't freak out
 @dynamic id;
 @dynamic type;
-@dynamic uri;
+@dynamic uriString;
 @dynamic ageRestriction;
 @dynamic location;
+@dynamic date;
 @dynamic venue;
 @dynamic artist;
-@dynamic date;
 
 @synthesize name = _name;
 @synthesize distanceFromUserToEvent = _distanceFromUserToEvent;

@@ -21,7 +21,6 @@
     ////////////////////////////////////
     //////////UPCOMING EVENTS VC////////
     ///////////////////////////////////
-    NSLog(@"bug");
     
     JIPUpComingEventsViewController *upcomingEventVC = [[JIPUpComingEventsViewController alloc] init];
     

@@ -172,7 +172,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     self.allEventProperties = @[[NSString stringWithFormat:@"Who ?  %@", self.event.artist.name],
                                 [NSString stringWithFormat:@"When ?  %@", [NSDate stringFromDate:self.event.date]],
                                 [NSString stringWithFormat:@"Where ?  %@ : %@ in %@",self.event.venue.name, self.event.venue.street, self.event.venue.city],
-                                [NSString stringWithFormat:@"Check prices here : %@", self.event.uri],
+                                [NSString stringWithFormat:@"Check prices here : %@", self.event.uriString],
                                 self.event.ageRestriction];
     return self.allEventProperties.count;
 }
@@ -239,7 +239,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     //Go to Songkick's event page to check prices
     if (indexPath.row == 3)
     {
-        [[UIApplication sharedApplication] openURL:self.event.uri];
+        [[UIApplication sharedApplication] openURL:self.event.uriString];
     }
 }
 
