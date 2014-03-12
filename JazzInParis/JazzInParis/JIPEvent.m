@@ -36,6 +36,7 @@
 }
 
 ////////////////////////////////////////
+
 - (instancetype)initWithID:(NSNumber *)id
                       name:(NSString *)name
                   location:(CLLocationCoordinate2D)location

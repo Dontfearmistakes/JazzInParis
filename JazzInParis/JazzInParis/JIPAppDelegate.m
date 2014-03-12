@@ -8,6 +8,7 @@
 
 #import "JIPAppDelegate.h"
 #import "JIPUpComingEventsViewController.h"
+#import "JIPUpcomingEventsCDTVC.h"
 
 @implementation JIPAppDelegate
 
@@ -22,9 +23,13 @@
     //////////UPCOMING EVENTS VC////////
     ///////////////////////////////////
     
-    JIPUpComingEventsViewController *upcomingEventVC = [[JIPUpComingEventsViewController alloc] init];
+    //TEST
+    //Soit 1
+    //JIPUpComingEventsViewController *upcomingEventVC = [[JIPUpComingEventsViewController alloc] init];
+    //[upcomingEventVC createFakeUpcomingEvents];
+    //Soit 2
+    JIPUpcomingEventsCDTVC *upcomingEventVC = [[JIPUpcomingEventsCDTVC alloc] init];
     
-    [upcomingEventVC createFakeUpcomingEvents];
     UINavigationController *upcomingEventsNavVC = [[UINavigationController alloc] initWithRootViewController:upcomingEventVC];
     upcomingEventsNavVC.navigationBar.barTintColor = Rgb2UIColor(255, 177, 91);
     upcomingEventsNavVC.navigationBar.tintColor = Rgb2UIColor(41, 59, 255);
@@ -32,7 +37,6 @@
     [[UINavigationBar appearance] setTitleTextAttributes:
      @{NSForegroundColorAttributeName: Rgb2UIColor(41, 59, 255),
        NSFontAttributeName: [UIFont fontWithName:@"Noteworthy-Light" size:20.0]
-
        }];
     
 //    [[UINavigationBar appearance] setTitleTextAttributes:
