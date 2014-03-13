@@ -15,11 +15,13 @@
 @dynamic type;
 @dynamic uriString;
 @dynamic ageRestriction;
-@dynamic location;
+@dynamic latitude;
+@dynamic longitude;
 @dynamic date;
 @dynamic venue;
 @dynamic artist;
 
+@synthesize location = _location;
 @synthesize name = _name;
 @synthesize distanceFromUserToEvent = _distanceFromUserToEvent;
 @synthesize shouldDisplayDistanceFromUserToEvent = _shouldDisplayDistanceFromUserToEvent;
@@ -76,7 +78,15 @@
     [self didChangeValueForKey:@"title"];
     [self didChangeValueForKey:@"name"];
 }
-//@property location est remplie lors de l'appel à l'API
+
+///////////////////////////////////////////////////////////////////////////
+-(CLLocationCoordinate2D)location
+{
+    return CLLocationCoordinate2DMake([self.latitude doubleValue], [self.longitude doubleValue]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////
+//@property latitude et longitude sont remplies lors de l'appel à l'API
 //@property coordinate est juste required par <MKAnnotation> mais readonly donc il suffit d'implémenter le getter
 //Dans JIPConcertDetailsVC (conforme à <MKMapViewDelegate>), c'est -viewForAnnotation qui réclame un object conforme à <MKAnnotation>
 //et qui va donc chercher la @property "coordinate", on lui renvoie @property location qui est du même type
@@ -102,6 +112,8 @@
     }
 }
 
+//////////////////////////////////////////
+//////////////////////////////////////////
 -(void)setShouldDisplayDistanceFromUserToEvent:(BOOL)shouldDisplayDistanceFromUserToEvent
 {
     [self willChangeValueForKey:@"subtitle"];

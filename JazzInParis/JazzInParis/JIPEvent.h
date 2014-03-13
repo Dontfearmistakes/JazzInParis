@@ -21,7 +21,8 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSURL *uriString;
 @property (strong, nonatomic) NSString *ageRestriction;
-@property (nonatomic) CLLocationCoordinate2D location;
+@property (nonatomic, retain) NSNumber * longitude;
+@property (nonatomic, retain) NSNumber * latitude;
 @property (strong, nonatomic) NSDate *date;
 
 //TO ONE RELATIONSHIP TO BE STORED
@@ -29,6 +30,7 @@
 @property (strong, nonatomic) JIPArtist *artist;
 
 //NOT TO BE STORED (so no need to @ dynamic in the .m file)
+@property (nonatomic) CLLocationCoordinate2D location;
 @property (nonatomic) double distanceFromUserToEvent;
 @property (nonatomic) BOOL shouldDisplayDistanceFromUserToEvent;
 
