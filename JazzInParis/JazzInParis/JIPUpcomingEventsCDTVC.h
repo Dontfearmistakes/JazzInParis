@@ -10,6 +10,4 @@
 
 @interface JIPUpcomingEventsCDTVC : JIPCoreDataTableViewController
 
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-
 @end

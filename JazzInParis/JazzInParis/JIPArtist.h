@@ -22,8 +22,8 @@
 @property (nonatomic, retain) NSSet *events;
 
 -(instancetype)initWithID: (NSNumber *)id
-name: (NSString *)name
-songkickUri: (NSURL *)songkickUri;
+                     name: (NSString *)name
+              songkickUri: (NSURL *)songkickUri;
 
 @end
 
