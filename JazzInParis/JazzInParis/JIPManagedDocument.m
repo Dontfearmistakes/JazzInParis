@@ -10,6 +10,12 @@
 
 static JIPManagedDocument * _sharedManagedDocument;
 
+@interface JIPManagedDocument ()
+
+@property (nonatomic, getter = isOpeningDocument) BOOL openingDocument;
+
+@end
+
 @implementation JIPManagedDocument
 
 +(JIPManagedDocument *)sharedManagedDocument
@@ -17,7 +23,7 @@ static JIPManagedDocument * _sharedManagedDocument;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentationDirectory inDomains:NSUserDomainMask] lastObject];
+        NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
         url = [url URLByAppendingPathComponent:@"DemoDocument"];
         _sharedManagedDocument = [[JIPManagedDocument alloc] initWithFileURL:url];
     });
@@ -27,41 +33,52 @@ static JIPManagedDocument * _sharedManagedDocument;
 
 -(void)performWithDocument:(void (^)(JIPManagedDocument * managedDocument))block
 {
-    //if UIDocument doesnt exist yet, create the document
-    if ( ! [[NSFileManager defaultManager] fileExistsAtPath:[self.fileURL path]] )
+    
+    void (^completionBlock) (BOOL) = ^(BOOL success) {
+        if (success)
+        {
+            block(self);
+        }
+        else
+        {
+            NSLog(@"COULDNT CREATE NEW DOCUMENT");
+        }
+        self.openingDocument = NO;
+    };
+    
+    //SOIT DOC PRET et ouvert --> on execute
+    if (self.documentState == UIDocumentStateNormal)
     {
-        [self        saveToURL:self.fileURL
-              forSaveOperation:UIDocumentSaveForCreating
-             completionHandler:^(BOOL success)
-         {
-             if (success)
-             {
-                 block(self);
-             }
-             else
-             {
-                 NSLog(@"COULDNT CREATE NEW DOCUMENT");
-             }
-         }];
+        completionBlock(YES);
     }
     
-    //if the document already exists but is closed, open it
-    else if (self.documentState == UIDocumentStateClosed)
+    
+    //SOIT ON EST PAS EN TRAIN DE L4OUVRIR MAIS ON ABESOIN DONC ON VA L4OUVRIR OU LE CR2ER
+    else if (! self.openingDocument)
     {
-        [self openWithCompletionHandler:^(BOOL success)
-         {
-             if (success)
-             {
-                 block(self);
-             }
-         }];
+        self.openingDocument = YES;
+        
+        //if UIDocument doesnt exist yet, create the document
+        if ( ! [[NSFileManager defaultManager] fileExistsAtPath:[self.fileURL path]] )
+        {
+            [self        saveToURL:self.fileURL
+                  forSaveOperation:UIDocumentSaveForCreating
+                 completionHandler:completionBlock];
+        }
+        
+        //if the document already exists but is closed, open it
+        else if (self.documentState == UIDocumentStateClosed)
+        {
+            [self openWithCompletionHandler:completionBlock];
+        }
     }
     
-    //otherwise, try to use it
-    else if (self.documentState == UIDocumentStateNormal)
+    //SOIT BESOIN du doc mais on est déjà en train de l'ouvrir/le crée donc wait 0.5 sec
+    else
     {
-        NSLog(@"ALREADY CREATED AND OPENED DOCUMENT");
-        block(self);
+        [self performSelector:@selector(performWithDocument:)
+                   withObject:block
+                   afterDelay:0.5];
     }
     
 }
