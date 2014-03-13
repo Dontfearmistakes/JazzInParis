@@ -18,9 +18,12 @@ static JIPManagedDocument * _sharedManagedDocument;
 
 @implementation JIPManagedDocument
 
+//////////////////////////////////////////////////////////////////////////////
+// First time it's called, create a UIManagedDoc and put it in the statis ivar
+// Then returns always this ivar
+//////////////////////////////////////////////////////////////////////////////
 +(JIPManagedDocument *)sharedManagedDocument
 {
-    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
@@ -31,13 +34,19 @@ static JIPManagedDocument * _sharedManagedDocument;
     return _sharedManagedDocument;
 }
 
--(void)performWithDocument:(void (^)(JIPManagedDocument * managedDocument))block
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Called like that : [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:aBlock]
+// This method make sure that we perform what's in the block only when the UIManagedDoc is opened and ready
+// If the Doc doesn't exist yet it gets created
+// If the Doc is already being opened at the same time, this method is called after a O.5 sec delay
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-(void)performBlockWithDocument:(void (^)(JIPManagedDocument * managedDocument))block
 {
-    
+    ///////////////////////////////////////////////
     void (^completionBlock) (BOOL) = ^(BOOL success) {
         if (success)
         {
-            block(self);
+            block(self); //ici self sera l'instance _sharedManagedDocument retourneé par +(JIPManagedDocument *)sharedManagedDocument
         }
         else
         {
@@ -46,14 +55,17 @@ static JIPManagedDocument * _sharedManagedDocument;
         self.openingDocument = NO;
     };
     
-    //SOIT DOC PRET et ouvert --> on execute
+    ///////////////////////////////////////////////
+    //SOIT DOC PRET et ouvert --> on execute le completionBlock
     if (self.documentState == UIDocumentStateNormal)
     {
         completionBlock(YES);
     }
     
     
-    //SOIT ON EST PAS EN TRAIN DE L4OUVRIR MAIS ON ABESOIN DONC ON VA L4OUVRIR OU LE CR2ER
+    //SOIT BESOIN DU DOC ET DOC PAS OUVERT NI EN TRAIN D'ETRE OUVERT DONC ON VA
+    //SOIT LE CREER S'IL N'EXISTE PAS ENCORE
+    //SOIT L'OUVRIR S'IL EXISTE DEJA
     else if (! self.openingDocument)
     {
         self.openingDocument = YES;
@@ -73,10 +85,11 @@ static JIPManagedDocument * _sharedManagedDocument;
         }
     }
     
-    //SOIT BESOIN du doc mais on est déjà en train de l'ouvrir/le crée donc wait 0.5 sec
+    //SOIT BESOIN du doc mais on est DEJA en train de l'ouvrir AU MEME MOMENT
+    //donc wait 0.5 sec et rapelle cette même méthode
     else
     {
-        [self performSelector:@selector(performWithDocument:)
+        [self performSelector:@selector(performBlockWithDocument:)
                    withObject:block
                    afterDelay:0.5];
     }

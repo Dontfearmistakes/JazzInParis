@@ -17,12 +17,40 @@
 
 @implementation JIPUpcomingEventsCDTVC
 
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self createFakeEvents];
+    [self createFetchResultsController];
+}
+
+
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+-(void)createFetchResultsController
+{
+    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
+        
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
+        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
+        request.predicate = nil; //all JIPEvents
+        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
+                                                                            managedObjectContext:managedDocument.managedObjectContext
+                                                                              sectionNameKeyPath:nil
+                                                                                       cacheName:nil];
+    }];
+    
+}
+
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 -(void)createFakeEvents
 {
-    
-    [[JIPManagedDocument sharedManagedDocument] performWithDocument:^(JIPManagedDocument *managedDocument) {
+    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
         
-        //fetch the events from Songkick
+        // 1) Fetch the events from Songkick
         NSArray *upcomingEvents = @[
                                     @{@"id"       :@1,
                                       @"name"     :@"Brad Mehldau",
@@ -37,9 +65,8 @@
                                       @"artist"   : @"Brad Mehldau",
                                       @"venue"    : @"Baiser Salé"}
                                     ];
-        //put the events in Core Data
-        //Database need to be accessed on the managedObjectContext Thread
         
+        // 2) Put the events in ManagedObjectContext
         for (NSDictionary *upcomingEvent in upcomingEvents)
         {
             [JIPEvent eventWithSongkickInfo:upcomingEvent
@@ -51,32 +78,6 @@
 }
 
 
-
-////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self  createFetchResultsController];
-    [self createFakeEvents];
-}
-
-////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////
--(void)createFetchResultsController
-{
-    [[JIPManagedDocument sharedManagedDocument] performWithDocument:^(JIPManagedDocument *managedDocument) {
-        
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
-        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
-        request.predicate = nil; //all JIPEvents
-        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                                            managedObjectContext:managedDocument.managedObjectContext
-                                                                              sectionNameKeyPath:nil
-                                                                                       cacheName:nil];
-    }];
-    
-}
 
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////

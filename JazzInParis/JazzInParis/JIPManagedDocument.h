@@ -11,6 +11,6 @@
 @interface JIPManagedDocument : UIManagedDocument
 
 +(JIPManagedDocument *) sharedManagedDocument;
--(void) performWithDocument:(void (^)(JIPManagedDocument * managedDocument))block;
+-(void) performBlockWithDocument:(void (^)(JIPManagedDocument * managedDocument))block;
 
 @end
