@@ -11,6 +11,4 @@
 
 @interface JIPJazzClubsViewController : UIViewController <MKMapViewDelegate>
 
-@property (strong, nonatomic) NSArray * allJazzClubs;
-
 @end

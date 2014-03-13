@@ -25,13 +25,13 @@
 @property (nonatomic) double distanceFromUserToVenue;
 
 - (instancetype)initWithID:(NSNumber *)id
-name:(NSString *)name
-description:(NSString *) description
-city:(NSString *) city
-street:(NSString *) street
-phone:(NSString *) phone
-website:(NSURL *) website
-capacity:(NSNumber *) capacity;
+                      name:(NSString *)name
+               description:(NSString *)description
+                      city:(NSString *)city
+                    street:(NSString *)street
+                     phone:(NSString *)phone
+                   website:(NSURL *)website
+                  capacity:(NSNumber *)capacity;
 
 
 

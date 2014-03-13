@@ -17,7 +17,6 @@
         // Initialization code
         self.animatesDrop = YES;
         self.pinColor = MKPinAnnotationColorPurple;
-        self.image = [UIImage imageNamed:@"Venue"];
     }
     return self;
 }

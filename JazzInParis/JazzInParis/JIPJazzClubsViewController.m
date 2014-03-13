@@ -24,7 +24,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = @"Jazz Clubs";
+        self.title = @"Jazz Clubs in Paris";
         //self.tabBarItem.image = [UIImage imageNamed:@"Venue"];
     }
     return self;
@@ -88,14 +88,26 @@
     //We want to display UserLocation as classic blue dot, not custom
     if([annotation isKindOfClass:[MKUserLocation class]]) {return nil;}
     
-    MKAnnotationView *view = [[JIPMyPinView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
+    MKAnnotationView *view = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
     
     view.canShowCallout = YES;
+    view.image = [UIImage imageNamed:@"Venue"];
     
     UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     view.rightCalloutAccessoryView = disclosureButton;
     
     return view;
+}
+
+-(void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+{
+    for (MKAnnotationView *annView in views)
+    {
+        CGRect endFrame = annView.frame;
+        annView.frame = CGRectOffset(endFrame, 0, -500);
+        [UIView animateWithDuration:0.5
+                         animations:^{ annView.frame = endFrame; }];
+    }
 }
 
 @end
