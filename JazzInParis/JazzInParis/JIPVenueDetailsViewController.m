@@ -166,7 +166,7 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     //Go to Venue's website
     if (indexPath.row == 2)
     {
-        [[UIApplication sharedApplication] openURL:self.venue.websiteString];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.venue.websiteString]];
     }
 }
 

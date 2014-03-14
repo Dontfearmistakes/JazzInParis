@@ -16,14 +16,14 @@
 // TO BE STORED
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSURL *songkickUri;
+@property (strong, nonatomic) NSString *songkickUri;
 
 //TO MANY RELATIONSHIP TO BE STORED
 @property (nonatomic, retain) NSSet *events;
 
 -(instancetype)initWithID: (NSNumber *)id
                      name: (NSString *)name
-              songkickUri: (NSURL *)songkickUri;
+              songkickUri: (NSString *)songkickUri;
 
 @end
 

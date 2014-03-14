@@ -26,6 +26,8 @@
 @synthesize distanceFromUserToEvent = _distanceFromUserToEvent;
 @synthesize shouldDisplayDistanceFromUserToEvent = _shouldDisplayDistanceFromUserToEvent;
 
+
+
 ////////////////////////////////////////
 -(id)init
 {
@@ -37,8 +39,9 @@
                      artist:[[JIPArtist alloc]init]    ];
 }
 
-////////////////////////////////////////
 
+
+////////////////////////////////////////
 - (instancetype)initWithID:(NSNumber *)id
                       name:(NSString *)name
                   location:(CLLocationCoordinate2D)location
@@ -58,6 +61,7 @@
     }
     return self;
 }
+
 
 ////////////////////////////////////////
 // Check if we have a custom display name for the event.
@@ -80,10 +84,14 @@
 }
 
 ///////////////////////////////////////////////////////////////////////////
+//lat and long are stored in CoreData as double/NSNumbers
+//we just put them together as a CLLocationCoordinate2D
+///////////////////////////////////////////////////////////////////////////
 -(CLLocationCoordinate2D)location
 {
     return CLLocationCoordinate2DMake([self.latitude doubleValue], [self.longitude doubleValue]);
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 //@property latitude et longitude sont remplies lors de l'appel à l'API

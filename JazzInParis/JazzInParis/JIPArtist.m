@@ -20,12 +20,12 @@
 {
     return [self initWithID:@0
                        name:@"Default Name"
-                songkickUri:[NSURL URLWithString:@"www.defaultURL"]];
+                songkickUri:@"www.defaultURL"];
 }
 //////////////////////////////////////////////////////////////////
 -(instancetype)initWithID:(NSNumber *)id
                      name:(NSString *)name
-              songkickUri:(NSURL *)songkickUri
+              songkickUri:(NSString *)songkickUri
 {
     self = [super init];
     if(self)

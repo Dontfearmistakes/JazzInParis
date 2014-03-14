@@ -16,14 +16,16 @@
 @interface JIPVenue : NSManagedObject <MKAnnotation>
 
 //TO BE STORED
-@property (strong, nonatomic) NSNumber *id;
+
+@property (nonatomic, retain) NSNumber * id;
+@property (nonatomic, retain) NSString * desc;
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSString *desc;
 @property (strong, nonatomic) NSString *city;
 @property (strong, nonatomic) NSString *street;
 @property (strong, nonatomic) NSString *phone;
-@property (nonatomic) CLLocationCoordinate2D location;
-@property (strong, nonatomic) NSURL *websiteString;
+@property (nonatomic, retain) NSNumber *longitude;
+@property (nonatomic, retain) NSNumber *latitude;
+@property (strong, nonatomic) NSString *websiteString;
 @property (strong, nonatomic) NSNumber *capacity;
 
 //TO MANY RELATIONSHIP TO BE STORED
@@ -31,6 +33,7 @@
 
 //NOT TO BE STORED
 @property (nonatomic) double distanceFromUserToVenue;
+@property (nonatomic) CLLocationCoordinate2D location; //made of lat and long see getter
 
 - (instancetype)initWithID:(NSNumber *)id
                       name:(NSString *)name

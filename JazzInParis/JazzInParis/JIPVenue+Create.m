@@ -40,8 +40,9 @@
         venue.id       = @1;
         venue.street   = @"3 Rue des Lombards";
         venue.phone    = @"00000000";
-        venue.websiteString = [NSURL URLWithString:@"www.jjj.com"];
-        venue.location = CLLocationCoordinate2DMake(0.0, 0.0) ;
+        venue.websiteString = @"www.jjj.com";
+        venue.latitude = [NSNumber numberWithDouble:0.0];
+        venue.longitude = [NSNumber numberWithDouble:0.0];
     }
     
     //there's already a Photo object with that unique ID in the database

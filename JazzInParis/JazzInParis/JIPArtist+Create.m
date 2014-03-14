@@ -35,7 +35,7 @@
                                               inManagedObjectContext:context];
         artist.name        = artistName;
         artist.id          = @1;
-        artist.songkickUri = [NSURL URLWithString:@"www.jjj.com"];
+        artist.songkickUri = @"www.jjj.com";
     }
     
     //there's already a Photo object with that unique ID in the database

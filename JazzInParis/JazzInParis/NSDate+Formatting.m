@@ -21,4 +21,12 @@
     return string;
 }
 
++(NSDate *)dateFromString:(NSString *)stringDate
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"EE, d LLLL yyyy HH:mm:ss Z";
+    NSDate *date = [dateFormatter dateFromString:stringDate];
+    return date;
+}
+
 @end

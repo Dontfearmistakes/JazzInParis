@@ -11,16 +11,19 @@
 @implementation JIPVenue
 
 @dynamic id;
-@dynamic name;
 @dynamic desc;
+@dynamic name;
 @dynamic city;
 @dynamic street;
 @dynamic phone;
-@dynamic location;
+@dynamic latitude;
+@dynamic longitude;
 @dynamic websiteString;
 @dynamic capacity;
 @dynamic events;
 @dynamic distanceFromUserToVenue;
+
+@synthesize location = _location;
 
 ////////////////////////////////////////
 -(id)init
@@ -42,7 +45,7 @@
                        city:(NSString *)city
                      street:(NSString *)street
                       phone:(NSString *)phone
-                    website:(NSURL *)website
+                    website:(NSString *)website
                    capacity:(NSNumber *)capacity
 {
     self = [super init];
@@ -58,6 +61,15 @@
         self.capacity = capacity;
     }
     return self;
+}
+
+///////////////////////////////////////////////////////////////////////////
+//lat and long are stored in CoreData as double/NSNumbers
+//we just put them together as a CLLocationCoordinate2D
+///////////////////////////////////////////////////////////////////////////
+-(CLLocationCoordinate2D)location
+{
+    return CLLocationCoordinate2DMake([self.latitude doubleValue], [self.longitude doubleValue]);
 }
 
 ///////////////////////////////////////////////////////////////////////
