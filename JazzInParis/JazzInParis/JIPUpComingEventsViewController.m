@@ -16,7 +16,7 @@
 @interface JIPUpComingEventsViewController ()
 //ici les proprietés sont automatiquement privée
 //@property = crée var d'instance + getter (return _ivar) + setter _ivar = smthg)
-@property (strong, nonatomic) NSDictionary *groupedUpcomingEvents;
+@property (strong, nonatomic) NSDictionary *groupedByDatesUpcomingEvents;
 @property (strong, nonatomic) NSArray *orderedDates;
 
 @end
@@ -41,7 +41,7 @@
 
 -(void)createFakeUpcomingEvents //OBJECTIF : FEED the NSArray* upcomingEvents like the SONGKICK API WILL
 {
-    NSDate *tomorrow = [NSDate dateWithTimeInterval:(24*60*60) sinceDate:[NSDate date]];
+    //NSDate *tomorrow = [NSDate dateWithTimeInterval:(24*60*60) sinceDate:[NSDate date]];
     NSDate *dayAfterTomorrow = [NSDate dateWithTimeInterval:(2*24*60*60) sinceDate:[NSDate date]];
 
     ///////////////////
@@ -160,7 +160,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(void)setUpcomingEvents:(NSArray *)upcomingEvents
 {
-    _groupedUpcomingEvents = nil;
+    _groupedByDatesUpcomingEvents = nil;
     _orderedDates = nil;
     _upcomingEvents = upcomingEvents;
 }
@@ -189,11 +189,11 @@
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//MAKE SURE _groupedUpcomingEvents is filled when getter called and ivar is still empty
+//MAKE SURE _groupedByDatesUpcomingEvents is filled when getter called and ivar is still empty
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
--(NSDictionary*)groupedUpcomingEvents
+-(NSDictionary*)groupedByDatesUpcomingEvents
 {
-    if (!_groupedUpcomingEvents)
+    if (!_groupedByDatesUpcomingEvents)
     {
         ///////////////////////////////////////////////////////////////////////
         //CREATE (NSDict*)_upcomingEvents = @ {  (NSDate*) TODAY    : [(JIPEvent*) EVENT1, EVENT2,...],
@@ -221,10 +221,10 @@
             [tempUpcomingEvents setObject:mutArray forKey:date];
         }
         
-        _groupedUpcomingEvents = tempUpcomingEvents;
+        _groupedByDatesUpcomingEvents = tempUpcomingEvents;
     }
     
-    return _groupedUpcomingEvents;
+    return _groupedByDatesUpcomingEvents;
 }
 
 
@@ -244,7 +244,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray *concertsThisDay = self.groupedUpcomingEvents[self.orderedDates[section]];
+    NSArray *concertsThisDay = self.groupedByDatesUpcomingEvents[self.orderedDates[section]];
     return concertsThisDay.count;
 }
 
@@ -263,7 +263,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"eventCell"];
     }
                              
-    JIPEvent *event = self.groupedUpcomingEvents[self.orderedDates[indexPath.section]][indexPath.row];
+    JIPEvent *event = self.groupedByDatesUpcomingEvents[self.orderedDates[indexPath.section]][indexPath.row];
     
     //CELL GETS EVENT.NAME
     cell.textLabel.text = event.name;
@@ -289,7 +289,7 @@
     JIPConcertDetailsViewController *concertDetailsVC = [[JIPConcertDetailsViewController alloc] init];
     
     //PASSING EVENT FROM VC TO VC///////////////////
-    concertDetailsVC.event = self.groupedUpcomingEvents[self.orderedDates[indexPath.section]][indexPath.row];
+    concertDetailsVC.event = self.groupedByDatesUpcomingEvents[self.orderedDates[indexPath.section]][indexPath.row];
     
     //PUSH VC//////////////////////
     [self.navigationController pushViewController:concertDetailsVC animated:YES];
