@@ -92,6 +92,13 @@
     return CLLocationCoordinate2DMake([self.latitude doubleValue], [self.longitude doubleValue]);
 }
 
+-(void)setLocation:(CLLocationCoordinate2D)location
+{
+    _location = location;
+    self.latitude = [NSNumber numberWithDouble:location.latitude];
+    self.longitude = [NSNumber numberWithDouble:location.longitude];
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 //@property latitude et longitude sont remplies lors de l'appel à l'API

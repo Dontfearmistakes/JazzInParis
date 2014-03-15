@@ -35,7 +35,8 @@
                                               inManagedObjectContext:context];
         event.id             = eventDictionary[@"id"];
         event.name           = eventDictionary[@"name"];
-        event.location       = CLLocationCoordinate2DMake([eventDictionary[@"lat"] doubleValue], [eventDictionary[@"long"] doubleValue]) ;
+        event.latitude       = [NSNumber numberWithDouble:[eventDictionary[@"lat"] doubleValue]];
+        event.longitude      = [NSNumber numberWithDouble:[eventDictionary[@"long"] doubleValue]];
         event.type           = eventDictionary[@"type"];
         event.date           = eventDictionary[@"date"];
         event.uriString      = eventDictionary[@"uriString"];
