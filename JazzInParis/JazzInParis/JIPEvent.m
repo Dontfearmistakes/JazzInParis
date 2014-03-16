@@ -20,9 +20,10 @@
 @dynamic date;
 @dynamic venue;
 @dynamic artist;
+@dynamic name;
 
 @synthesize location = _location;
-@synthesize name = _name;
+//@synthesize name = _name;
 @synthesize distanceFromUserToEvent = _distanceFromUserToEvent;
 @synthesize shouldDisplayDistanceFromUserToEvent = _shouldDisplayDistanceFromUserToEvent;
 
@@ -62,26 +63,26 @@
     return self;
 }
 
-
+//FIXME: Event Name attribute getter/setter commented out 
 ////////////////////////////////////////
 // Check if we have a custom display name for the event.
 // If not, set and use the artist's name as the display name.
-- (NSString *)name
-{
-    if (!_name && [_name isEqualToString:@""]) {
-        _name = [NSString stringWithFormat:@"%@ at %@", self.artist.name, self.venue.name];
-    }
-    return _name;
-}
-
--(void)setName:(NSString *)name
-{
-    [self willChangeValueForKey:@"title"];
-    [self willChangeValueForKey:@"name"];
-    _name = name;
-    [self didChangeValueForKey:@"title"];
-    [self didChangeValueForKey:@"name"];
-}
+//- (NSString *)name
+//{
+//    if (!_name && [_name isEqualToString:@""]) {
+//        _name = [NSString stringWithFormat:@"%@ at %@", self.artist.name, self.venue.name];
+//    }
+//    return _name;
+//}
+//
+//-(void)setName:(NSString *)name
+//{
+//    [self willChangeValueForKey:@"title"];
+//    [self willChangeValueForKey:@"name"];
+//    _name = name;
+//    [self didChangeValueForKey:@"title"];
+//    [self didChangeValueForKey:@"name"];
+//}
 
 ///////////////////////////////////////////////////////////////////////////
 //lat and long are stored in CoreData as double/NSNumbers

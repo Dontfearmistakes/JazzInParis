@@ -14,7 +14,8 @@
 
 @interface JIPUpcomingEventsCDTVC ()
 
-@property (strong, nonatomic) NSArray *upcomingEvents;
+@property (strong, nonatomic) NSArray *upcomingEventsFromAPI;
+@property (strong, nonatomic) NSArray *upcomingEventsFromFRC;
 @property (strong, nonatomic) NSDictionary *groupedByDatesUpcomingEvents;
 @property (strong, nonatomic) NSArray *orderedDates;
 
@@ -54,7 +55,7 @@
     [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
         
         // 1) Fetch the events from Songkick
-        self.upcomingEvents = @[
+        self.upcomingEventsFromAPI = @[
                                     @{@"id"       :@1,
                                       @"name"     :@"Brad Mehldau",
                                       @"lat"      :@(-0.1150322),
@@ -93,7 +94,7 @@
         
         
         // 2) Put the events in ManagedObjectContext
-        for (NSDictionary *upcomingEvent in self.upcomingEvents)
+        for (NSDictionary *upcomingEvent in self.upcomingEventsFromAPI)
         {
             //FILTER PAST EVENTS//////
             if ([upcomingEvent[@"date"] timeIntervalSinceDate:today10am] >= 0)
@@ -113,6 +114,8 @@
 /////////////////////////////////////////////////////////////////////////
 -(void)createFetchResultsController
 {
+    NSLog(@"FIRING createFetchResultsController");
+    
     [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
         
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
@@ -122,10 +125,38 @@
         self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                             managedObjectContext:managedDocument.managedObjectContext
                                                                               sectionNameKeyPath:nil
-                                                                                       cacheName:nil];
+                                                                                    cacheName:nil];
     }];
     
 }
+
+
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+#pragma mark - UITableViewDataSource
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"FIRING CellForRowAtIndexPath");
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"eventCell"];
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"eventCell"];
+    }
+
+    JIPEvent *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSLog(@"EVENT  : %@", event);
+    NSString * eventName = event.name;
+    NSLog(@"EVENT NAME : %@", event.name);
+    cell.textLabel.text = eventName;    
+    cell.detailTextLabel.text  = [NSString stringWithFormat:@"@ %@", event.venue.name];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    return cell;
+}
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -139,7 +170,7 @@
         //SORTING ARRAY OF JIPEVENTS (self.upcomingEvents) BY ASCENDING DATES////
         /////////////////////////////////////////////////////////////////////////
         NSSortDescriptor *dateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
-        NSArray *sortedByDateEventsArray = [self.upcomingEvents sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateSortDescriptor]];
+        NSArray *sortedByDateEventsArray = [self.upcomingEventsFromFRC sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateSortDescriptor]];
         
         ////////////////////////////////////////////////////
         //CREATE ARRAY WITH ALL DATES AND NO DUPLICATE/////
@@ -148,29 +179,5 @@
     }
     return _orderedDates;
 }
-
-////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"eventCell"];
-    if (!cell)
-    {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"eventCell"];
-    }
-    
-    //FIXME:CoreData faults --> event attributes not loaded yet
-    JIPEvent *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    NSLog(@"EVENT  : %@", event);
-    NSString * eventName = event.name;
-    NSLog(@"EVENT NAME : %@", event.name);
-    cell.textLabel.text = eventName;
-    
-    //FIXME:cell.detailTextLabel.text = @"aaa"; --> detailTextLabel overrides textLabel
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
-    return cell;
-}
-
 
 @end
