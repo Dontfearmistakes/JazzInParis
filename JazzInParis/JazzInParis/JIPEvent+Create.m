@@ -29,7 +29,7 @@
     }
     
     ////////////////////////////////////
-    else if ([matches count] == 0) //there's no match in the database yet, let's create a Photo object in the database
+    else if ([matches count] == 0) //there's no match in the database yet, let's create an Event object in the database
     {
         event = [NSEntityDescription insertNewObjectForEntityForName:@"JIPEvent"
                                               inManagedObjectContext:context];
@@ -47,7 +47,7 @@
     }
     
     ////////////////////////////////////
-    else //there's already a Photo object with that unique ID in the database
+    else //there's already a event object with that unique ID in the database
     {
         event = [matches lastObject];//there's one object in matches anyway
     }

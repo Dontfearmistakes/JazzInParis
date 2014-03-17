@@ -15,8 +15,8 @@
 @interface JIPUpcomingEventsCDTVC ()
 
 @property (strong, nonatomic) NSArray *upcomingEventsFromAPI;
-@property (strong, nonatomic) NSArray *upcomingEventsFromFRC;
-@property (strong, nonatomic) NSDictionary *groupedByDatesUpcomingEvents;
+@property (strong, nonatomic) NSArray *upcomingEventsArrayFromFRC;
+@property (strong, nonatomic) NSDictionary *groupedByDatesUpcomingEventsDictionnary;
 @property (strong, nonatomic) NSArray *orderedDates;
 
 @end
@@ -71,7 +71,7 @@
                                       @"name"     :@"Oscar Peterson",
                                       @"lat"      :@(-0.1150322),
                                       @"long"     :@51.4650846,
-                                      @"date"     :[NSDate dateFromString:@"Tue, 25 May 2014 12:53:58 +0000"],
+                                      @"date"     :[NSDate dateFromString:@"Tue, 26 June 2015 12:53:58 +0000"],
                                       @"venue"    :@"Baiser Salé",
                                       @"artist"   :@"Oscar Peterson",
                                       @"type"     :@"concert",
@@ -114,7 +114,6 @@
 /////////////////////////////////////////////////////////////////////////
 -(void)createFetchResultsController
 {
-    NSLog(@"FIRING createFetchResultsController");
     
     [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
         
@@ -124,12 +123,12 @@
         
         self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                             managedObjectContext:managedDocument.managedObjectContext
-                                                                              sectionNameKeyPath:nil
-                                                                                    cacheName:nil];
+                                                                              sectionNameKeyPath:@"sectionIdentifier"
+                                                                                       cacheName:nil];
+        self.upcomingEventsArrayFromFRC = self.fetchedResultsController.fetchedObjects;
     }];
     
 }
-
 
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -138,8 +137,6 @@
 ////////////////////////////////////////////////////////////
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"FIRING CellForRowAtIndexPath");
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"eventCell"];
     if (!cell)
     {
@@ -147,10 +144,7 @@
     }
 
     JIPEvent *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    NSLog(@"EVENT  : %@", event);
-    NSString * eventName = event.name;
-    NSLog(@"EVENT NAME : %@", event.name);
-    cell.textLabel.text = eventName;    
+    cell.textLabel.text = event.name;
     cell.detailTextLabel.text  = [NSString stringWithFormat:@"@ %@", event.venue.name];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
@@ -158,26 +152,41 @@
 }
 
 
-
-////////////////////////////////////////////////////////////////////////////////
-//MAKE SURE _orderedDates is filled when getter called and ivar is still empty
-////////////////////////////////////////////////////////////////////////////////
--(NSArray *)orderedDates
+///////////////////////////////////////////////////////////////////////////////////////////
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (!_orderedDates)
+	id <NSFetchedResultsSectionInfo> theSection = [[self.fetchedResultsController sections] objectAtIndex:section];
+    
+    /*
+     Section information derives from an event's sectionIdentifier, which is a string representing the number (year * 1000) + month.
+     To display the section title, convert the year and month components to a string representation.
+     */
+    static NSDateFormatter *formatter = nil;
+    
+    if (!formatter)
     {
-        /////////////////////////////////////////////////////////////////////////
-        //SORTING ARRAY OF JIPEVENTS (self.upcomingEvents) BY ASCENDING DATES////
-        /////////////////////////////////////////////////////////////////////////
-        NSSortDescriptor *dateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
-        NSArray *sortedByDateEventsArray = [self.upcomingEventsFromFRC sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateSortDescriptor]];
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setCalendar:[NSCalendar currentCalendar]];
         
-        ////////////////////////////////////////////////////
-        //CREATE ARRAY WITH ALL DATES AND NO DUPLICATE/////
-        ////////////////////////////////////////////////////
-        _orderedDates = [sortedByDateEventsArray valueForKeyPath:@"@distinctUnionOfObjects.date"];
+        NSString *formatTemplate = [NSDateFormatter dateFormatFromTemplate:@"d MMMM YYYY" options:0 locale:[NSLocale currentLocale]];
+        [formatter setDateFormat:formatTemplate];
     }
-    return _orderedDates;
+    
+    NSInteger numericSection = [[theSection name] integerValue];
+    
+	NSInteger year = numericSection / 10000;
+    NSInteger month = (numericSection / 100) % 100;
+    NSInteger day = numericSection % 100;
+    
+    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    dateComponents.year = year;
+    dateComponents.month = month;
+    dateComponents.day = day;
+    NSDate *date = [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
+    
+	NSString *titleString = [formatter stringFromDate:date];
+    
+	return titleString;
 }
 
 @end

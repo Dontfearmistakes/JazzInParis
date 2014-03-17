@@ -8,6 +8,12 @@
 
 #import "JIPEvent.h"
 
+@interface JIPEvent ()
+
+@property (nonatomic) NSString *primitiveSectionIdentifier;
+
+@end
+
 @implementation JIPEvent
 
 //@dynamic : dit au compilateur = pas de getter pas de setter pas de ivar but don't freak out
@@ -21,12 +27,43 @@
 @dynamic venue;
 @dynamic artist;
 @dynamic name;
+@dynamic sectionIdentifier;
+@dynamic primitiveSectionIdentifier;
 
 @synthesize location = _location;
 //@synthesize name = _name;
 @synthesize distanceFromUserToEvent = _distanceFromUserToEvent;
 @synthesize shouldDisplayDistanceFromUserToEvent = _shouldDisplayDistanceFromUserToEvent;
 
+
+
+
+#pragma mark - Transient properties
+
+- (NSString *)sectionIdentifier
+{
+    // Create and cache the section identifier on demand.
+    
+    [self willAccessValueForKey:@"sectionIdentifier"];
+    NSString *tmp = [self primitiveSectionIdentifier];
+    [self didAccessValueForKey:@"sectionIdentifier"];
+    
+    if (!tmp)
+    {
+        /*
+         Sections are organized by month and year. 
+         Create the section identifier as a string representing the number (year * 1000) + month;
+         This way they will be correctly ordered chronologically regardless of the actual name of the month.
+         */
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSLog(@"Event Date : %@", self.date);
+        NSDateComponents *components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit| NSDayCalendarUnit ) fromDate:[self date]];
+        tmp = [NSString stringWithFormat:@"%d", ([components year] * 10000) + [components month] * 100 +[components day]];
+        NSLog(@"sectionIdentifier : %@" , tmp);
+        [self setPrimitiveSectionIdentifier:tmp];
+    }
+    return tmp;
+}
 
 
 ////////////////////////////////////////
@@ -63,6 +100,11 @@
     return self;
 }
 
+
+
+
+
+
 //FIXME: Event Name attribute getter/setter commented out 
 ////////////////////////////////////////
 // Check if we have a custom display name for the event.
@@ -84,6 +126,13 @@
 //    [self didChangeValueForKey:@"name"];
 //}
 
+
+
+
+
+
+
+
 ///////////////////////////////////////////////////////////////////////////
 //lat and long are stored in CoreData as double/NSNumbers
 //we just put them together as a CLLocationCoordinate2D
@@ -99,6 +148,11 @@
     self.latitude = [NSNumber numberWithDouble:location.latitude];
     self.longitude = [NSNumber numberWithDouble:location.longitude];
 }
+
+
+
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////

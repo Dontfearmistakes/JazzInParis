@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSNumber * latitude;
 @property (strong, nonatomic) NSDate *date;
+@property (nonatomic) NSString *sectionIdentifier;
 
 //TO ONE RELATIONSHIP TO BE STORED
 @property (strong, nonatomic) JIPVenue *venue;
