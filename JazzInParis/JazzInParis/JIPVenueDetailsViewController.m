@@ -41,6 +41,9 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSLog(@"VENUE NAME : %@", self.venue.name);
+    
     self.title = [NSString stringWithFormat:@"%@", self.venue.name];
     
     ///////////////////////////////////////////////////// 1) TABLE VIEW WITH EVENT DETAILS
@@ -48,14 +51,12 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     CGFloat superViewWidth = self.view.bounds.size.width;
     CGFloat superViewHeight = self.view.bounds.size.height;
     CGFloat tableViewHeight = superViewHeight * JIPVenueDetailsTableViewHeightPercenatge;
-    NSLog(@"tableViewHeight = %f", tableViewHeight);
     
     CGRect frame = CGRectMake(0, 0, superViewWidth, tableViewHeight);
     self.topTableView = [[UITableView alloc] initWithFrame:frame];
     
     //Resizing when super view redraw itself (rotation for example)
     self.topTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    NSLog(@"FRAME : %f, %f", frame.size.height, frame.size.width);
 
     self.topTableView.dataSource = self;
     self.topTableView.delegate = self;

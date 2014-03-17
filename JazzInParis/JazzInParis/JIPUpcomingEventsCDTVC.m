@@ -10,11 +10,14 @@
 #import "NSDate+Formatting.h"
 #import "JIPEvent.h"
 #import "JIPEvent+Create.h"
+#import "JIPVenue+Create.h"
 #import "JIPManagedDocument.h"
+#import "JIPConcertDetailsViewController.h"
 
 @interface JIPUpcomingEventsCDTVC ()
 
 @property (strong, nonatomic) NSArray *upcomingEventsFromAPI;
+@property (strong, nonatomic) NSArray *venuesFromAPI;
 @property (strong, nonatomic) NSArray *upcomingEventsArrayFromFRC;
 @property (strong, nonatomic) NSDictionary *groupedByDatesUpcomingEventsDictionnary;
 @property (strong, nonatomic) NSArray *orderedDates;
@@ -58,27 +61,50 @@
         self.upcomingEventsFromAPI = @[
                                     @{@"id"       :@1,
                                       @"name"     :@"Brad Mehldau",
-                                      @"lat"      :@(-0.1150322),
-                                      @"long"     :@51.4650846,
+                                      @"lat"      :@(28.41871),
+                                      @"long"     :@(-81.58121),
                                       @"date"     :[NSDate dateFromString:@"Tue, 25 May 2014 12:53:58 +0000"],
                                       @"venue"    :@"Baiser Salé",
                                       @"artist"   :@"Brad Mehldau",
                                       @"type"     :@"concert",
                                       @"uriString":@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale",
-                                      @"ageRestriction" : @"14+",
-                                      @"venue"    : @"Baiser Salé"},
+                                      @"ageRestriction" : @"14+"},
+                                    
                                     @{@"id"       :@2,
                                       @"name"     :@"Oscar Peterson",
                                       @"lat"      :@(-0.1150322),
-                                      @"long"     :@51.4650846,
+                                      @"long"     :@(51.4650846),
                                       @"date"     :[NSDate dateFromString:@"Tue, 26 June 2015 12:53:58 +0000"],
-                                      @"venue"    :@"Baiser Salé",
+                                      @"venue"    :@"Duc des Lombards",
                                       @"artist"   :@"Oscar Peterson",
                                       @"type"     :@"concert",
                                       @"uriString":@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale",
-                                      @"ageRestriction" : @"14+",
-                                      @"venue"    : @"Baiser Salé"}
+                                      @"ageRestriction" : @"14+"}
                                     ];
+        
+        self.venuesFromAPI = @[
+                                       @{@"id"       :@1,
+                                         @"desc"     :@"Cool Salted Kiss",
+                                         @"name"     :@"Baiser Salé",
+                                         @"city"     :@"Paris",
+                                         @"street"   :@"3 rue des Lombards",
+                                         @"phone"     :@"01 42 06 68 43",
+                                         @"lat"      :@(28.41871),
+                                         @"long"     :@(-81.58121),
+                                         @"websiteString"     :@"wwww.baisersle.com",
+                                         @"capacity"     :@200},
+                                       
+                                       @{@"id"       :@2,
+                                         @"desc"     :@"At the Duke",
+                                         @"name"     :@"Duc des Lombards",
+                                         @"city"     :@"Paris",
+                                         @"street"   :@"3 rue des Lombards",
+                                         @"phone"     :@"01 42 06 68 43",
+                                         @"lat"      :@(28.41871),
+                                         @"long"     :@(-81.58121),
+                                         @"websiteString"     :@"wwww.ducdeslombards.com",
+                                         @"capacity"     :@200}
+                                       ];
         
         
         ///////////////////
@@ -92,8 +118,13 @@
         [components setSecond:10];
         NSDate *today10am = [calendar dateFromComponents:components];
         
+        // 2) Put the venues in ManagedObjectContext
+        for (NSDictionary *venue in self.venuesFromAPI) {
+            [JIPVenue venueWithDict:venue
+             inManagedObjectContext:managedDocument.managedObjectContext];
+        }
         
-        // 2) Put the events in ManagedObjectContext
+        // 3) Put the events in ManagedObjectContext
         for (NSDictionary *upcomingEvent in self.upcomingEventsFromAPI)
         {
             //FILTER PAST EVENTS//////
@@ -103,6 +134,7 @@
                          inManagedObjectContext:managedDocument.managedObjectContext];
             }
         }
+        
         
     }];
     
@@ -187,6 +219,26 @@
 	NSString *titleString = [formatter stringFromDate:date];
     
 	return titleString;
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Table View Delegate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //CREATE VC////////////////////////
+    JIPConcertDetailsViewController *concertDetailsVC = [[JIPConcertDetailsViewController alloc] init];
+    
+    //PASSING EVENT FROM VC TO VC///////////////////
+    concertDetailsVC.event = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    //PUSH VC//////////////////////
+    [self.navigationController pushViewController:concertDetailsVC animated:YES];
 }
 
 @end

@@ -21,9 +21,10 @@
 @dynamic websiteString;
 @dynamic capacity;
 @dynamic events;
-@dynamic distanceFromUserToVenue;
+
 
 @synthesize location = _location;
+@synthesize distanceFromUserToVenue = _distanceFromUserToVenue;
 
 ////////////////////////////////////////
 -(id)init

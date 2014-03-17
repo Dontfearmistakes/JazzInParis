@@ -10,6 +10,10 @@
 
 @interface JIPVenue (Create)
 
+
++ (JIPVenue *)venueWithDict:(NSDictionary *)venueDict
+     inManagedObjectContext:(NSManagedObjectContext *)context;
+
 + (JIPVenue *)venueWithName:(NSString *)name
   inManagedObjectContext:(NSManagedObjectContext *)context;
 

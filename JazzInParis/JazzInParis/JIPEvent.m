@@ -56,10 +56,8 @@
          This way they will be correctly ordered chronologically regardless of the actual name of the month.
          */
         NSCalendar *calendar = [NSCalendar currentCalendar];
-        NSLog(@"Event Date : %@", self.date);
         NSDateComponents *components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit| NSDayCalendarUnit ) fromDate:[self date]];
         tmp = [NSString stringWithFormat:@"%d", ([components year] * 10000) + [components month] * 100 +[components day]];
-        NSLog(@"sectionIdentifier : %@" , tmp);
         [self setPrimitiveSectionIdentifier:tmp];
     }
     return tmp;
@@ -167,7 +165,7 @@
 
 -(NSString *)title
 {
-    return self.name;
+    return self.venue.name;
 }
 
 -(NSString *)subtitle

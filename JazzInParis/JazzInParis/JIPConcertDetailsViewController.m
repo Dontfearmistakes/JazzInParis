@@ -6,11 +6,13 @@
 //  Copyright (c) 2014 Max. All rights reserved.
 //
 
+#import "JIPManagedDocument.h"
 #import "JIPConcertDetailsViewController.h"
 #import "JIPMyPinView.h"
 #import "JIPVenueDetailsViewController.h"
 #import "JIPArtistDetailsViewController.h"
 #import "NSDate+Formatting.h"
+#import "JIPVenue+Create.h"
 
 const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 
@@ -29,15 +31,6 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 //////////////////////////////////////////////////////////////////////
 @implementation JIPConcertDetailsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        self.title = [NSString stringWithFormat:@"%@ Concert", self.event.name];
-    }
-    return self;
-}
 
 -(NSUInteger)supportedInterfaceOrientations
 {
@@ -142,8 +135,6 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    NSLog(@"ROTATION !!!!");
-    NSLog(@"fromInterfaceOrientation : %d", fromInterfaceOrientation);
     [self.topTableView reloadData];
 }
 
@@ -155,11 +146,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:self.event.location.latitude
                                                            longitude:self.event.location.longitude];
     
-    NSLog(@"%@", self.venueMap.userLocation);
     double distance = [self.venueMap.userLocation.location distanceFromLocation:eventLocation];
-    NSLog(@"self.venueMap.userLocation.location.coordinate.longitude : %f / %f", self.venueMap.userLocation.location.coordinate.longitude, self.venueMap.userLocation.location.coordinate.latitude);
-    NSLog(@"eventLocation.coordinate.longitude/latitude : %f / %f", eventLocation.coordinate.longitude, eventLocation.coordinate.latitude);
-    NSLog(@"distance : %f", distance);
     return distance;
 }
 
@@ -232,7 +219,14 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     if (indexPath.row == 2)
     {
         JIPVenueDetailsViewController *venueDetailsVC = [[JIPVenueDetailsViewController alloc] init];
-        venueDetailsVC.venue = self.event.venue;
+        
+        //FETCH VENUE IN CONTEXT AND PASS IT TO venueDetailsVC.venue
+        [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
+         {
+             venueDetailsVC.venue = [JIPVenue venueWithName:self.event.venue.name
+                                     inManagedObjectContext:managedDocument.managedObjectContext];
+         }];
+        
         [self.navigationController pushViewController:venueDetailsVC animated:YES];
     }
     
@@ -272,7 +266,14 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
     JIPVenueDetailsViewController *venueDetailsVC = [[JIPVenueDetailsViewController alloc] init];
-    venueDetailsVC.venue = self.event.venue;
+    
+    //FETCH VENUE IN CONTEXT AND PASS IT TO venueDetailsVC.venue
+    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
+    {
+        venueDetailsVC.venue = [JIPVenue venueWithName:self.event.venue.name
+                                inManagedObjectContext:managedDocument.managedObjectContext];
+    }];
+    
     [self.navigationController pushViewController:venueDetailsVC animated:YES];
 }
 
