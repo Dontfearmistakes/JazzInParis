@@ -13,6 +13,7 @@
 #import "JIPArtistDetailsViewController.h"
 #import "NSDate+Formatting.h"
 #import "JIPVenue+Create.h"
+#import "JIPArtist+Create.h"
 
 const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 
@@ -236,7 +237,13 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     if (indexPath.row == 0)
     {
         JIPArtistDetailsViewController *artistDetailsVC = [[JIPArtistDetailsViewController alloc] init];
-        artistDetailsVC.artist = self.event.artist;
+        //FETCH VENUE IN CONTEXT AND PASS IT TO venueDetailsVC.venue
+        [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
+         {
+             artistDetailsVC.artist = [JIPArtist artistWithName:self.event.artist.name
+                                         inManagedObjectContext:managedDocument.managedObjectContext];
+         }];
+
         [self.navigationController pushViewController:artistDetailsVC animated:YES];
     }
     

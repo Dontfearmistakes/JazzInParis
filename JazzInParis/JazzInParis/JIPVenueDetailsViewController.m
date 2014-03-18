@@ -19,7 +19,6 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
 
 @property (strong, nonatomic) NSArray *allVenueProperties;
 @property (strong, nonatomic) UITableView *topTableView;
--(double)distanceFromUserLocationToEvent;
 
 @end
 

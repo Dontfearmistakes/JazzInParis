@@ -10,6 +10,9 @@
 
 @interface JIPArtist (Create)
 
++ (JIPArtist *)artistWithDict:(NSDictionary *)artistName
+       inManagedObjectContext:(NSManagedObjectContext *)context;
+
 + (JIPArtist *)artistWithName:(NSString *)artistName
        inManagedObjectContext:(NSManagedObjectContext *)context;
 

@@ -11,6 +11,7 @@
 #import "JIPEvent.h"
 #import "JIPEvent+Create.h"
 #import "JIPVenue+Create.h"
+#import "JIPArtist+Create.h"
 #import "JIPManagedDocument.h"
 #import "JIPConcertDetailsViewController.h"
 
@@ -18,6 +19,7 @@
 
 @property (strong, nonatomic) NSArray *upcomingEventsFromAPI;
 @property (strong, nonatomic) NSArray *venuesFromAPI;
+@property (strong, nonatomic) NSArray *artistsFromAPI;
 @property (strong, nonatomic) NSArray *upcomingEventsArrayFromFRC;
 @property (strong, nonatomic) NSDictionary *groupedByDatesUpcomingEventsDictionnary;
 @property (strong, nonatomic) NSArray *orderedDates;
@@ -106,6 +108,16 @@
                                          @"capacity"     :@200}
                                        ];
         
+        self.artistsFromAPI = @[
+                               @{@"id"          :@1,
+                                 @"name"        :@"Brad Mehldau",
+                                 @"songKickUri" :@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale"},
+                               
+                               @{@"id"          :@2,
+                                 @"name"        :@"Oscar Peterson",
+                                 @"songKickUri" :@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale"}
+                               ];
+        
         
         ///////////////////
         //GET TODAY 10AM///
@@ -122,6 +134,12 @@
         for (NSDictionary *venue in self.venuesFromAPI) {
             [JIPVenue venueWithDict:venue
              inManagedObjectContext:managedDocument.managedObjectContext];
+        }
+        
+        // 2) Put the artists in ManagedObjectContext
+        for (NSDictionary *artist in self.artistsFromAPI) {
+            [JIPArtist artistWithDict:artist
+               inManagedObjectContext:managedDocument.managedObjectContext];
         }
         
         // 3) Put the events in ManagedObjectContext
