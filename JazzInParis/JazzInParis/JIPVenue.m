@@ -25,6 +25,7 @@
 
 @synthesize location = _location;
 @synthesize distanceFromUserToVenue = _distanceFromUserToVenue;
+@synthesize shouldDisplayDistanceFromUserToVenue = _shouldDisplayDistanceFromUserToVenue;
 
 ////////////////////////////////////////
 -(id)init
@@ -73,6 +74,14 @@
     return CLLocationCoordinate2DMake([self.latitude doubleValue], [self.longitude doubleValue]);
 }
 
+-(void)setLocation:(CLLocationCoordinate2D)location
+{
+    _location = location;
+    self.latitude = [NSNumber numberWithDouble:location.latitude];
+    self.longitude = [NSNumber numberWithDouble:location.longitude];
+}
+
+
 ///////////////////////////////////////////////////////////////////////
 #pragma mark - MKAnotation
 //@property location est remplie lors de l'appel à l'API
@@ -91,7 +100,33 @@
 
 -(NSString *)subtitle
 {
-    return [NSString stringWithFormat:@"%ld meters away", lroundf(self.distanceFromUserToVenue)];
+    if (!self.shouldDisplayDistanceFromUserToVenue)
+    {
+        return nil;
+    }
+    else
+    {
+        NSLog(@"VENUE SUBTITLE RELOAD");
+        return [NSString stringWithFormat:@"%ld meters away", lroundf(self.distanceFromUserToVenue)];
+    }
 }
 
+
+//////////////////////////////////////////
+//////////////////////////////////////////
+-(void)setShouldDisplayDistanceFromUserToEvent:(BOOL)shouldDisplayDistanceFromUserToVenue
+{
+    [self willChangeValueForKey:@"subtitle"];
+    [self willChangeValueForKey:@"shouldDisplayDistanceFromUserToVenue"];
+    _shouldDisplayDistanceFromUserToVenue = shouldDisplayDistanceFromUserToVenue;
+    [self didChangeValueForKey:@"shouldDisplayDistanceFromUserToVenue"];
+    [self didChangeValueForKey:@"subtitle"];
+}
+
+-(void)setDistanceFromUserToVenue:(double)distanceFromUserToVenue
+{
+    [self willChangeValueForKey:@"subtitle"];
+    _distanceFromUserToVenue = distanceFromUserToVenue;
+    [self didChangeValueForKey:@"subtitle"];
+}
 @end

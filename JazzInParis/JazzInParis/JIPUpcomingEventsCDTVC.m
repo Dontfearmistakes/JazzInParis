@@ -91,7 +91,7 @@
                                          @"phone"     :@"01 42 06 68 43",
                                          @"lat"      :@(28.41871),
                                          @"long"     :@(-81.58121),
-                                         @"websiteString"     :@"wwww.baisersle.com",
+                                         @"websiteString"     :@"http://lebaisersale.com",
                                          @"capacity"     :@200},
                                        
                                        @{@"id"       :@2,
@@ -102,7 +102,7 @@
                                          @"phone"     :@"01 42 06 68 43",
                                          @"lat"      :@(28.41871),
                                          @"long"     :@(-81.58121),
-                                         @"websiteString"     :@"wwww.ducdeslombards.com",
+                                         @"websiteString"     :@"http://wwww.ducdeslombards.com",
                                          @"capacity"     :@200}
                                        ];
         

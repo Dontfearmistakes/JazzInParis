@@ -32,8 +32,9 @@
 @property (nonatomic, retain) NSSet *events;
 
 //NOT TO BE STORED
-@property (nonatomic) double distanceFromUserToVenue;
 @property (nonatomic) CLLocationCoordinate2D location; //made of lat and long see getter
+@property (nonatomic) double distanceFromUserToVenue;
+@property (nonatomic) BOOL shouldDisplayDistanceFromUserToVenue;
 
 - (instancetype)initWithID:(NSNumber *)id
                       name:(NSString *)name

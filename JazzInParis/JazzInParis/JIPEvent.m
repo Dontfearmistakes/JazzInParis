@@ -176,6 +176,7 @@
     }
     else
     {
+        NSLog(@"EVENT SUBTITLE RELOAD");
         return [NSString stringWithFormat:@"%ld meters away", lroundf(self.distanceFromUserToEvent)];
     }
 }

@@ -38,11 +38,22 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     return self;
 }
 
+//////////////////////////////////////////////
+///IN PROGRESS
+//////////////////////////////////////////////
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    NSLog(@"AFTER ROTATION VIEW HEIGHT * JIPVenueDetailsTableViewHeightPercenatge : %f", self.view.bounds.size.height * JIPVenueDetailsTableViewHeightPercenatge);
+    NSLog(@"AFTER ROTATION TABLEVIEW HEIGHT/WIDTH : %f / %f", self.topTableView.frame.size.height, self.topTableView.frame.size.width);
+    NSLog(@"AFTER ROTATION MAPVIEW HEIGHT/WIDTH : %f / %f", self.venueMap.frame.size.height, self.venueMap.frame.size.width);
+}
+
+
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    NSLog(@"VENUE NAME : %@", self.venue.name);
     
     self.title = [NSString stringWithFormat:@"%@", self.venue.name];
     
@@ -73,37 +84,29 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     
     self.venueMap.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    ////////////////////////////////////////////POSITIONNE MAPVIEW DANS L'ESPACE AVEC eventCoordinate COMME CENTRE
+    //////////////////////////////////////////// 3)POSITIONNE MAPVIEW DANS L'ESPACE AVEC eventCoordinate COMME CENTRE ET TRACK USER
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     CLLocationCoordinate2D venueCoordinate = CLLocationCoordinate2DMake(self.venue.location.latitude, self.venue.location.longitude);
     double regionWidth = 2500;
     double regionHeight = 2200;
     MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(venueCoordinate, regionWidth, regionHeight);
     [self.venueMap setRegion:startRegion
                     animated:YES];
-    
-    
-    //CENTRER SUR LE VENUE ET TRACK USER
+
     [self.venueMap setCenterCoordinate:venueCoordinate animated:YES];
     self.venueMap.showsUserLocation = YES;
     
-    //PASS distanceFromUserLocationToEvent to adhoc event @property to display it
-    //as subtitle of the annotation (called by -viewForAnnotation below)
-    self.venue.distanceFromUserToVenue = [self distanceFromUserLocationToEvent];
+
+    //initialisation cf didUpdateUserLocation below
+    self.venue.distanceFromUserToVenue = 0;
+    self.venue.shouldDisplayDistanceFromUserToVenue = NO;
     
     //ADD ANNOTATION
     [self.venueMap addAnnotation:self.venue];
 }
 
 
-//////////////////////////////////////////////
-///IN PROGRESS
-//////////////////////////////////////////////
--(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    NSLog(@"AFTER ROTATION VIEW HEIGHT * JIPVenueDetailsTableViewHeightPercenatge : %f", self.view.bounds.size.height * JIPVenueDetailsTableViewHeightPercenatge);
-    NSLog(@"AFTER ROTATION TABLEVIEW HEIGHT/WIDTH : %f / %f", self.topTableView.frame.size.height, self.topTableView.frame.size.width);
-    NSLog(@"AFTER ROTATION MAPVIEW HEIGHT/WIDTH : %f / %f", self.venueMap.frame.size.height, self.venueMap.frame.size.width);
-}
+
 
 //////////////////////////////////////////////
 ///Automatically show Callout
@@ -113,20 +116,47 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     [self.venueMap selectAnnotation:self.venue animated:YES];
 }
 
+
 //////////////////////////////////////////////
 ///USE CURRENT USER LOCATION TO CALCULATE DISTANCE TO eventCoordinare
 //////////////////////////////////////////////
--(double)distanceFromUserLocationToEvent
+-(double)distanceFromUserLocationToVenue
 {
     CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:self.venue.location.latitude
                                                            longitude:self.venue.location.longitude];
     
     double distance = [self.venueMap.userLocation.location distanceFromLocation:eventLocation];
-    NSLog(@"self.venueMap.userLocation.location.coordinate.longitude/latitude : %f / %f", self.venueMap.userLocation.location.coordinate.longitude, self.venueMap.userLocation.location.coordinate.latitude);
-    NSLog(@"eventLocation.coordinate.longitude/latitude : %f / %f", eventLocation.coordinate.longitude, eventLocation.coordinate.latitude);
-    NSLog(@"distance : %f", distance);
     return distance;
 }
+
+//////////////////////////////////////////////
+///Called when userLocation updated
+//////////////////////////////////////////////
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    if (!userLocation)
+    {
+        self.venue.shouldDisplayDistanceFromUserToVenue = NO;
+        self.venue.distanceFromUserToVenue = 0;
+    }
+    else
+    {
+        //PASS distanceFromUserLocationToEvent to adhoc event @property to display it
+        //as subtitle of the annotation (called by -viewForAnnotation below)
+        self.venue.shouldDisplayDistanceFromUserToVenue = YES;
+        self.venue.distanceFromUserToVenue = [self distanceFromUserLocationToVenue];
+    }
+}
+
+
+
+-(void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
+{
+    self.venue.shouldDisplayDistanceFromUserToVenue = NO;
+    self.venue.distanceFromUserToVenue = 0;
+}
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -136,13 +166,14 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     self.allVenueProperties = @[[NSString stringWithFormat:@"%@ in %@", self.venue.street, self.venue.city],
-                                 self.venue.description,
+                                 self.venue.desc,
                                  self.venue.websiteString,
                                  self.venue.phone,
                                  self.venue.capacity
                                 ];
     return self.allVenueProperties.count;
 }
+
 
 //////////////////////////////////////////////////////
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -157,6 +188,9 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     return cell;
 }
 
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Table View Delegate
@@ -167,9 +201,15 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     //Go to Venue's website
     if (indexPath.row == 2)
     {
+        NSLog(@"%@", self.venue.websiteString);
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.venue.websiteString]];
     }
 }
+
+
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

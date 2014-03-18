@@ -37,6 +37,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     return UIInterfaceOrientationMaskAll;
 }
 
+
 //////////////////////////////////////////////////////////////////////
 - (void)viewDidLoad
 {
@@ -61,7 +62,9 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     self.venueMap.zoomEnabled = NO;
     [self.view addSubview:self.venueMap];
     
-    ////////////////////////////////////////////POSITIONNE MAPVIEW DANS L'ESPACE AVEC eventCoordinate COMME CENTRE
+    //////////////////////////////////////////// 3) POSITIONNE MAPVIEW DANS L'ESPACE AVEC eventCoordinate COMME CENTRE
+    //////////////////////////////////////////////// + TRACK USER
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     CLLocationCoordinate2D eventCoordinate = CLLocationCoordinate2DMake(self.event.location.latitude, self.event.location.longitude);
     double regionWidth = 2500;
     double regionHeight = 2200;
@@ -69,11 +72,11 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     [self.venueMap setRegion:startRegion
                   animated:YES];
 
-    
-    //CENTRER SUR LE VENUE ET TRACK USER
     [self.venueMap setCenterCoordinate:eventCoordinate animated:YES];
     self.venueMap.showsUserLocation = YES;
     
+    
+    //initialisation cf didUpdateUserLocation below
     self.event.distanceFromUserToEvent = 0;
     self.event.shouldDisplayDistanceFromUserToEvent = NO;
     
@@ -81,6 +84,8 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     [self.venueMap addAnnotation:self.event];
     
 }
+
+
 
 -(void)viewDidLayoutSubviews
 //called when bounds are redrawn
@@ -94,6 +99,10 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     self.venueMap.frame = CGRectMake(0, self.tableViewHeight, superViewWidth, superViewHeight - self.tableViewHeight);
 
 }
+
+
+
+
 
 //////////////////////////////////////////////
 ///Called when userLocation updated
@@ -114,11 +123,29 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     }
 }
 
+
+
 -(void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
 {
     self.event.shouldDisplayDistanceFromUserToEvent = NO;
     self.event.distanceFromUserToEvent = 0;
 }
+
+
+
+//////////////////////////////////////////////
+///USE CURRENT USER LOCATION TO CALCULATE DISTANCE TO eventCoordinare
+//////////////////////////////////////////////
+-(double)distanceFromUserLocationToEvent
+{
+    CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:self.event.location.latitude
+                                                           longitude:self.event.location.longitude];
+    
+    return [self.venueMap.userLocation.location distanceFromLocation:eventLocation];;
+}
+
+
+
 
 //////////////////////////////////////////////
 ///Automatically show Callout
@@ -127,6 +154,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 {
     [self.venueMap selectAnnotation:self.event animated:YES];
 }
+
 
 
 //////////////////////////////////////////////
@@ -138,17 +166,8 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     [self.topTableView reloadData];
 }
 
-//////////////////////////////////////////////
-///USE CURRENT USER LOCATION TO CALCULATE DISTANCE TO eventCoordinare
-//////////////////////////////////////////////
--(double)distanceFromUserLocationToEvent
-{
-    CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:self.event.location.latitude
-                                                           longitude:self.event.location.longitude];
-    
-    double distance = [self.venueMap.userLocation.location distanceFromLocation:eventLocation];
-    return distance;
-}
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,13 +178,14 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     self.allEventProperties = @[[NSString stringWithFormat:@"Who ?  %@", self.event.artist.name],
                                 [NSString stringWithFormat:@"When ?  %@", [NSDate stringFromDate:self.event.date]],
                                 [NSString stringWithFormat:@"Where ?  %@ : %@ in %@",self.event.venue.name, self.event.venue.street, self.event.venue.city],
-                                [NSString stringWithFormat:@"Check prices here : %@", self.event.uriString],
+                                [NSString stringWithFormat:@"Check prices : %@", self.event.uriString],
                                 self.event.ageRestriction];
     return self.allEventProperties.count;
 }
 
-//////////////////////////////////////////////////////
 
+
+//////////////////////////////////////////////////////
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"id"];
@@ -190,6 +210,8 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     return cell;
 }
 
+
+
 //////////////////////////////////////////////////////
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -199,6 +221,9 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     }
     return self.tableViewHeight/6;
 }
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -233,9 +258,10 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     //Go to Songkick's event page to check prices
     if (indexPath.row == 3)
     {
-        [[UIApplication sharedApplication] openURL:self.event.uriString];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.event.uriString]];
     }
 }
+
 
 
 ////////////////REPLICATE didSelectRow BEHAVIOR (above) FOR ACCESSORY BUTTON///////////////////////////////
@@ -243,6 +269,8 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 {
     [self tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,6 +290,9 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     
     return view;
 }
+
+
+
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {

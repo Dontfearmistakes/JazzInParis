@@ -19,7 +19,7 @@
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *type;
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSURL *uriString;
+@property (strong, nonatomic) NSString *uriString;
 @property (strong, nonatomic) NSString *ageRestriction;
 @property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSNumber * latitude;
