@@ -9,11 +9,15 @@
 #import "JIPAppDelegate.h"
 #import "JIPUpComingEventsViewController.h"
 #import "JIPUpcomingEventsCDTVC.h"
+#import "JIPUpdateManager.h"
 
 @implementation JIPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     

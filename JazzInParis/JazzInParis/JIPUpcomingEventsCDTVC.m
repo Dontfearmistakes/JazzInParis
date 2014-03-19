@@ -20,9 +20,6 @@
 @property (strong, nonatomic) NSArray *upcomingEventsFromAPI;
 @property (strong, nonatomic) NSArray *venuesFromAPI;
 @property (strong, nonatomic) NSArray *artistsFromAPI;
-@property (strong, nonatomic) NSArray *upcomingEventsArrayFromFRC;
-@property (strong, nonatomic) NSDictionary *groupedByDatesUpcomingEventsDictionnary;
-@property (strong, nonatomic) NSArray *orderedDates;
 
 @end
 
@@ -61,22 +58,22 @@
         
         // 1) Fetch the events from Songkick
         self.upcomingEventsFromAPI = @[
-                                    @{@"id"       :@1,
+                                    @{@"id"       :@3,
                                       @"name"     :@"Brad Mehldau",
                                       @"lat"      :@(28.41871),
                                       @"long"     :@(-81.58121),
-                                      @"date"     :[NSDate dateFromString:@"Tue, 25 May 2014 12:53:58 +0000"],
+                                      @"date"     :[NSDate dateFromString:@"Tue, 25 May 2013 12:53:58 +0000"],
                                       @"venue"    :@"Baiser Salé",
                                       @"artist"   :@"Brad Mehldau",
                                       @"type"     :@"concert",
                                       @"uriString":@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale",
                                       @"ageRestriction" : @"14+"},
                                     
-                                    @{@"id"       :@2,
+                                    @{@"id"       :@6,
                                       @"name"     :@"Oscar Peterson",
                                       @"lat"      :@(-0.1150322),
                                       @"long"     :@(51.4650846),
-                                      @"date"     :[NSDate dateFromString:@"Tue, 26 June 2015 12:53:58 +0000"],
+                                      @"date"     :[NSDate dateFromString:@"Tue, 27 June 2015 12:53:58 +0000"],
                                       @"venue"    :@"Duc des Lombards",
                                       @"artist"   :@"Oscar Peterson",
                                       @"type"     :@"concert",
@@ -118,39 +115,23 @@
                                  @"songKickUri" :@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale"}
                                ];
         
-        
-        ///////////////////
-        //GET TODAY 10AM///
-        ///////////////////
-        NSDate *now = [NSDate date];
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:now];
-        [components setHour:10];
-        [components setMinute:10];
-        [components setSecond:10];
-        NSDate *today10am = [calendar dateFromComponents:components];
-        
         // 2) Put the venues in ManagedObjectContext
         for (NSDictionary *venue in self.venuesFromAPI) {
             [JIPVenue venueWithDict:venue
              inManagedObjectContext:managedDocument.managedObjectContext];
         }
         
-        // 2) Put the artists in ManagedObjectContext
+        // 3) Put the artists in ManagedObjectContext
         for (NSDictionary *artist in self.artistsFromAPI) {
             [JIPArtist artistWithDict:artist
                inManagedObjectContext:managedDocument.managedObjectContext];
         }
         
-        // 3) Put the events in ManagedObjectContext
+        // 4) Put the events in ManagedObjectContext
         for (NSDictionary *upcomingEvent in self.upcomingEventsFromAPI)
         {
-            //FILTER PAST EVENTS//////
-            if ([upcomingEvent[@"date"] timeIntervalSinceDate:today10am] >= 0)
-            {
                 [JIPEvent eventWithSongkickInfo:upcomingEvent
                          inManagedObjectContext:managedDocument.managedObjectContext];
-            }
         }
         
         
@@ -169,13 +150,12 @@
         
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
-        request.predicate = nil; //all JIPEvents
+        request.predicate = [NSPredicate predicateWithFormat:@"date >= %@", [NSDate date]]; //all JIPEvents starting today or later
         
         self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                             managedObjectContext:managedDocument.managedObjectContext
                                                                               sectionNameKeyPath:@"sectionIdentifier"
                                                                                        cacheName:nil];
-        self.upcomingEventsArrayFromFRC = self.fetchedResultsController.fetchedObjects;
     }];
     
 }

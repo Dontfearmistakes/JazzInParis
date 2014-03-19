@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5015AAAE18A159ED000A7625 /* JIPConcertDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */; };
 		501FB96118D1BFCE00845256 /* JIPManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 501FB96018D1BFCE00845256 /* JIPManagedDocument.m */; };
+		5051B4F518D9A6D600BBE2DB /* JIPUpdateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5051B4F418D9A6D600BBE2DB /* JIPUpdateManager.m */; };
 		508598D418AA46330048D760 /* JIPVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D318AA46330048D760 /* JIPVenue.m */; };
 		508598D718AA551C0048D760 /* JIPVenueDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D618AA551C0048D760 /* JIPVenueDetailsViewController.m */; };
 		508598DA18AA74BF0048D760 /* JIPArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D918AA74BF0048D760 /* JIPArtist.m */; };
@@ -56,6 +57,8 @@
 		5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPConcertDetailsViewController.m; sourceTree = "<group>"; };
 		501FB95F18D1BFCE00845256 /* JIPManagedDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPManagedDocument.h; sourceTree = "<group>"; };
 		501FB96018D1BFCE00845256 /* JIPManagedDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPManagedDocument.m; sourceTree = "<group>"; };
+		5051B4F318D9A6D600BBE2DB /* JIPUpdateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPUpdateManager.h; sourceTree = "<group>"; };
+		5051B4F418D9A6D600BBE2DB /* JIPUpdateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPUpdateManager.m; sourceTree = "<group>"; };
 		508598D218AA46330048D760 /* JIPVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPVenue.h; sourceTree = "<group>"; };
 		508598D318AA46330048D760 /* JIPVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPVenue.m; sourceTree = "<group>"; };
 		508598D518AA551C0048D760 /* JIPVenueDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPVenueDetailsViewController.h; sourceTree = "<group>"; };
@@ -182,6 +185,8 @@
 				50A52FB3189ED5D9001D9779 /* JIPAppDelegate.m */,
 				501FB95F18D1BFCE00845256 /* JIPManagedDocument.h */,
 				501FB96018D1BFCE00845256 /* JIPManagedDocument.m */,
+				5051B4F318D9A6D600BBE2DB /* JIPUpdateManager.h */,
+				5051B4F418D9A6D600BBE2DB /* JIPUpdateManager.m */,
 				50FB3192189EE04F00137949 /* ViewControllers */,
 				50CE606418BA9C540079F0EF /* Views */,
 				50FB3191189EE04500137949 /* Models */,
@@ -398,6 +403,7 @@
 				50A52FD4189ED91C001D9779 /* JIPUpComingEventsViewController.m in Sources */,
 				50A52FB4189ED5D9001D9779 /* JIPAppDelegate.m in Sources */,
 				50DAA79118AB8E52003DDADA /* NSDate+Formatting.m in Sources */,
+				5051B4F518D9A6D600BBE2DB /* JIPUpdateManager.m in Sources */,
 				50A1525218CF66DE00AB2D9F /* JIPArtist+Create.m in Sources */,
 				501FB96118D1BFCE00845256 /* JIPManagedDocument.m in Sources */,
 				509759D118A900F800E1482E /* JIPMyPinView.m in Sources */,
