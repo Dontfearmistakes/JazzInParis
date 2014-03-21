@@ -18,11 +18,11 @@
 
 
     JIPJazzClubsViewController *allJazzClubsVC = [[JIPJazzClubsViewController alloc]init];
-    UINavigationController *allJazzClubsNavController = [[UINavigationController alloc] initWithRootViewController:allJazzClubsVC];
+    UINavigationController     *allJazzClubsNC = [[UINavigationController alloc] initWithRootViewController:allJazzClubsVC];
     
-    UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[allJazzClubsNavController];
-    tabBarController.selectedViewController = allJazzClubsNavController;
+    UITabBarController *tabBarController    = [[UITabBarController alloc] init];
+    tabBarController.viewControllers        = @[allJazzClubsNC];
+    tabBarController.selectedViewController = allJazzClubsNC;
     
     self.window.rootViewController = tabBarController;
     
