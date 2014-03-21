@@ -29,4 +29,12 @@
     return date;
 }
 
++(NSDate *)dateFromAPIString:(NSString *)stringDate
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy-mm-dd";
+    NSDate *date = [dateFormatter dateFromString:stringDate];
+    return date;
+}
+
 @end

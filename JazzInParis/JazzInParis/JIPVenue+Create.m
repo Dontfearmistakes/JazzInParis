@@ -7,6 +7,7 @@
 //
 
 #import "JIPVenue+Create.h"
+#import "JIPUpdateManager.h"
 
 @implementation JIPVenue (Create)
 
@@ -58,13 +59,13 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-+ (JIPVenue *)venueWithName:(NSString *)venueName
-     inManagedObjectContext:(NSManagedObjectContext *)context
++ (JIPVenue *)venueWithId:(NSString *)venueId
+   inManagedObjectContext:(NSManagedObjectContext *)context
 {
     JIPVenue *venue = nil;
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPVenue"];
-    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", venueName];
+    request.predicate = [NSPredicate predicateWithFormat:@"id = %@", venueId];
     
     NSError *error = nil;
     NSArray *matches = [context executeFetchRequest:request error:&error];
@@ -79,7 +80,7 @@
     //there's no match in the database
     else if ([matches count] == 0)
     {
-        NSLog(@"NO VENUE WITH THIS NAME : %@", venueName);
+        NSLog(@"NO VENUE WITH THIS id YET LET'S DOWNLOAD. ID = %@", venueId);
     }
     
     //there's a match

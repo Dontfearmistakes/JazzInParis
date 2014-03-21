@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JIPVenue.h"
 
 @interface JIPUpdateManager : NSObject
 

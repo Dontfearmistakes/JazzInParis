@@ -255,9 +255,10 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
         //FETCH VENUE IN CONTEXT AND PASS IT TO venueDetailsVC.venue
         [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
          {
-             venueDetailsVC.venue = [JIPVenue venueWithName:self.event.venue.name
+             venueDetailsVC.venue = [JIPVenue venueWithId:[NSString stringWithFormat:@"%@", self.event.venue.id]
                                      inManagedObjectContext:managedDocument.managedObjectContext];
          }];
+
         
         [self.navigationController pushViewController:venueDetailsVC animated:YES];
     }
@@ -308,7 +309,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     //FETCH VENUE IN CONTEXT AND PASS IT TO venueDetailsVC.venue
     [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
     {
-        venueDetailsVC.venue = [JIPVenue venueWithName:self.event.venue.name
+        venueDetailsVC.venue = [JIPVenue venueWithId:[NSString stringWithFormat:@"%@", self.event.venue.id]
                                 inManagedObjectContext:managedDocument.managedObjectContext];
     }];
     

@@ -14,7 +14,7 @@
 + (JIPVenue *)venueWithDict:(NSDictionary *)venueDict
      inManagedObjectContext:(NSManagedObjectContext *)context;
 
-+ (JIPVenue *)venueWithName:(NSString *)name
-  inManagedObjectContext:(NSManagedObjectContext *)context;
++ (JIPVenue *)venueWithId:(NSString *)venueId
+   inManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

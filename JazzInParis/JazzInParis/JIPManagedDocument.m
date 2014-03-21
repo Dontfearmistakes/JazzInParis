@@ -18,6 +18,11 @@ static JIPManagedDocument * _sharedManagedDocument;
 
 @implementation JIPManagedDocument
 
+
+
+
+
+
 //////////////////////////////////////////////////////////////////////////////
 // First time it's called, create a UIManagedDoc and put it in the statis ivar
 // Then returns always this ivar
@@ -33,6 +38,11 @@ static JIPManagedDocument * _sharedManagedDocument;
     
     return _sharedManagedDocument;
 }
+
+
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Called like that : [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:aBlock]
@@ -50,10 +60,11 @@ static JIPManagedDocument * _sharedManagedDocument;
         }
         else
         {
-            NSLog(@"COULDNT CREATE NEW DOCUMENT");
+            NSLog(@"COULDNT PERFORM BLOCK WITH ManagedDocument");
         }
         self.openingDocument = NO;
     };
+    
     
     ///////////////////////////////////////////////
     //SOIT DOC PRET et ouvert --> on execute le completionBlock
@@ -61,6 +72,7 @@ static JIPManagedDocument * _sharedManagedDocument;
     {
         completionBlock(YES);
     }
+    
     
     
     //SOIT BESOIN DU DOC ET DOC PAS OUVERT NI EN TRAIN D'ETRE OUVERT DONC ON VA
@@ -84,6 +96,8 @@ static JIPManagedDocument * _sharedManagedDocument;
             [self openWithCompletionHandler:completionBlock];
         }
     }
+    
+    
     
     //SOIT BESOIN du doc mais on est DEJA en train de l'ouvrir AU MEME MOMENT
     //donc wait 0.5 sec et rapelle cette même méthode
