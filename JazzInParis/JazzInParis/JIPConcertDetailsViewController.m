@@ -22,6 +22,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 @property (strong, nonatomic) NSArray *allEventProperties;
 @property (nonatomic) CGFloat tableViewHeight;
 @property (strong, nonatomic) UITableView *topTableView;
+@property (strong, nonatomic) MKMapView *venueMap;
 
 -(double)distanceFromUserLocationToEvent;
 
@@ -237,7 +238,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     if (indexPath.row == 0)
     {
         JIPArtistDetailsViewController *artistDetailsVC = [[JIPArtistDetailsViewController alloc] init];
-        //FETCH VENUE IN CONTEXT AND PASS IT TO venueDetailsVC.venue
+        //FETCH ARTIST IN CONTEXT AND PASS IT TO artistDetailsVC.artist
         [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
          {
              artistDetailsVC.artist = [JIPArtist artistWithName:self.event.artist.name
