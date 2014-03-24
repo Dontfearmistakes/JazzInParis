@@ -11,17 +11,24 @@
 #import "JIPManagedDocument.h"
 #import "JIPArtist+Create.h"
 
+const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
+
 @interface JIPSearchArtistsViewController ()
 
-
+@property (nonatomic)         CGFloat searchBarHeight;
 @property (strong, nonatomic) UITableView * downTableView;
+@property (strong, nonatomic) UITextField * searchBar;
 @property (strong, nonatomic) NSString * searchTerm;
 @property (strong, nonatomic) NSMutableArray * artistsDictionnaries;
 
 @end
 
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 @implementation JIPSearchArtistsViewController
 
+
+//////////////////////////////////////////////////////////////////////
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -32,31 +39,60 @@
     return self;
 }
 
+//////////////////////////////////////////////////////////////////////
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
+}
+
+//////////////////////////////////////////////////////////////////////
+-(void)viewDidLayoutSubviews
+//called when bounds are redrawn
+{
+    CGFloat superViewWidth = self.view.bounds.size.width;
+    CGFloat superViewHeight = self.view.bounds.size.height;
+    
+    self.searchBarHeight = superViewHeight * JIPSearchArtistSearchBarHeightPercenatge;
+    
+    self.searchBar.frame     = CGRectMake(4, 70, superViewWidth, self.searchBarHeight);
+    NSLog(@"self.searchBar.frame : height - %f, width - %f, x - %f, y - %f", self.searchBar.frame.size.height,
+                                                             self.searchBar.frame.size.width,
+                                                             self.searchBar.frame.origin.x,
+                                                             self.searchBar.frame.origin.y);
+    self.downTableView.frame = CGRectMake(0, (70+self.searchBarHeight), superViewWidth, superViewHeight - self.searchBarHeight);
+    NSLog(@"downTableView : height - %f, width - %f, x - %f, y - %f", self.downTableView.frame.size.height,
+                                                                      self.downTableView.frame.size.width,
+                                                                      self.downTableView.frame.origin.x,
+                                                                      self.downTableView.frame.origin.y);
+}
+
+//////////////////////////////////////////////////////////////////////
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	
-    //setup the search text field
-    UITextField * fldSearch = [[UITextField alloc] initWithFrame:CGRectMake(4,70,312,35)];
-    fldSearch.borderStyle = UITextBorderStyleRoundedRect;
-    fldSearch.backgroundColor = [UIColor whiteColor];
-    fldSearch.font = [UIFont systemFontOfSize:24];
-    fldSearch.delegate = self;
-    fldSearch.placeholder = @"Enter Artist";
-    fldSearch.clearButtonMode = UITextFieldViewModeAlways;
-    fldSearch.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    [self.view addSubview: fldSearch];
+    //1) setup the search text field
+    self.searchBar = [[UITextField alloc] initWithFrame:CGRectZero];
+    self.searchBar.borderStyle = UITextBorderStyleRoundedRect;
+    self.searchBar.backgroundColor = [UIColor whiteColor];
+    self.searchBar.font = [UIFont systemFontOfSize:24];
+    self.searchBar.delegate = self;
+    self.searchBar.placeholder = @"Enter Artist's name";
+    self.searchBar.clearButtonMode = UITextFieldViewModeAlways;
+    self.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    [self.view addSubview: self.searchBar];
 
-    self.downTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
-                                                                      105,
-                                                                      self.view.bounds.size.width,
-                                                                      self.view.bounds.size.height - fldSearch.bounds.size.height)];
+    //2) setup the tableView
+    self.downTableView = [[UITableView alloc] initWithFrame:CGRectZero];
     self.downTableView.dataSource = self;
     self.downTableView.delegate = self;
     [self.view addSubview:self.downTableView];
 
 }
 
+
+
+//////////////////////////////////////////////////////////////////////
 -(void)searchSongkickArtistForSearchterm:(NSString *)searchTerm
 {
 
@@ -107,6 +143,21 @@
 }
 
 
+
+//////////////////////////////////////
+//fire up API search on Enter pressed
+///////////////////////////////////////
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    self.searchTerm = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    [self searchSongkickArtistForSearchterm:self.searchTerm];
+    [self.downTableView reloadData];
+    return YES;
+}
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UITableViewDataSource
@@ -153,16 +204,10 @@
     [self.navigationController pushViewController:artistDetailsVC animated:YES];
 }
 
-//////////////////////////////////////
-//fire up API search on Enter pressed
-///////////////////////////////////////
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    self.searchTerm = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    [self searchSongkickArtistForSearchterm:self.searchTerm];
-    [self.downTableView reloadData];
-    return YES;
-}
+
+
+
+
+
 
 @end

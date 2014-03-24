@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JIPArtist.h"
 
-@interface JIPArtistDetailsViewController : UIViewController
+@interface JIPArtistDetailsViewController : UIViewController <UITableViewDataSource>
 
 @property (strong, nonatomic) JIPArtist *artist;
 
