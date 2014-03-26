@@ -55,15 +55,8 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
     self.searchBarHeight = superViewHeight * JIPSearchArtistSearchBarHeightPercenatge;
     
     self.searchBar.frame     = CGRectMake(4, 70, superViewWidth, self.searchBarHeight);
-    NSLog(@"self.searchBar.frame : height - %f, width - %f, x - %f, y - %f", self.searchBar.frame.size.height,
-                                                             self.searchBar.frame.size.width,
-                                                             self.searchBar.frame.origin.x,
-                                                             self.searchBar.frame.origin.y);
+
     self.downTableView.frame = CGRectMake(0, (70+self.searchBarHeight), superViewWidth, superViewHeight - self.searchBarHeight);
-    NSLog(@"downTableView : height - %f, width - %f, x - %f, y - %f", self.downTableView.frame.size.height,
-                                                                      self.downTableView.frame.size.width,
-                                                                      self.downTableView.frame.origin.x,
-                                                                      self.downTableView.frame.origin.y);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -108,8 +101,6 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
                                             completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                 
                                                 NSDictionary *resultsDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-                                                NSLog(@"class of serialized results : %@", [resultsDict[@"resultsPage"][@"results"][@"artist"][0] class]);
-                                                NSLog(@"data in resultsDict of class : %@", resultsDict[@"resultsPage"][@"results"][@"artist"]);
                                                 
                                                 self.artistsDictionnaries = [[NSMutableArray alloc] init];
                                                 
@@ -199,14 +190,11 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
      {
          artistDetailsVC.artist = [JIPArtist artistWithDict:artistDict
                                      inManagedObjectContext:managedDocument.managedObjectContext];
+         NSLog(@"artistDetailVC.artist = %@", artistDetailsVC.artist.name);
+         [self.navigationController pushViewController:artistDetailsVC animated:YES];
      }];
     
-    [self.navigationController pushViewController:artistDetailsVC animated:YES];
 }
-
-
-
-
 
 
 

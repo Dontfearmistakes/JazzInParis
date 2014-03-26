@@ -45,7 +45,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    //[self createFakeEvents];
+    [self createFakeEvents];
     [self createFetchResultsController];
 }
 

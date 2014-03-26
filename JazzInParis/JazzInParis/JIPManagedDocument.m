@@ -57,6 +57,7 @@ static JIPManagedDocument * _sharedManagedDocument;
         if (success)
         {
             block(self); //ici self sera l'instance _sharedManagedDocument retourneé par +(JIPManagedDocument *)sharedManagedDocument
+            NSLog(@"COULD PERFORM BLOCK WITH ManagedDocument");
         }
         else
         {

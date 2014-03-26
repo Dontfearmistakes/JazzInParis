@@ -14,6 +14,7 @@
 @dynamic name;
 @dynamic songkickUri;
 @dynamic events;
+@dynamic favorite;
 
 //////////////////////////////////////////////////////////////////
 - (id)init

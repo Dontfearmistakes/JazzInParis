@@ -243,9 +243,9 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
          {
              artistDetailsVC.artist = [JIPArtist artistWithName:self.event.artist.name
                                          inManagedObjectContext:managedDocument.managedObjectContext];
+             [self.navigationController pushViewController:artistDetailsVC animated:YES];
          }];
 
-        [self.navigationController pushViewController:artistDetailsVC animated:YES];
     }
     
     //GO TO VENUE DETAILS VC
@@ -258,10 +258,10 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
          {
              venueDetailsVC.venue = [JIPVenue venueWithId:[NSString stringWithFormat:@"%@", self.event.venue.id]
                                      inManagedObjectContext:managedDocument.managedObjectContext];
+             [self.navigationController pushViewController:venueDetailsVC animated:YES];
          }];
 
         
-        [self.navigationController pushViewController:venueDetailsVC animated:YES];
     }
     
     //Go to Songkick's event page to check prices

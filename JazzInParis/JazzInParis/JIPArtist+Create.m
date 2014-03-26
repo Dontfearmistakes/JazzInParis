@@ -40,7 +40,7 @@
         artist.songkickUri = artistDict[@"songkickUri"];
     }
     
-    //there's already a Photo object with that unique ID in the database
+    //there's already an artist object with that unique ID in the database
     else
     {
         artist = [matches lastObject];//there's one object in matches anyway

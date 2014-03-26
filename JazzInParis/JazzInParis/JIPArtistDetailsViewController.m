@@ -7,11 +7,14 @@
 //
 
 #import "JIPArtistDetailsViewController.h"
+#import "JIPManagedDocument.h"
 
 @interface JIPArtistDetailsViewController ()
 
-@property (strong, nonatomic) UITableView * switchButtonLine;
-@property (nonatomic)         CGFloat       switchButtonLineHeight;
+@property (strong, nonatomic) UITableView    * tableView;
+@property (strong, nonatomic) NSMutableArray * videoNames;
+@property (nonatomic)         CGFloat          switchButtonLineHeight;
+
 
 @end
 
@@ -31,7 +34,7 @@
     CGFloat superViewWidth = self.view.bounds.size.width;
     CGFloat superViewHeight = self.view.bounds.size.height;
     
-    self.switchButtonLine.frame = CGRectMake(0,0, superViewWidth, superViewHeight);
+    self.tableView.frame = CGRectMake(0,0, superViewWidth, superViewHeight);
 
 }
 
@@ -44,10 +47,12 @@
     
     
     //1) setup the SwitchButton tableView
-    self.switchButtonLine = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    self.tableView.dataSource = self;
+    [self.view addSubview:self.tableView];
     
-    self.switchButtonLine.dataSource = self;
-    [self.view addSubview:self.switchButtonLine];
+    //2) load youtube videos
+    [self searchYoutubeVideosForTerm:self.artist.name];
     
     ////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////
@@ -63,6 +68,49 @@
     ////////////////////////////////////////////////////////////////////////
 }
 
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+-(void)searchYoutubeVideosForTerm:(NSString*)term
+{
+    NSLog(@"Searching for '%@' ...", term);
+    NSURLSession * session   = [NSURLSession sharedSession];
+    term = [term stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://gdata.youtube.com/feeds/api/videos?q=%@&max-results=50&alt=json", term]];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
+                                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                
+                                                NSDictionary *resultsDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+                                                
+
+                                                NSLog(@"resultsDict2 : %@", resultsDict[@"feed"][@"entry"][0][@"content"][@"$t"]);
+                                                
+                                                self.videoNames = [[NSMutableArray alloc] init];
+                                                for (int i=0; i<[resultsDict[@"feed"][@"entry"] count]; i++)
+                                                {
+                                                    [self.videoNames addObject:resultsDict[@"feed"][@"entry"][i][@"content"][@"$t"]];
+                                                }
+                                                
+                                                //Recharge la TableView
+                                                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                                    [self.tableView reloadData];
+                                                }];
+                                                
+                                                if (error)
+                                                {
+                                                    [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                message:[error localizedDescription]
+                                                                               delegate:nil
+                                                                      cancelButtonTitle:@"Close"
+                                                                      otherButtonTitles: nil] show];
+                                                    return;
+                                                }
+                                                
+                                            }];
+    [dataTask resume];
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,10 +118,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return (self.videoNames.count + 2);
 }
-
-
 
 
 //////////////////////////////////////////////////////
@@ -86,12 +132,50 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     
-    //CELL GETS EVENT.NAME
-    cell.textLabel.text =@"Add/Remove to Favorite";
-    UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-    cell.accessoryView = switchView;
-    [switchView setOn:NO animated:NO];
+    if (indexPath.row == 0)
+    {
+
+        //CELL GETS EVENT.NAME
+        cell.textLabel.text =@"Add/Remove to Favorite";
+        UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+        cell.accessoryView = switchView;
+        
+        if (self.artist.favorite)
+        {
+            [switchView setOn:YES animated:NO];
+        }
+        else
+        {
+            [switchView setOn:NO  animated:NO];
+        }
+        
+        [switchView addTarget:self action:@selector(toggleFavorite:) forControlEvents:UIControlEventValueChanged];
+
+    }
+    else if (indexPath.row == 1)
+    {
+        cell.textLabel.text =@"YouTube Videos : ";
+    }
+    else
+    {
+        cell.textLabel.text = self.videoNames[indexPath.row - 2];
+    }
+    
+    
     
     return cell;
 }
+
+
+////////////////////////////////////
+- (void) toggleFavorite:(id)sender {
+    UISwitch* switchControl = sender;
+    NSLog( @"The switch is %@", switchControl.on ? @"ON" : @"OFF" );
+    
+    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
+     {
+         [self.artist setFavorite:[NSNumber numberWithBool:switchControl.on]];
+     }];
+}
+
 @end

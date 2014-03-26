@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *songkickUri;
+@property (nonatomic, retain) NSNumber *favorite;
 
 //TO MANY RELATIONSHIP TO BE STORED
 @property (nonatomic, retain) NSSet *events;

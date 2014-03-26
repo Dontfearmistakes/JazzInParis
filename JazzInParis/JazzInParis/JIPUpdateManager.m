@@ -19,7 +19,7 @@
 
 static JIPUpdateManager * _sharedUpdateManager;
 
-static const int JIPUpdateManagerDeletionDelay = 10; //After how many days in the past should a JIPEvent be deleted from de batabase ?
+static const int JIPUpdateManagerDeletionDelay = 10; //After how many days in the past should a JIPEvent be deleted from the batabase ?
 static NSString const * JIPUpdateManagerSongkickAPIVersion = @"3.0";
 static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 
