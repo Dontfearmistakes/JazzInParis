@@ -9,6 +9,7 @@
 #import "JIPAppDelegate.h"
 #import "JIPUpComingEventsViewController.h"
 #import "JIPUpcomingEventsCDTVC.h"
+#import "JIPFavoriteArtistTableViewController.h"
 #import "JIPSearchArtistsViewController.h"
 #import "JIPUpdateManager.h"
 
@@ -29,13 +30,13 @@
     ///////////////////////////////////
     
 
-    JIPUpcomingEventsCDTVC         *upcomingEventCDTVC = [[JIPUpcomingEventsCDTVC alloc] init];
-
-    JIPSearchArtistsViewController *searchArtistsVC    = [[JIPSearchArtistsViewController alloc] init];
+    JIPUpcomingEventsCDTVC               *upcomingEventCDTVC = [[JIPUpcomingEventsCDTVC alloc] init];
+    JIPSearchArtistsViewController       *searchArtistsVC    = [[JIPSearchArtistsViewController alloc] init];
+    JIPFavoriteArtistTableViewController *favoriteArtistsVC  = [[JIPFavoriteArtistTableViewController alloc] init];
     
     UINavigationController *upcomingEventsNC = [[UINavigationController alloc] initWithRootViewController:upcomingEventCDTVC];
     UINavigationController *searchArtistsNC  = [[UINavigationController alloc] initWithRootViewController:searchArtistsVC];
-    
+    UINavigationController *favoriteArtistNC = [[UINavigationController alloc] initWithRootViewController:favoriteArtistsVC];
 
     
     
@@ -43,7 +44,7 @@
     //////////  TAB BAR CONTROLLER GETS NAV VC  //////////
     //////////////////////////////////////////////////////
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[searchArtistsNC, upcomingEventsNC];
+    tabBarController.viewControllers = @[searchArtistsNC, upcomingEventsNC, favoriteArtistNC];
     
     
     
@@ -51,9 +52,10 @@
     ///////////////////////  STYLING  ////////////////////
     //////////////////////////////////////////////////////
     upcomingEventsNC.navigationBar.barTintColor = Rgb2UIColor(255, 177, 91);
-    searchArtistsNC. navigationBar.barTintColor = Rgb2UIColor(255, 177, 91);
+    searchArtistsNC .navigationBar.barTintColor = Rgb2UIColor(255, 177, 91);
+    favoriteArtistNC.navigationBar.barTintColor = Rgb2UIColor(255, 177, 91);
     upcomingEventsNC.navigationBar.tintColor    = Rgb2UIColor(41, 59, 255);
-    searchArtistsNC. navigationBar.tintColor    = Rgb2UIColor(41, 59, 255);
+    searchArtistsNC .navigationBar.tintColor    = Rgb2UIColor(41, 59, 255);
     
     [[UINavigationBar appearance] setTitleTextAttributes:
      @{NSForegroundColorAttributeName: Rgb2UIColor(41, 59, 255),
