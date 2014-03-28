@@ -139,11 +139,9 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5008E04818DC995F00530542 /* Basics */ = {
+		5008E04818DC995F00530542 /* RootVCs */ = {
 			isa = PBXGroup;
 			children = (
-				50FCB09618CE12B500AD4402 /* JIPCoreDataTableViewController.h */,
-				50FCB09718CE12B500AD4402 /* JIPCoreDataTableViewController.m */,
 				50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */,
 				50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */,
 				50FCB09B18CE140800AD4402 /* JIPUpcomingEventsCDTVC.h */,
@@ -151,7 +149,16 @@
 				5008E04518DC992F00530542 /* JIPSearchArtistsViewController.h */,
 				5008E04618DC992F00530542 /* JIPSearchArtistsViewController.m */,
 			);
-			name = Basics;
+			name = RootVCs;
+			sourceTree = "<group>";
+		};
+		5049960018E59FEE008D5413 /* Abstract */ = {
+			isa = PBXGroup;
+			children = (
+				50FCB09618CE12B500AD4402 /* JIPCoreDataTableViewController.h */,
+				50FCB09718CE12B500AD4402 /* JIPCoreDataTableViewController.m */,
+			);
+			name = Abstract;
 			sourceTree = "<group>";
 		};
 		50726F2F18BB56A8008F2578 /* Extension */ = {
@@ -286,7 +293,8 @@
 		50FB3192189EE04F00137949 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5008E04818DC995F00530542 /* Basics */,
+				5049960018E59FEE008D5413 /* Abstract */,
+				5008E04818DC995F00530542 /* RootVCs */,
 				5015AAAC18A159ED000A7625 /* JIPConcertDetailsViewController.h */,
 				5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */,
 				508598D518AA551C0048D760 /* JIPVenueDetailsViewController.h */,

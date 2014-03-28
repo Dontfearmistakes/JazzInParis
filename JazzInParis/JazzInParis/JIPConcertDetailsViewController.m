@@ -98,7 +98,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     
     self.topTableView.frame = CGRectMake(0, 0, superViewWidth, self.tableViewHeight);
     
-    self.venueMap.frame = CGRectMake(0, self.tableViewHeight, superViewWidth, superViewHeight - self.tableViewHeight);
+    self.venueMap.frame     = CGRectMake(0, self.tableViewHeight, superViewWidth, superViewHeight - self.tableViewHeight);
 
 }
 
@@ -177,11 +177,10 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    self.allEventProperties = @[[NSString stringWithFormat:@"Who ?  %@", self.event.artist.name],
-                                [NSString stringWithFormat:@"When ?  %@", [NSDate stringFromDate:self.event.date]],
-                                [NSString stringWithFormat:@"Where ?  %@ : %@ in %@",self.event.venue.name, self.event.venue.street, self.event.venue.city],
-                                [NSString stringWithFormat:@"Check prices : %@", self.event.uriString],
-                                self.event.ageRestriction];
+    self.allEventProperties = @[[NSString stringWithFormat:@"Who   ?  %@", self.event.artist.name],
+                                [NSString stringWithFormat:@"When  ?  %@", [NSDate stringFromDate:self.event.date]],
+                                [NSString stringWithFormat:@"Where ?  %@",self.event.venue.name],
+                                [NSString stringWithFormat:@"Check prices on Songkick"]];
     return self.allEventProperties.count;
 }
 
@@ -203,8 +202,8 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
         cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:12.0f];
     }
     
-    //BUTTONS ON CELL 0 AND 2
-    if (indexPath.row == 0 || indexPath.row == 2)
+    //BUTTONS ON CELL 0, 2 and 3
+    if (indexPath.row != 1)
     {
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     }
@@ -214,15 +213,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 
 
 
-//////////////////////////////////////////////////////
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
-    {
-        return self.tableViewHeight/10;
-    }
-    return self.tableViewHeight/6;
-}
+
 
 
 
@@ -238,30 +229,16 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     if (indexPath.row == 0)
     {
         JIPArtistDetailsViewController *artistDetailsVC = [[JIPArtistDetailsViewController alloc] init];
-        //FETCH ARTIST IN CONTEXT AND PASS IT TO artistDetailsVC.artist
-        [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
-         {
-             artistDetailsVC.artist = [JIPArtist artistWithName:self.event.artist.name
-                                         inManagedObjectContext:managedDocument.managedObjectContext];
-             [self.navigationController pushViewController:artistDetailsVC animated:YES];
-         }];
-
+        artistDetailsVC.artist = self.event.artist;
+        [self.navigationController pushViewController:artistDetailsVC animated:YES];
     }
     
     //GO TO VENUE DETAILS VC
     if (indexPath.row == 2)
     {
         JIPVenueDetailsViewController *venueDetailsVC = [[JIPVenueDetailsViewController alloc] init];
-        
-        //FETCH VENUE IN CONTEXT AND PASS IT TO venueDetailsVC.venue
-        [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
-         {
-             venueDetailsVC.venue = [JIPVenue venueWithId:[NSString stringWithFormat:@"%@", self.event.venue.id]
-                                     inManagedObjectContext:managedDocument.managedObjectContext];
-             [self.navigationController pushViewController:venueDetailsVC animated:YES];
-         }];
-
-        
+        venueDetailsVC.venue = self.event.venue;
+        [self.navigationController pushViewController:venueDetailsVC animated:YES];
     }
     
     //Go to Songkick's event page to check prices
@@ -269,6 +246,8 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.event.uriString]];
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
@@ -306,14 +285,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
     JIPVenueDetailsViewController *venueDetailsVC = [[JIPVenueDetailsViewController alloc] init];
-    
-    //FETCH VENUE IN CONTEXT AND PASS IT TO venueDetailsVC.venue
-    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
-    {
-        venueDetailsVC.venue = [JIPVenue venueWithId:[NSString stringWithFormat:@"%@", self.event.venue.id]
-                                inManagedObjectContext:managedDocument.managedObjectContext];
-    }];
-    
+    venueDetailsVC.venue = self.event.venue;
     [self.navigationController pushViewController:venueDetailsVC animated:YES];
 }
 

@@ -59,12 +59,16 @@
      @{NSForegroundColorAttributeName: Rgb2UIColor(41, 59, 255),
        NSFontAttributeName           : [UIFont fontWithName:@"Noteworthy-Light" size:20.0]
        }];
+    
     tabBarController.tabBar.tintColor = Rgb2UIColor(41, 59, 255); //blue
     tabBarController.tabBar.barTintColor = Rgb2UIColor(255, 177, 91); //orange
 
     
-    self.window.rootViewController = tabBarController;
     
+    
+    
+    
+    self.window.rootViewController = tabBarController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

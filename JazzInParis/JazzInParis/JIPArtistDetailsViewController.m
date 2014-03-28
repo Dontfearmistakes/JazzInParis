@@ -42,7 +42,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //FIXME: Artist Name appears on second load only
     self.title = [NSString stringWithFormat:@"%@", self.artist.name];
     
     

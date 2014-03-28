@@ -36,6 +36,7 @@
         event = [NSEntityDescription insertNewObjectForEntityForName:@"JIPEvent"
                                               inManagedObjectContext:context];
         
+        //FIXME: eventDictionary[@"id"] seems to be NSNumber but gets transformed when passed to event.id
         event.id             = eventDictionary[@"id"];
         event.name           = eventDictionary[@"name"];
         event.latitude       = [NSNumber numberWithDouble:[eventDictionary[@"lat"] doubleValue]];

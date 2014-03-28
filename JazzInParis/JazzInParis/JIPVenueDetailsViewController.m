@@ -17,7 +17,7 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
 
 @interface JIPVenueDetailsViewController ()
 
-@property (strong, nonatomic) NSArray *allVenueProperties;
+@property (strong, nonatomic) NSArray *venueDetailsRows;
 @property (strong, nonatomic) UITableView *topTableView;
 
 @end
@@ -164,13 +164,29 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    self.allVenueProperties = @[[NSString stringWithFormat:@"%@ in %@", self.venue.street, self.venue.city],
-                                 self.venue.desc,
-                                 self.venue.websiteString,
-                                 self.venue.phone,
-                                 self.venue.capacity
-                                ];
-    return self.allVenueProperties.count;
+    
+    if (self.venue.street == nil){
+        self.venue.street = @"No adress available";
+    }
+    if (self.venue.city == nil) {
+        self.venue.city = @"No city available";
+    }
+    if (self.venue.desc == nil) {
+        self.venue.desc = @"No description available";
+    }
+    if (self.venue.websiteString == nil) {
+        self.venue.websiteString = @"No website";
+    }
+    if (self.venue.phone == nil) {
+        self.venue.phone = @"No Phone";
+    }
+    
+    self.venueDetailsRows = @[
+                              [NSString stringWithFormat:@"%@ - %@", self.venue.street, self.venue.city],
+                              self.venue.desc,
+                              self.venue.websiteString,
+                              self.venue.phone];
+    return self.venueDetailsRows.count;
 }
 
 
@@ -180,7 +196,7 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"id"];
     
     //CELL GETS EVENT.NAME
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", self.allVenueProperties[indexPath.row]];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", self.venueDetailsRows[indexPath.row]];
     cell.backgroundColor = [UIColor blueColor];
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
     
@@ -203,6 +219,8 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
         NSLog(@"%@", self.venue.websiteString);
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.venue.websiteString]];
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 

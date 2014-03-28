@@ -194,6 +194,7 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
          [self.navigationController pushViewController:artistDetailsVC animated:YES];
      }];
     
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 

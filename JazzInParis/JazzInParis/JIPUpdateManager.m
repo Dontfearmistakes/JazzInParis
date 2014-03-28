@@ -91,17 +91,17 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
             NSMutableDictionary * eventDict = [[NSMutableDictionary alloc]init];
             
             //event details
-            [eventDict setValue:dictionnaryOfEvent[@"id"]                                                  forKey:@"id"];
-            [eventDict setValue:dictionnaryOfEvent[@"displayName"]                                         forKey:@"name"];
-            [eventDict setValue:[NSString stringWithFormat:@"%@", dictionnaryOfEvent[@"location"][@"lat"]] forKey:@"lat"];
-            [eventDict setValue:[NSString stringWithFormat:@"%@", dictionnaryOfEvent[@"location"][@"lng"]] forKey:@"long"];
-            [eventDict setValue:[NSDate dateFromAPIString:dictionnaryOfEvent[@"start"][@"date"]]           forKey:@"date"];
-            [eventDict setValue:dictionnaryOfEvent[@"venue"][@"displayName"]                               forKey:@"venue"];
-            [eventDict setValue:dictionnaryOfEvent[@"performance"][0][@"artist"][@"displayName"]           forKey:@"artist"];
-            [eventDict setValue:dictionnaryOfEvent[@"type"]                                                forKey:@"type"];
-            [eventDict setValue:dictionnaryOfEvent[@"uri"]                                                 forKey:@"uriString"];
-            [eventDict setValue:[NSString stringWithFormat:@"%@", dictionnaryOfEvent[@"ageRestriction"]]   forKey:@"ageRestriction"];
-            [eventDict setValue:dictionnaryOfEvent[@"venue"][@"id"]                                        forKey:@"venueId"];
+
+            [eventDict setValue: dictionnaryOfEvent[@"id"]                                                  forKey:@"id"];
+            [eventDict setValue: dictionnaryOfEvent[@"displayName"]                                         forKey:@"name"];
+            [eventDict setValue: [NSString stringWithFormat:@"%@", dictionnaryOfEvent[@"location"][@"lat"]] forKey:@"lat"];
+            [eventDict setValue: [NSString stringWithFormat:@"%@", dictionnaryOfEvent[@"location"][@"lng"]] forKey:@"long"];
+            [eventDict setValue: [NSDate dateFromAPIString:dictionnaryOfEvent[@"start"][@"date"]]           forKey:@"date"];
+            [eventDict setValue: dictionnaryOfEvent[@"venue"][@"displayName"]                               forKey:@"venue"];
+            [eventDict setValue: dictionnaryOfEvent[@"performance"][0][@"artist"][@"displayName"]           forKey:@"artist"];
+            [eventDict setValue: dictionnaryOfEvent[@"type"]                                                forKey:@"type"];
+            [eventDict setValue: dictionnaryOfEvent[@"uri"]                                                 forKey:@"uriString"];
+            [eventDict setValue: [NSString stringWithFormat:@"%@", dictionnaryOfEvent[@"ageRestriction"]]   forKey:@"ageRestriction"];
             
             //artist details
             [eventDict setValue:dictionnaryOfEvent[@"performance"][0][@"artist"][@"id"]     forKey:@"artistId"];
@@ -172,9 +172,9 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 {
     [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
         
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
-        NSDate *tenDaysAgo= [NSDate dateWithTimeIntervalSinceNow:( -JIPUpdateManagerDeletionDelay * 24 * 60 * 60 )];
-        request.predicate = [NSPredicate predicateWithFormat:@"date <= %@", tenDaysAgo]; //all JIPEvents starting today or later
+        NSFetchRequest *request     = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
+        NSDate         *tenDaysAgo  = [NSDate dateWithTimeIntervalSinceNow:( -JIPUpdateManagerDeletionDelay * 24 * 60 * 60 )];
+        request.predicate           = [NSPredicate predicateWithFormat:@"date <= %@", tenDaysAgo]; //all JIPEvents older than XX days
         NSError *error = nil;
         NSArray *objectsToBeDeleted = [managedDocument.managedObjectContext executeFetchRequest:request
                                                                                    error:&error];

@@ -143,7 +143,7 @@
 -(void)setLocation:(CLLocationCoordinate2D)location
 {
     _location = location;
-    self.latitude = [NSNumber numberWithDouble:location.latitude];
+    self.latitude  = [NSNumber numberWithDouble:location.latitude];
     self.longitude = [NSNumber numberWithDouble:location.longitude];
 }
 

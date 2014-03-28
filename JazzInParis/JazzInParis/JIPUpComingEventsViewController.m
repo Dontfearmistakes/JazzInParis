@@ -293,6 +293,7 @@
     
     //PUSH VC//////////////////////
     [self.navigationController pushViewController:concertDetailsVC animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
