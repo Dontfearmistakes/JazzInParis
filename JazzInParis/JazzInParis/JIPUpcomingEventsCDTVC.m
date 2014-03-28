@@ -45,7 +45,7 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    [self createFakeEvents];
+    //[self createFakeEvents];
     [self createFetchResultsController];
 }
 
@@ -150,7 +150,7 @@
         
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
-        request.predicate       = [NSPredicate predicateWithFormat:@"date >= %@", [NSDate date]]; //all JIPEvents starting today or later
+        //request.predicate       = [NSPredicate predicateWithFormat:@"date >= %@", [NSDate date]]; //all JIPEvents starting today or later
         
         self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                                             managedObjectContext:managedDocument.managedObjectContext

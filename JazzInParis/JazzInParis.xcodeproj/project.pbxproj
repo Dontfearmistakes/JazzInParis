@@ -142,6 +142,8 @@
 		5008E04818DC995F00530542 /* Basics */ = {
 			isa = PBXGroup;
 			children = (
+				50FCB09618CE12B500AD4402 /* JIPCoreDataTableViewController.h */,
+				50FCB09718CE12B500AD4402 /* JIPCoreDataTableViewController.m */,
 				50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */,
 				50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */,
 				50FCB09B18CE140800AD4402 /* JIPUpcomingEventsCDTVC.h */,
@@ -291,8 +293,6 @@
 				508598D618AA551C0048D760 /* JIPVenueDetailsViewController.m */,
 				508598DB18AA83AB0048D760 /* JIPArtistDetailsViewController.h */,
 				508598DC18AA83AB0048D760 /* JIPArtistDetailsViewController.m */,
-				50FCB09618CE12B500AD4402 /* JIPCoreDataTableViewController.h */,
-				50FCB09718CE12B500AD4402 /* JIPCoreDataTableViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";

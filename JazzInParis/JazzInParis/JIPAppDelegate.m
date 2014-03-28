@@ -17,7 +17,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    //[[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
+    [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
@@ -28,11 +28,7 @@
     //////////UPCOMING EVENTS VC////////
     ///////////////////////////////////
     
-    //TEST
-    //Soit 1
-    //JIPUpComingEventsViewController *upcomingEventVC = [[JIPUpComingEventsViewController alloc] init];
-    //[upcomingEventVC createFakeUpcomingEvents];
-    //Soit 2
+
     JIPUpcomingEventsCDTVC         *upcomingEventCDTVC = [[JIPUpcomingEventsCDTVC alloc] init];
 
     JIPSearchArtistsViewController *searchArtistsVC    = [[JIPSearchArtistsViewController alloc] init];
@@ -55,9 +51,9 @@
     ///////////////////////  STYLING  ////////////////////
     //////////////////////////////////////////////////////
     upcomingEventsNC.navigationBar.barTintColor = Rgb2UIColor(255, 177, 91);
-    upcomingEventsNC.navigationBar.tintColor = Rgb2UIColor(41, 59, 255);
-    searchArtistsNC.navigationBar.barTintColor = Rgb2UIColor(255, 177, 91);
-    searchArtistsNC.navigationBar.tintColor = Rgb2UIColor(41, 59, 255);
+    searchArtistsNC. navigationBar.barTintColor = Rgb2UIColor(255, 177, 91);
+    upcomingEventsNC.navigationBar.tintColor    = Rgb2UIColor(41, 59, 255);
+    searchArtistsNC. navigationBar.tintColor    = Rgb2UIColor(41, 59, 255);
     
     [[UINavigationBar appearance] setTitleTextAttributes:
      @{NSForegroundColorAttributeName: Rgb2UIColor(41, 59, 255),

@@ -38,7 +38,10 @@
         venue.capacity = venueDict[@"capacity"];
         venue.city     = venueDict[@"city"];
         venue.desc     = venueDict[@"desc"];
-        venue.id       = venueDict[@"id"];
+        if (venueDict[@"id"] != [NSNull null])
+        {
+            venue.id       = venueDict[@"id"];
+        }
         venue.street   = venueDict[@"street"];
         venue.phone    = venueDict[@"phone"];
         venue.websiteString = venueDict[@"websiteString"];

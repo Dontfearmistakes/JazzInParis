@@ -36,7 +36,10 @@
         artist = [NSEntityDescription insertNewObjectForEntityForName:@"JIPArtist"
                                               inManagedObjectContext:context];
         artist.name        = artistDict[@"name"];
-        artist.id          = artistDict[@"id"];
+        if (artistDict[@"id"] != [NSNull null])
+        {
+            artist.id      = artistDict[@"id"];
+        }
         artist.songkickUri = artistDict[@"songkickUri"];
     }
     
