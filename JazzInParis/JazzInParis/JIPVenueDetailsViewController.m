@@ -161,7 +161,7 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
+
     if (self.venue.street == nil){
         self.venue.street = @"No adress available";
     }

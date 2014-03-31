@@ -26,6 +26,7 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 @interface JIPUpdateManager ()
 
 @property (strong, nonatomic) NSArray * favoriteArtists;
+@property (strong, nonatomic) JIPVenue * venue;
 
 @end
 
@@ -53,15 +54,13 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 /////////////////////////////////////////////////////////////
 -(void)updateUpcomingEvents
 {
-    //1) Clear old events (older than X days)
-    //[self clearOldEvents];
-    
-    //2) Create http requests for all favorite artists
+    //1) Create http requests for all favorite artists
     NSURLSession * session  = [NSURLSession sharedSession];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
     request.predicate       = [NSPredicate predicateWithFormat:@"favorite == %@", @YES];
     NSError *error = nil;
+    
     self.favoriteArtists = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
     
     for (JIPArtist * artist in self.favoriteArtists)
@@ -70,20 +69,22 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
         NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                     
-                                                    //NSLog(@"DATA : %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-                                                    // JSON into NSDict (parser) cf NSJSONSerialisation
-                                                    // + Créer object avec les attributes
-                                                    // + Insert them intoContext
-                                                    // Objectif : méthodes réutilisables pour autres appels
-                                                    // ex : constantes pour les keys de retour de Songkick (mettre dans .h pour utilisation publique et nottament par JIPEvent + Create pour modifier les eventDict[keyFromSongkick])
-                                                    
                                                     [self insertJIPEventsFromJSON:data error:&error];
-                                                    
                                                 }];
         [dataTask resume];
     }
-    
+}
 
+-(void)updateUpcomingEventsForFavoriteArtist:(JIPArtist *)artist
+{
+    NSURLSession * session  = [NSURLSession sharedSession];
+    NSURL *url = [self songkickURLUpcomingEventsForArtist:artist];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
+                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                    
+                                                    [self insertJIPEventsFromJSON:data error:&error];
+                                                }];
+    [dataTask resume];
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -96,49 +97,74 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
         NSLog(@"%@", error);
     }
     
-    NSArray *dictionnariesOfEvents = parsedObject[@"resultsPage"][@"results"][@"event"];
+    NSArray *dictionnariesOfEventsFromApi = parsedObject[@"resultsPage"][@"results"][@"event"];
     
     [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
         
-        for (NSDictionary * dictionnaryOfEvent in dictionnariesOfEvents)
+        for (NSDictionary * dictionnaryFromApi in dictionnariesOfEventsFromApi)
         {
             NSMutableDictionary * eventDict = [[NSMutableDictionary alloc]init];
             
             //event details
-            [eventDict setValue: dictionnaryOfEvent[@"id"]                                                  forKey:@"id"];
-            [eventDict setValue: dictionnaryOfEvent[@"displayName"]                                         forKey:@"name"];
-            [eventDict setValue: [NSString stringWithFormat:@"%@", dictionnaryOfEvent[@"location"][@"lat"]] forKey:@"lat"];
-            [eventDict setValue: [NSString stringWithFormat:@"%@", dictionnaryOfEvent[@"location"][@"lng"]] forKey:@"long"];
-            [eventDict setValue: [NSDate dateFromAPIString:dictionnaryOfEvent[@"start"][@"date"]]           forKey:@"date"];
-            [eventDict setValue: dictionnaryOfEvent[@"venue"][@"displayName"]                               forKey:@"venue"];
-            [eventDict setValue: dictionnaryOfEvent[@"performance"][0][@"artist"][@"displayName"]           forKey:@"artist"];
-            [eventDict setValue: dictionnaryOfEvent[@"type"]                                                forKey:@"type"];
-            [eventDict setValue: dictionnaryOfEvent[@"uri"]                                                 forKey:@"uriString"];
-            [eventDict setValue: [NSString stringWithFormat:@"%@", dictionnaryOfEvent[@"ageRestriction"]]   forKey:@"ageRestriction"];
+            eventDict[@"id"]        = dictionnaryFromApi[@"id"];
+            eventDict[@"name"]      = dictionnaryFromApi[@"displayName"];
+            eventDict[@"lat"]       = [NSString stringWithFormat:@"%@", dictionnaryFromApi[@"location"][@"lat"]];
+            eventDict[@"long"]      = [NSString stringWithFormat:@"%@", dictionnaryFromApi[@"location"][@"lng"]];
+            eventDict[@"date"]      = [NSDate dateFromAPIString:dictionnaryFromApi[@"start"][@"date"]] ;
+            eventDict[@"venue"]     = dictionnaryFromApi[@"venue"][@"displayName"];
+            eventDict[@"artist"]    = dictionnaryFromApi[@"performance"][0][@"artist"][@"displayName"] ;
+            eventDict[@"uriString"] = dictionnaryFromApi[@"uri"];
             
             //artist details
-            [eventDict setValue:dictionnaryOfEvent[@"performance"][0][@"artist"][@"id"]     forKey:@"artistId"];
-            [eventDict setValue:dictionnaryOfEvent[@"performance"][0][@"artist"][@"uri"]    forKey:@"artistUri"];
+            eventDict[@"artistId"]  = dictionnaryFromApi[@"performance"][0][@"artist"][@"id"];
+            eventDict[@"artistUri"] = dictionnaryFromApi[@"performance"][0][@"artist"][@"uri"];
             
             
             //venue details
-            [eventDict setValue:dictionnaryOfEvent[@"venue"][@"capacity"]                                           forKey:@"venueCapacity"];
-            [eventDict setValue:dictionnaryOfEvent[@"venue"][@"city"][@"displayName"]                               forKey:@"venueCity"];
-            [eventDict setValue:dictionnaryOfEvent[@"venue"][@"description"]                                        forKey:@"venueDesc"];
-            [eventDict setValue:dictionnaryOfEvent[@"venue"][@"id"]                                                 forKey:@"venueId"];
-            [eventDict setValue:[NSString stringWithFormat:@"%@", dictionnaryOfEvent[@"venue"][@"lat"]]             forKey:@"venueLat"];
-            [eventDict setValue:[NSString stringWithFormat:@"%@", dictionnaryOfEvent[@"venue"][@"lng"]]             forKey:@"venueLong"];
-            [eventDict setValue:dictionnaryOfEvent[@"venue"][@"displayName"]                                        forKey:@"venueName"];
-            [eventDict setValue:dictionnaryOfEvent[@"venue"][@"phone"]                                              forKey:@"venuePhone"];
-            [eventDict setValue:dictionnaryOfEvent[@"venue"][@"street"]                                             forKey:@"venueStreet"];
-            [eventDict setValue:dictionnaryOfEvent[@"venue"][@"website"]                                            forKey:@"venueWebsite"];
-    
+            eventDict[@"venueId"]   = dictionnaryFromApi[@"venue"][@"id"];
+            eventDict[@"venueUri"]  = dictionnaryFromApi[@"venue"][@"uri"];
+            eventDict[@"venueName"] = dictionnaryFromApi[@"venue"][@"displayName"];
+            eventDict[@"venueCity"] = dictionnaryFromApi[@"location"][@"city"];
+            
 
             [JIPEvent eventWithSongkickInfo:eventDict
                      inManagedObjectContext:managedDocument.managedObjectContext];
         }
     }];
     
+}
+
+
+-(JIPVenue *)venueFromSongkickWithId:(NSString *)venueId
+{
+    //1) Create http request
+    NSURLSession * session  = [NSURLSession sharedSession];
+    NSURL *url = [self songkickURLUpcomingEventsForVenueWithId:venueId];
+
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
+                                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                
+                                                NSError *localError = nil;
+                                                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
+                                                NSDictionary *dictionnaryOfVenue = parsedObject[@"resultsPage"][@"results"][@"venue"];
+
+                                                [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
+                                                    
+                                                        self.venue = [JIPVenue venueWithDict:@{@"id"               : dictionnaryOfVenue[@"id"],
+                                                                                               @"street"           : dictionnaryOfVenue[@"street"],
+                                                                                               @"capacity"         : dictionnaryOfVenue[@"capacity"],
+                                                                                               @"desc"             : dictionnaryOfVenue[@"description"],
+                                                                                               @"phone"            : dictionnaryOfVenue[@"phone"],
+                                                                                               @"websiteString"    : dictionnaryOfVenue[@"website"]
+                                                                                               }
+                                                                      inManagedObjectContext:managedDocument.managedObjectContext];
+                                                    }
+                                                ];
+                                            }];
+                                        
+    [dataTask resume];
+
+    return self.venue;
 }
 
 
@@ -155,6 +181,7 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 ////////////////////////////////////////////////////////////////
 -(NSURL *)songkickURLUpcomingEventsForVenueWithId:(NSString *)venueId
 {
+    //goal : http://api.songkick.com/api/3.0/venues/{venue_id}.json?apikey={your_api_key}
     NSString * venueUrlPiece = [NSString stringWithFormat:@"venues/%@.json", venueId];
     return [self songkickApiURLWithComponent:venueUrlPiece];
 }
@@ -162,11 +189,12 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 ///////////////////////////////////////////////////////
 -(NSURL *)songkickApiURLWithComponent:(NSString*)component
 {
-    if (!component) {
-        return nil;
-    }
+    if (!component)
+    return nil;
 
-    NSString * songkickAPIString = [NSString stringWithFormat:@"http://api.songkick.com/api/%@/%@?apikey=%@", JIPUpdateManagerSongkickAPIVersion, component, JIPUpdateManagerSongkickAPIKey];
+    NSString * songkickAPIString = [NSString stringWithFormat:@"http://api.songkick.com/api/%@/%@?apikey=%@", JIPUpdateManagerSongkickAPIVersion,
+                                                                                                              component,
+                                                                                                              JIPUpdateManagerSongkickAPIKey];
     return [NSURL URLWithString:songkickAPIString];
 }
 
@@ -188,6 +216,23 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
         if (objectsToBeDeleted != nil)
         for (NSManagedObject* objectToBeDeleted in objectsToBeDeleted)
         [[JIPManagedDocument sharedManagedDocument].managedObjectContext deleteObject:objectToBeDeleted];
+    
+    
+}
+
+/////////////////////
+-(void)clearArtistEvents:(JIPArtist *)artist
+{
+    
+    NSFetchRequest *request     = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
+    request.predicate           = [NSPredicate predicateWithFormat:@"id = %@", artist.id]; //all JIPEvents for this artist
+    NSError *error = nil;
+    NSArray *objectsToBeDeleted = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request
+                                                                                                                 error:&error];
+    
+    if (objectsToBeDeleted != nil)
+        for (NSManagedObject* objectToBeDeleted in objectsToBeDeleted)
+            [[JIPManagedDocument sharedManagedDocument].managedObjectContext deleteObject:objectToBeDeleted];
     
     
 }

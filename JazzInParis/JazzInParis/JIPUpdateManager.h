@@ -8,10 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "JIPVenue.h"
+#import "JIPArtist.h"
 
 @interface JIPUpdateManager : NSObject
 
 +(JIPUpdateManager *) sharedUpdateManager;
 -(void)updateUpcomingEvents;
+-(void)updateUpcomingEventsForFavoriteArtist:(JIPArtist *)artist;
+-(void)clearOldEvents;
+-(void)clearArtistEvents:(JIPArtist *)artist;
+-(JIPVenue *)venueFromSongkickWithId:(NSString*)venueId;
 
 @end

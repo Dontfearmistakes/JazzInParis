@@ -180,8 +180,15 @@
 
     [self.artist setFavorite:[NSNumber numberWithBool:switchControl.on]];
 
-    
-    [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
+    //Si
+    if (switchControl.on)
+    {   // On commence à télécharger
+        [[JIPUpdateManager sharedUpdateManager] updateUpcomingEventsForFavoriteArtist:self.artist];
+    }
+    else
+    {   //// On efface
+        [[JIPUpdateManager sharedUpdateManager] clearArtistEvents:self.artist];
+    }
 }
 
 @end

@@ -36,7 +36,6 @@
         event = [NSEntityDescription insertNewObjectForEntityForName:@"JIPEvent"
                                               inManagedObjectContext:context];
         
-
         event.id             = eventDictionary[@"id"];
         event.name           = eventDictionary[@"name"];
         event.latitude       = [NSNumber numberWithDouble:[eventDictionary[@"lat"] doubleValue]];
@@ -48,23 +47,20 @@
 
         
         NSMutableDictionary * venueDict = [[NSMutableDictionary alloc] init];
-        [venueDict setValue:eventDictionary[@"venueCapacity"] forKey:@"capacity"];
-        [venueDict setValue:eventDictionary[@"venueCity"]     forKey:@"city"];
-        [venueDict setValue:eventDictionary[@"venueId"]       forKey:@"id"];
-        [venueDict setValue:eventDictionary[@"venueLat"]      forKey:@"lat"];
-        [venueDict setValue:eventDictionary[@"venueLong"]     forKey:@"long"];
-        [venueDict setValue:eventDictionary[@"venueName"]     forKey:@"name"];
-        //FIXME:CHECK
-        venueDict[@"name"] = eventDictionary[@"venueName"];
+        venueDict[@"name"]    = eventDictionary[@"venueName"];
+        venueDict[@"long"]    = eventDictionary[@"long"];
+        venueDict[@"lat"]     = eventDictionary[@"lat"];
+        venueDict[@"id"]      = eventDictionary[@"venueId"];
+        venueDict[@"city"]    = eventDictionary[@"venueCity"];
         
         event.venue  = [JIPVenue  venueWithDict:venueDict
                          inManagedObjectContext:context];
         
         
         NSMutableDictionary * artistDict = [[NSMutableDictionary alloc] init];
-        [artistDict setValue:eventDictionary[@"artist"]    forKey:@"name"];
-        [artistDict setValue:eventDictionary[@"artistId"]  forKey:@"id"];
-        [artistDict setValue:eventDictionary[@"artistUri"] forKey:@"songkickUri"];
+        artistDict[@"name"]          = eventDictionary[@"artist"];
+        artistDict[@"id"]            = eventDictionary[@"artistId"];
+        artistDict[@"songkickUri"]   = eventDictionary[@"artistUri"];
         
         event.artist = [JIPArtist artistWithDict:artistDict
                           inManagedObjectContext:context];

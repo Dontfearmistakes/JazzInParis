@@ -14,6 +14,7 @@
 #import "NSDate+Formatting.h"
 #import "JIPVenue+Create.h"
 #import "JIPArtist+Create.h"
+#import "JIPUpdateManager.h"
 
 const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 
@@ -237,7 +238,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     if (indexPath.row == 2)
     {
         JIPVenueDetailsViewController *venueDetailsVC = [[JIPVenueDetailsViewController alloc] init];
-        venueDetailsVC.venue = self.event.venue;
+        venueDetailsVC.venue = [[JIPUpdateManager sharedUpdateManager] venueFromSongkickWithId:[NSString stringWithFormat:@"%@", self.event.venue.id]];
         [self.navigationController pushViewController:venueDetailsVC animated:YES];
     }
     

@@ -30,10 +30,6 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -42,9 +38,12 @@
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
     request.predicate       = [NSPredicate predicateWithFormat:@"favorite == %@", @YES]; 
-    NSError *error = nil;
-    self.favoriteArtists = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
-
+    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
+    {
+        NSError *error = nil;
+        self.favoriteArtists = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
+    }];
+     
     [self.tableView reloadData];
 }
 
@@ -95,7 +94,12 @@
     
     [self.favoriteArtists[switchControl.tag] setFavorite:[NSNumber numberWithBool:switchControl.on]];
     
-    [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
+    if (switchControl.on) {
+        [[JIPUpdateManager sharedUpdateManager] updateUpcomingEventsForFavoriteArtist:self.favoriteArtists[switchControl.tag]];
+    }
+    else {
+        [[JIPUpdateManager sharedUpdateManager] clearArtistEvents:self.favoriteArtists[switchControl.tag]];
+    }
 }
 
 @end

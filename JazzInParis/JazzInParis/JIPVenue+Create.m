@@ -17,11 +17,11 @@
     JIPVenue *venue = nil;
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPVenue"];
-    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", venueDict[@"name"]];
+    request.predicate = [NSPredicate predicateWithFormat:@"id = %@", venueDict[@"id"]];
     
     NSError *error = nil;
     NSArray *matches = [context executeFetchRequest:request error:&error];
-    
+    venue = [matches lastObject];
     //fetchRequest returns nil, there's an error
     if ( !matches )
     {
@@ -30,23 +30,34 @@
     }
     
     //there's no match in the database yet, let's create a Venue object in the database
-    else if ([matches count] == 0)
+    else if ([matches count] == 0 )
     {
         venue = [NSEntityDescription insertNewObjectForEntityForName:@"JIPVenue"
                                                      inManagedObjectContext:context];
-        venue.name     = venueDict[@"name"];
-        venue.capacity = venueDict[@"capacity"];
-        venue.city     = venueDict[@"city"];
-        venue.desc     = venueDict[@"desc"];
         if (venueDict[@"id"] != [NSNull null])
         {
             venue.id       = venueDict[@"id"];
         }
+        venue.name     = venueDict[@"name"];
+        venue.city     = venueDict[@"city"];
+        venue.latitude = [NSNumber numberWithDouble:[venueDict[@"lat"] doubleValue]];
+        venue.longitude = [NSNumber numberWithDouble:[venueDict[@"long"] doubleValue]];
+        venue.desc     = venueDict[@"desc"];
+        venue.capacity = venueDict[@"capacity"];
         venue.street   = venueDict[@"street"];
         venue.phone    = venueDict[@"phone"];
         venue.websiteString = venueDict[@"websiteString"];
-        venue.latitude = [NSNumber numberWithDouble:[venueDict[@"lat"] doubleValue]];
-        venue.longitude = [NSNumber numberWithDouble:[venueDict[@"long"] doubleValue]];
+    }
+    
+    //or the object exist is missing properties (API Call specific for Venue is being done now)
+    else if ([matches count] != 0  && venue.desc == nil)
+    {
+        venue.street        = venueDict[@"street"];
+        venue.phone         = venueDict[@"phone"];
+        venue.websiteString = venueDict[@"websiteString"];
+        venue.capacity      = venueDict[@"capacity"];
+        venue.city          = venueDict[@"city"];
+        venue.desc          = venueDict[@"desc"];
     }
     
     //there's already an object with that name in the database

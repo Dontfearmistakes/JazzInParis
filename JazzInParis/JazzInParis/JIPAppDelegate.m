@@ -18,6 +18,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
+    [[JIPUpdateManager sharedUpdateManager] clearOldEvents];
     [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
