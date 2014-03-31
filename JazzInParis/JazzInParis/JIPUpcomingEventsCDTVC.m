@@ -13,15 +13,9 @@
 #import "JIPVenue+Create.h"
 #import "JIPArtist+Create.h"
 #import "JIPManagedDocument.h"
+#import "JIPUpdateManager.h"
 #import "JIPConcertDetailsViewController.h"
 
-@interface JIPUpcomingEventsCDTVC ()
-
-@property (strong, nonatomic) NSArray *upcomingEventsFromAPI;
-@property (strong, nonatomic) NSArray *venuesFromAPI;
-@property (strong, nonatomic) NSArray *artistsFromAPI;
-
-@end
 
 @implementation JIPUpcomingEventsCDTVC
 
@@ -42,101 +36,10 @@
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 
--(void)viewDidLoad
+-(void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
-    //[self createFakeEvents];
+    [super viewWillAppear:animated];
     [self createFetchResultsController];
-}
-
-////////////////////////////////////////////////////////////
-// 1) Fetch upcomingEvents and put them in ManagedContext
-////////////////////////////////////////////////////////////
--(void)createFakeEvents
-{
-    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
-        
-        // 1) Fetch the events from Songkick
-        self.upcomingEventsFromAPI = @[
-                                    @{@"id"       :@3,
-                                      @"name"     :@"Brad Mehldau",
-                                      @"lat"      :@(28.41871),
-                                      @"long"     :@(-81.58121),
-                                      @"date"     :[NSDate dateFromString:@"Tue, 25 May 2013 12:53:58 +0000"],
-                                      @"venue"    :@"Baiser Salé",
-                                      @"artist"   :@"Brad Mehldau",
-                                      @"type"     :@"concert",
-                                      @"uriString":@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale",
-                                      @"ageRestriction" : @"14+"},
-                                    
-                                    @{@"id"       :@6,
-                                      @"name"     :@"Oscar Peterson",
-                                      @"lat"      :@(-0.1150322),
-                                      @"long"     :@(51.4650846),
-                                      @"date"     :[NSDate dateFromString:@"Tue, 27 June 2015 12:53:58 +0000"],
-                                      @"venue"    :@"Duc des Lombards",
-                                      @"artist"   :@"Oscar Peterson",
-                                      @"type"     :@"concert",
-                                      @"uriString":@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale",
-                                      @"ageRestriction" : @"14+"}
-                                    ];
-        
-        self.venuesFromAPI = @[
-                                       @{@"id"       :@1,
-                                         @"desc"     :@"Cool Salted Kiss",
-                                         @"name"     :@"Baiser Salé",
-                                         @"city"     :@"Paris",
-                                         @"street"   :@"3 rue des Lombards",
-                                         @"phone"     :@"01 42 06 68 43",
-                                         @"lat"      :@(28.41871),
-                                         @"long"     :@(-81.58121),
-                                         @"websiteString"     :@"http://lebaisersale.com",
-                                         @"capacity"     :@200},
-                                       
-                                       @{@"id"       :@2,
-                                         @"desc"     :@"At the Duke",
-                                         @"name"     :@"Duc des Lombards",
-                                         @"city"     :@"Paris",
-                                         @"street"   :@"3 rue des Lombards",
-                                         @"phone"     :@"01 42 06 68 43",
-                                         @"lat"      :@(28.41871),
-                                         @"long"     :@(-81.58121),
-                                         @"websiteString"     :@"http://wwww.ducdeslombards.com",
-                                         @"capacity"     :@200}
-                                       ];
-        
-        self.artistsFromAPI = @[
-                               @{@"id"          :@1,
-                                 @"name"        :@"Brad Mehldau",
-                                 @"songKickUri" :@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale"},
-                               
-                               @{@"id"          :@2,
-                                 @"name"        :@"Oscar Peterson",
-                                 @"songKickUri" :@"http://www.songkick.com/concerts/19267659-maxxximus-at-baiser-sale"}
-                               ];
-        
-        // 2) Put the venues in ManagedObjectContext
-        for (NSDictionary *venue in self.venuesFromAPI) {
-            [JIPVenue venueWithDict:venue
-             inManagedObjectContext:managedDocument.managedObjectContext];
-        }
-        
-        // 3) Put the artists in ManagedObjectContext
-        for (NSDictionary *artist in self.artistsFromAPI) {
-            [JIPArtist artistWithDict:artist
-               inManagedObjectContext:managedDocument.managedObjectContext];
-        }
-        
-        // 4) Put the events in ManagedObjectContext
-        for (NSDictionary *upcomingEvent in self.upcomingEventsFromAPI)
-        {
-                [JIPEvent eventWithSongkickInfo:upcomingEvent
-                         inManagedObjectContext:managedDocument.managedObjectContext];
-        }
-        
-        
-    }];
-    
 }
 
 
@@ -145,19 +48,19 @@
 /////////////////////////////////////////////////////////////////////////
 -(void)createFetchResultsController
 {
-    
-    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
         
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
-        request.predicate       = [NSPredicate predicateWithFormat:@"date >= %@", [NSDate date]]; //all JIPEvents starting today or later
-        
-        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                                            managedObjectContext:managedDocument.managedObjectContext
-                                                                              sectionNameKeyPath:@"sectionIdentifier"
-                                                                                    cacheName:nil];
-    }];
     
+        NSPredicate * p1 = [NSPredicate predicateWithFormat:@"(date >= %@)", [NSDate date]]; //all JIPEvents starting today or later and whose artist is a favorite
+        NSPredicate * p2 = [NSPredicate predicateWithFormat:@"(artist.favorite == %@)", @YES];
+        NSPredicate * globalPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[p1, p2]];
+        request.predicate= globalPredicate;
+    
+        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
+                                                                            managedObjectContext:[JIPManagedDocument sharedManagedDocument].managedObjectContext
+                                                                              sectionNameKeyPath:@"sectionIdentifier"
+                                                                                       cacheName:nil];
 }
 
 ////////////////////////////////////////////////////////////

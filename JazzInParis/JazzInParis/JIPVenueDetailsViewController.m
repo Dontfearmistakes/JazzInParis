@@ -42,9 +42,6 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
 //////////////////////////////////////////////
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    NSLog(@"AFTER ROTATION VIEW HEIGHT * JIPVenueDetailsTableViewHeightPercenatge : %f", self.view.bounds.size.height * JIPVenueDetailsTableViewHeightPercenatge);
-    NSLog(@"AFTER ROTATION TABLEVIEW HEIGHT/WIDTH : %f / %f", self.topTableView.frame.size.height, self.topTableView.frame.size.width);
-    NSLog(@"AFTER ROTATION MAPVIEW HEIGHT/WIDTH : %f / %f", self.venueMap.frame.size.height, self.venueMap.frame.size.width);
 }
 
 
@@ -216,7 +213,6 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     //Go to Venue's website
     if (indexPath.row == 2)
     {
-        NSLog(@"%@", self.venue.websiteString);
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.venue.websiteString]];
     }
     

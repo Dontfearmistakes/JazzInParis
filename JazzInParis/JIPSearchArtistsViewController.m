@@ -15,6 +15,7 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
 
 @interface JIPSearchArtistsViewController ()
 
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic)         CGFloat searchBarHeight;
 @property (strong, nonatomic) UITableView * downTableView;
 @property (strong, nonatomic) UITextField * searchBar;
@@ -80,7 +81,12 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
     self.downTableView.dataSource = self;
     self.downTableView.delegate = self;
     [self.view addSubview:self.downTableView];
-
+    
+    //3) Activity Indicator
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width/2 - 22, self.view.bounds.size.height/2 -22, 44, 44)];
+    self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    self.activityIndicator.hidesWhenStopped = YES;
+    [self.view addSubview:self.activityIndicator];
 }
 
 
@@ -89,13 +95,12 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
 -(void)searchSongkickArtistForSearchterm:(NSString *)searchTerm
 {
 
-    //http://api.songkick.com/api/3.0/search/artists.json?query={search_query}&apikey={your_api_key}
+    [self.activityIndicator startAnimating];
 
     //1) Create http request
     NSURLSession * session   = [NSURLSession sharedSession];
     NSString     * urlString = [NSString stringWithFormat:@"http://api.songkick.com/api/3.0/search/artists.json?query=%@&apikey=vUGmX4egJWykM1TA", searchTerm];
     NSURL        *url        = [[NSURL alloc]initWithString:urlString];
-    NSLog(@"url : %@", url);
     
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
                                             completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -111,6 +116,7 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
                                                         [self.artistsDictionnaries addObject:@{@"displayName": @"No upcoming concert for this artist"}];
                                                     }
                                                 }
+                                                
                                                 //2) Si pas de réponse : pas de réseau
                                                 else
                                                 {
@@ -123,10 +129,13 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
                                                     
                                                     [self.artistsDictionnaries addObject:artistDict];
                                                 }
+
+                                                
                                                 
                                                 //4) Dans tous les cas, on recharge le TableView
                                                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                                                     [self.downTableView reloadData];
+                                                    [self.activityIndicator stopAnimating];
                                                 }];
                                                 
                                             }];
@@ -186,13 +195,17 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
     [artistDict setValue:self.artistsDictionnaries[indexPath.row][@"uri"]         forKey:@"songkickUri"];
     
     //FETCH ARTIST IN CONTEXT AND PASS IT TO artistDetailsVC.artist
-    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
-     {
-         artistDetailsVC.artist = [JIPArtist artistWithDict:artistDict
-                                     inManagedObjectContext:managedDocument.managedObjectContext];
-         NSLog(@"artistDetailVC.artist = %@", artistDetailsVC.artist.name);
-         [self.navigationController pushViewController:artistDetailsVC animated:YES];
-     }];
+    if ([self.artistsDictionnaries[0][@"displayName"]  isEqualToString: @"No upcoming concert for this artist"] == false &&
+        [self.artistsDictionnaries[0][@"displayName"]  isEqualToString: @"No network connection"]               == false)
+    {
+        [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
+         {
+             artistDetailsVC.artist = [JIPArtist artistWithDict:artistDict
+                                         inManagedObjectContext:managedDocument.managedObjectContext];
+             
+             [self.navigationController pushViewController:artistDetailsVC animated:YES];
+         }];
+    }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

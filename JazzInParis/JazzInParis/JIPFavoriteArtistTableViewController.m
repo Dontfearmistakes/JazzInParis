@@ -10,8 +10,11 @@
 #import "JIPManagedDocument.h"
 #import <CoreData/CoreData.h>
 #import "JIPArtist.h"
+#import "JIPUpdateManager.h"
 
 @interface JIPFavoriteArtistTableViewController ()
+
+@property (strong, nonatomic) JIPArtist * tmpArtist;
 
 @end
 
@@ -35,22 +38,28 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
         
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
-        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
-        request.predicate       = [NSPredicate predicateWithFormat:@"favorite == %@", [NSNumber numberWithBool: YES]]; //all JIPEvents starting today or later
-        NSError *error = nil;
-        self.favoriteArtists = [managedDocument.managedObjectContext executeFetchRequest:request error:&error];
-    }];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
+    request.predicate       = [NSPredicate predicateWithFormat:@"favorite == %@", @YES]; 
+    NSError *error = nil;
+    self.favoriteArtists = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
+
     [self.tableView reloadData];
 }
+
+
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
     return self.favoriteArtists.count;
 }
+
+
+
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -60,12 +69,33 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     
+
     JIPArtist * artist = self.favoriteArtists[indexPath.row];
+    self.tmpArtist = artist;
     cell.textLabel.text = artist.name;
+    
+    UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+    
+    cell.accessoryView = switchView;
+    switchView.tag = indexPath.row;
+    
+    [switchView setOn:[artist.favorite boolValue] animated:NO];
+    
+    [switchView addTarget:self action:@selector(toggleFavorite:) forControlEvents:UIControlEventValueChanged];
     
     return cell;
 }
 
 
+
+
+////////////////////////////////////
+- (void) toggleFavorite:(id)sender {
+    UISwitch* switchControl = sender;
+    
+    [self.favoriteArtists[switchControl.tag] setFavorite:[NSNumber numberWithBool:switchControl.on]];
+    
+    [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
+}
 
 @end

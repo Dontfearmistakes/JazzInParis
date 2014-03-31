@@ -21,8 +21,6 @@ static JIPManagedDocument * _sharedManagedDocument;
 
 
 
-
-
 //////////////////////////////////////////////////////////////////////////////
 // First time it's called, create a UIManagedDoc and put it in the statis ivar
 // Then returns always this ivar

@@ -23,6 +23,12 @@ static const int JIPUpdateManagerDeletionDelay = 10; //After how many days in th
 static NSString const * JIPUpdateManagerSongkickAPIVersion = @"3.0";
 static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 
+@interface JIPUpdateManager ()
+
+@property (strong, nonatomic) NSArray * favoriteArtists;
+
+@end
+
 @implementation JIPUpdateManager
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,29 +54,37 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 -(void)updateUpcomingEvents
 {
     //1) Clear old events (older than X days)
-    //FIXME: remove comment slashes
     //[self clearOldEvents];
     
-    //2) Create http request
-    NSURLSession * session = [NSURLSession sharedSession];
-    NSURL *url = [self songkickURLUpcomingEventsForArtist:nil];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
-                                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                
-               //NSLog(@"DATA : %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-               // FIXME:ICI JSON into NSDict (parser) cf NSJSONSerialisation
-               // + Créer object avec les attributes
-               // + Insert them intoContext
-               // Objectif : méthodes réutilisables pour autres appels
-               // ex : constantes pour les keys de retour de Songkick (mettre dans .h pour utilisation publique et nottament par JIPEvent + Create pour modifier les eventDict[keyFromSongkick])
-                                                
-                [self insertJIPEventsFromJSON:data error:&error];
-                                                
-           }];
-    [dataTask resume];
+    //2) Create http requests for all favorite artists
+    NSURLSession * session  = [NSURLSession sharedSession];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
+    request.predicate       = [NSPredicate predicateWithFormat:@"favorite == %@", @YES];
+    NSError *error = nil;
+    self.favoriteArtists = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
+    
+    for (JIPArtist * artist in self.favoriteArtists)
+    {
+        NSURL *url = [self songkickURLUpcomingEventsForArtist:artist];
+        NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
+                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                    
+                                                    //NSLog(@"DATA : %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                                                    // JSON into NSDict (parser) cf NSJSONSerialisation
+                                                    // + Créer object avec les attributes
+                                                    // + Insert them intoContext
+                                                    // Objectif : méthodes réutilisables pour autres appels
+                                                    // ex : constantes pour les keys de retour de Songkick (mettre dans .h pour utilisation publique et nottament par JIPEvent + Create pour modifier les eventDict[keyFromSongkick])
+                                                    
+                                                    [self insertJIPEventsFromJSON:data error:&error];
+                                                    
+                                                }];
+        [dataTask resume];
+    }
+    
 
 }
-
 
 /////////////////////////////////////////////////////////////////////
 -(void)insertJIPEventsFromJSON:(NSData *)JsonData error:(NSError **)error
@@ -91,7 +105,6 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
             NSMutableDictionary * eventDict = [[NSMutableDictionary alloc]init];
             
             //event details
-
             [eventDict setValue: dictionnaryOfEvent[@"id"]                                                  forKey:@"id"];
             [eventDict setValue: dictionnaryOfEvent[@"displayName"]                                         forKey:@"name"];
             [eventDict setValue: [NSString stringWithFormat:@"%@", dictionnaryOfEvent[@"location"][@"lat"]] forKey:@"lat"];
@@ -135,12 +148,6 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 ////////////////////////////////////////////////////////////////
 -(NSURL *)songkickURLUpcomingEventsForArtist:(JIPArtist *)artist
 {
-    //FIXME:temporary block with example artistSongkikId : @76327
-    if (!artist) {
-        NSString * artistUrlPiece = [NSString stringWithFormat:@"artists/%@/calendar.json", @1925906];
-        return [self songkickApiURLWithComponent:artistUrlPiece];
-    }
-    
     NSString * artistUrlPiece = [NSString stringWithFormat:@"artists/%@/calendar.json", artist.id];
     return [self songkickApiURLWithComponent:artistUrlPiece];
 }
@@ -170,23 +177,19 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 /////////////////////
 -(void)clearOldEvents
 {
-    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
-        
+    
         NSFetchRequest *request     = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
         NSDate         *tenDaysAgo  = [NSDate dateWithTimeIntervalSinceNow:( -JIPUpdateManagerDeletionDelay * 24 * 60 * 60 )];
         request.predicate           = [NSPredicate predicateWithFormat:@"date <= %@", tenDaysAgo]; //all JIPEvents older than XX days
         NSError *error = nil;
-        NSArray *objectsToBeDeleted = [managedDocument.managedObjectContext executeFetchRequest:request
+        NSArray *objectsToBeDeleted = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request
                                                                                    error:&error];
         
-        if (!objectsToBeDeleted)
-        {
-            for (NSManagedObject* objectToBeDeleted in objectsToBeDeleted)
-            {
-                [managedDocument.managedObjectContext deleteObject:objectToBeDeleted];
-            }
-        }
-    }];
+        if (objectsToBeDeleted != nil)
+        for (NSManagedObject* objectToBeDeleted in objectsToBeDeleted)
+        [[JIPManagedDocument sharedManagedDocument].managedObjectContext deleteObject:objectToBeDeleted];
+    
+    
 }
 
 @end

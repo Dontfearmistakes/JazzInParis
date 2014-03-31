@@ -12,5 +12,5 @@
 @interface JIPArtistDetailsViewController : UIViewController <UITableViewDataSource>
 
 @property (strong, nonatomic) JIPArtist *artist;
-
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 @end

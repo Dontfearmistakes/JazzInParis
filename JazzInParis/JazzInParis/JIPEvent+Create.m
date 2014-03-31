@@ -36,7 +36,7 @@
         event = [NSEntityDescription insertNewObjectForEntityForName:@"JIPEvent"
                                               inManagedObjectContext:context];
         
-        //FIXME: eventDictionary[@"id"] seems to be NSNumber but gets transformed when passed to event.id
+
         event.id             = eventDictionary[@"id"];
         event.name           = eventDictionary[@"name"];
         event.latitude       = [NSNumber numberWithDouble:[eventDictionary[@"lat"] doubleValue]];
@@ -50,14 +50,12 @@
         NSMutableDictionary * venueDict = [[NSMutableDictionary alloc] init];
         [venueDict setValue:eventDictionary[@"venueCapacity"] forKey:@"capacity"];
         [venueDict setValue:eventDictionary[@"venueCity"]     forKey:@"city"];
-        [venueDict setValue:eventDictionary[@"venueDesc"]     forKey:@"desc"];
         [venueDict setValue:eventDictionary[@"venueId"]       forKey:@"id"];
         [venueDict setValue:eventDictionary[@"venueLat"]      forKey:@"lat"];
         [venueDict setValue:eventDictionary[@"venueLong"]     forKey:@"long"];
         [venueDict setValue:eventDictionary[@"venueName"]     forKey:@"name"];
-        [venueDict setValue:eventDictionary[@"venuePhone"]    forKey:@"phone"];
-        [venueDict setValue:eventDictionary[@"venueStreet"]   forKey:@"street"];
-        [venueDict setValue:eventDictionary[@"venueWebsite"]  forKey:@"websiteString"];
+        //FIXME:CHECK
+        venueDict[@"name"] = eventDictionary[@"venueName"];
         
         event.venue  = [JIPVenue  venueWithDict:venueDict
                          inManagedObjectContext:context];

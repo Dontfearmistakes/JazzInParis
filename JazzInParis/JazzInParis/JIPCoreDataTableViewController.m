@@ -13,7 +13,11 @@
 
 @implementation JIPCoreDataTableViewController
 
-
+- (void) viewDidLoad
+{
+    [super viewDidLoad];
+    
+}
 
 -(void)performFetch
 {
@@ -71,13 +75,8 @@
         return nil;
 }
 
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return [self.fetchedResultsController sectionIndexTitles];
-}
 
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-    return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
-}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
