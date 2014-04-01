@@ -26,7 +26,6 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 @interface JIPUpdateManager ()
 
 @property (strong, nonatomic) NSArray * favoriteArtists;
-@property (strong, nonatomic) JIPVenue * venue;
 
 @end
 
@@ -75,6 +74,8 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
     }
 }
 
+
+/////////////////////////////////////////////////////////////////////
 -(void)updateUpcomingEventsForFavoriteArtist:(JIPArtist *)artist
 {
     NSURLSession * session  = [NSURLSession sharedSession];
@@ -86,6 +87,39 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
                                                 }];
     [dataTask resume];
 }
+
+
+/////////////////////////////////////////////////////////////////////
+-(void)venueFromSongkickWithId:(NSString *)venueId
+{
+    //1) Create http request
+    NSURLSession * session  = [NSURLSession sharedSession];
+    NSURL *url = [self songkickURLUpcomingEventsForVenueWithId:venueId];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
+                                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                
+                                                NSError *localError = nil;
+                                                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
+                                                NSDictionary *dictionnaryOfVenue = parsedObject[@"resultsPage"][@"results"][@"venue"];
+                                                
+                                                [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
+                                                    
+                                                    [JIPVenue venueWithDict:@{@"id"            : dictionnaryOfVenue[@"id"],
+                                                                              @"street"        : dictionnaryOfVenue[@"street"],
+                                                                              @"capacity"      : dictionnaryOfVenue[@"capacity"],
+                                                                              @"desc"          : dictionnaryOfVenue[@"description"],
+                                                                              @"phone"         : dictionnaryOfVenue[@"phone"],
+                                                                              @"websiteString" : dictionnaryOfVenue[@"website"]
+                                                                             }
+                                                    inManagedObjectContext:managedDocument.managedObjectContext];
+                                                    }
+                                                 ];
+                                            }];
+    
+    [dataTask resume];
+}
+
 
 /////////////////////////////////////////////////////////////////////
 -(void)insertJIPEventsFromJSON:(NSData *)JsonData error:(NSError **)error
@@ -132,39 +166,6 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
         }
     }];
     
-}
-
-
--(JIPVenue *)venueFromSongkickWithId:(NSString *)venueId
-{
-    //1) Create http request
-    NSURLSession * session  = [NSURLSession sharedSession];
-    NSURL *url = [self songkickURLUpcomingEventsForVenueWithId:venueId];
-
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
-                                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                
-                                                NSError *localError = nil;
-                                                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
-                                                NSDictionary *dictionnaryOfVenue = parsedObject[@"resultsPage"][@"results"][@"venue"];
-
-                                                [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
-                                                    
-                                                        self.venue = [JIPVenue venueWithDict:@{@"id"               : dictionnaryOfVenue[@"id"],
-                                                                                               @"street"           : dictionnaryOfVenue[@"street"],
-                                                                                               @"capacity"         : dictionnaryOfVenue[@"capacity"],
-                                                                                               @"desc"             : dictionnaryOfVenue[@"description"],
-                                                                                               @"phone"            : dictionnaryOfVenue[@"phone"],
-                                                                                               @"websiteString"    : dictionnaryOfVenue[@"website"]
-                                                                                               }
-                                                                      inManagedObjectContext:managedDocument.managedObjectContext];
-                                                    }
-                                                ];
-                                            }];
-                                        
-    [dataTask resume];
-
-    return self.venue;
 }
 
 

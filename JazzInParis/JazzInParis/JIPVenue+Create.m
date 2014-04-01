@@ -50,14 +50,17 @@
     }
     
     //or the object exist is missing properties (API Call specific for Venue is being done now)
-    else if ([matches count] != 0  && venue.desc == nil)
+    else if ([matches count] == 1  && (venue.desc == nil || [venue.desc isEqualToString:@""] || [venue.desc isEqualToString:@"No description available"] ))
     {
-        venue.street        = venueDict[@"street"];
-        venue.phone         = venueDict[@"phone"];
-        venue.websiteString = venueDict[@"websiteString"];
-        venue.capacity      = venueDict[@"capacity"];
-        venue.city          = venueDict[@"city"];
-        venue.desc          = venueDict[@"desc"];
+        venue.street        = [venueDict[@"street"] description];
+        venue.phone         = [venueDict[@"phone"]  description];
+        venue.websiteString = [venueDict[@"websiteString"] description];
+        if (venueDict[@"capacity"] != [NSNull null])
+        {
+            venue.capacity      = venueDict[@"capacity"];
+        }
+        venue.city          = [venueDict[@"city"] description];
+        venue.desc          = [venueDict[@"desc"] description];
     }
     
     //there's already an object with that name in the database

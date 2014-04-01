@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JIPVenue.h"
+
 #import "JIPArtist.h"
 
 @interface JIPUpdateManager : NSObject
@@ -17,6 +17,7 @@
 -(void)updateUpcomingEventsForFavoriteArtist:(JIPArtist *)artist;
 -(void)clearOldEvents;
 -(void)clearArtistEvents:(JIPArtist *)artist;
--(JIPVenue *)venueFromSongkickWithId:(NSString*)venueId;
+-(void)venueFromSongkickWithId:(NSString*)venueId;
+-(NSURL *)songkickURLUpcomingEventsForVenueWithId:(NSString *)venueId;
 
 @end

@@ -41,7 +41,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 }
 
 
-//////////////////////////////////////////////////////////////////////
+///////////////////
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -50,7 +50,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     //////////////////////////////////////////////////////////////////////////////////////
     
     self.topTableView = [[UITableView alloc] initWithFrame:CGRectZero];
-    //Resizing when super view redraw itself (rotation for example)
+    //Sizes are implemented in viewDidLayoutSubviews
     
     self.topTableView.dataSource = self;
     self.topTableView.delegate = self;
@@ -89,18 +89,17 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 }
 
 
-
+////////////////////////////
 -(void)viewDidLayoutSubviews
 //called when bounds are redrawn
 {
-    CGFloat superViewWidth = self.view.bounds.size.width;
+    CGFloat superViewWidth  = self.view.bounds.size.width;
     CGFloat superViewHeight = self.view.bounds.size.height;
-    self.tableViewHeight = superViewHeight * JIPConcertDetailsTableViewHeightPercenatge;
+    self.tableViewHeight    = superViewHeight * JIPConcertDetailsTableViewHeightPercenatge;
     
     self.topTableView.frame = CGRectMake(0, 0, superViewWidth, self.tableViewHeight);
     
     self.venueMap.frame     = CGRectMake(0, self.tableViewHeight, superViewWidth, superViewHeight - self.tableViewHeight);
-
 }
 
 
@@ -149,7 +148,6 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 
 
 
-
 //////////////////////////////////////////////
 ///Automatically show Callout
 //////////////////////////////////////////////
@@ -160,14 +158,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 
 
 
-//////////////////////////////////////////////
-///ROTATION
-//////////////////////////////////////////////
--(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    [self.topTableView reloadData];
-}
+
 
 
 
@@ -175,6 +166,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UITableViewDataSource
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -187,7 +179,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 
 
 
-//////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"id"];
@@ -195,13 +187,6 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     //CELL GETS EVENT.NAME
     cell.textLabel.text = [NSString stringWithFormat:@"%@", self.allEventProperties[indexPath.row]];
     cell.backgroundColor = [UIColor blueColor];
-    
-    //CHANGE FONT UPON ROTATION
-    cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
-    if (UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
-    {
-        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:12.0f];
-    }
     
     //BUTTONS ON CELL 0, 2 and 3
     if (indexPath.row != 1)
@@ -238,7 +223,23 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     if (indexPath.row == 2)
     {
         JIPVenueDetailsViewController *venueDetailsVC = [[JIPVenueDetailsViewController alloc] init];
-        venueDetailsVC.venue = [[JIPUpdateManager sharedUpdateManager] venueFromSongkickWithId:[NSString stringWithFormat:@"%@", self.event.venue.id]];
+        
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPVenue"];
+        request.predicate       = [NSPredicate predicateWithFormat:@"id == %@", self.event.venue.id];
+        NSError *error = nil;
+        NSArray *matches = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
+        
+        ////////////////////////////////////
+        if ( !matches ) //there is an error
+        {
+            NSLog(@"Core Data ERROR");
+        }
+        
+        else
+        {
+            venueDetailsVC.venue = [matches lastObject];
+        }
+        
         [self.navigationController pushViewController:venueDetailsVC animated:YES];
     }
     
@@ -252,12 +253,6 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 }
 
 
-
-////////////////REPLICATE didSelectRow BEHAVIOR (above) FOR ACCESSORY BUTTON///////////////////////////////
--(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    [self tableView:tableView didSelectRowAtIndexPath:indexPath];
-}
 
 
 

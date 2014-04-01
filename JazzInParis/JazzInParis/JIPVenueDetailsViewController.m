@@ -9,6 +9,9 @@
 
 #import "JIPVenueDetailsViewController.h"
 #import "JIPMyPinView.h"
+#import "JIPManagedDocument.h"
+#import "JIPUpdateManager.h"
+#import "JIPVenue+Create.m"
 
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
@@ -27,24 +30,6 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
 ////////////////////////////////////////////////////////////////
 @implementation JIPVenueDetailsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        
-    }
-    return self;
-}
-
-//////////////////////////////////////////////
-///IN PROGRESS
-//////////////////////////////////////////////
--(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-}
-
-
 
 
 - (void)viewDidLoad
@@ -55,7 +40,7 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     
     ///////////////////////////////////////////////////// 1) TABLE VIEW WITH EVENT DETAILS
     //////////////////////////////////////////////////////////////////////////////////////
-    CGFloat superViewWidth = self.view.bounds.size.width;
+    CGFloat superViewWidth  = self.view.bounds.size.width;
     CGFloat superViewHeight = self.view.bounds.size.height;
     CGFloat tableViewHeight = superViewHeight * JIPVenueDetailsTableViewHeightPercenatge;
     
@@ -66,16 +51,16 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     self.topTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
     self.topTableView.dataSource = self;
-    self.topTableView.delegate = self;
+    self.topTableView.delegate   = self;
     [self.view addSubview:self.topTableView];
     
     ///////////////////////////////////////////////////// 2) DESSINE MAPVIEW
     ////////////////////////////////////////////////////////////////////////
     self.venueMap = [[MKMapView alloc] init];
-    self.venueMap.delegate = self;
-    self.venueMap.frame = CGRectMake(0, tableViewHeight, superViewWidth, superViewHeight-tableViewHeight);
+    self.venueMap.delegate      = self;
+    self.venueMap.frame         = CGRectMake(0, tableViewHeight, superViewWidth, superViewHeight-tableViewHeight);
     self.venueMap.scrollEnabled = YES;
-    self.venueMap.zoomEnabled = NO;
+    self.venueMap.zoomEnabled   = NO;
     [self.view addSubview:self.venueMap];
     
     self.venueMap.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -83,7 +68,7 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     //////////////////////////////////////////// 3)POSITIONNE MAPVIEW DANS L'ESPACE AVEC eventCoordinate COMME CENTRE ET TRACK USER
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     CLLocationCoordinate2D venueCoordinate = CLLocationCoordinate2DMake(self.venue.location.latitude, self.venue.location.longitude);
-    double regionWidth = 2500;
+    double regionWidth  = 2500;
     double regionHeight = 2200;
     MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(venueCoordinate, regionWidth, regionHeight);
     [self.venueMap setRegion:startRegion
@@ -101,6 +86,39 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     [self.venueMap addAnnotation:self.venue];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+
+    //1) Create http request
+    NSURLSession * session  = [NSURLSession sharedSession];
+    NSURL *url = [[JIPUpdateManager sharedUpdateManager] songkickURLUpcomingEventsForVenueWithId:[NSString stringWithFormat:@"%@", self.venue.id]];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
+                                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                
+                                                NSError *localError = nil;
+                                                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
+                                                NSDictionary *dictionnaryOfVenue = parsedObject[@"resultsPage"][@"results"][@"venue"];
+                                                
+                                                [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
+                                                    {
+                                                        self.venue = [JIPVenue venueWithDict:@{@"id"            : dictionnaryOfVenue[@"id"],
+                                                                                               @"street"        : dictionnaryOfVenue[@"street"],
+                                                                                               @"capacity"      : dictionnaryOfVenue[@"capacity"],
+                                                                                               @"desc"          : dictionnaryOfVenue[@"description"],
+                                                                                               @"phone"         : dictionnaryOfVenue[@"phone"],
+                                                                                               @"websiteString" : dictionnaryOfVenue[@"website"],
+                                                                                               @"city"          : dictionnaryOfVenue[@"city"][@"displayName"]
+                                                                                  }
+                                                         inManagedObjectContext:managedDocument.managedObjectContext];
+                                                    }
+                                                ];
+                                                [self.topTableView reloadData];
+                                            }];
+    
+    [dataTask resume];
+}
 
 
 
@@ -168,14 +186,14 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     if (self.venue.city == nil) {
         self.venue.city = @"No city available";
     }
-    if (self.venue.desc == nil) {
+    if (self.venue.desc == nil || [self.venue.desc isEqualToString:@""]) {
         self.venue.desc = @"No description available";
     }
     if (self.venue.websiteString == nil) {
-        self.venue.websiteString = @"No website";
+        self.venue.websiteString = @"No website available";
     }
-    if (self.venue.phone == nil) {
-        self.venue.phone = @"No Phone";
+    if (self.venue.phone == nil || [self.venue.phone isEqualToString:@"<null>"]) {
+        self.venue.phone = @"No Phone available";
     }
     
     self.venueDetailsRows = @[
