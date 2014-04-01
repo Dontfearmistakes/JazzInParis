@@ -22,6 +22,7 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
 
 @property (strong, nonatomic) NSArray *venueDetailsRows;
 @property (strong, nonatomic) UITableView *topTableView;
+@property (strong, nonatomic) MKMapView *venueMap;
 
 @end
 
@@ -56,9 +57,9 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     
     ///////////////////////////////////////////////////// 2) DESSINE MAPVIEW
     ////////////////////////////////////////////////////////////////////////
-    self.venueMap = [[MKMapView alloc] init];
+    self.venueMap = [[MKMapView alloc] initWithFrame:CGRectMake(0, tableViewHeight, superViewWidth, superViewHeight-tableViewHeight)];
+    
     self.venueMap.delegate      = self;
-    self.venueMap.frame         = CGRectMake(0, tableViewHeight, superViewWidth, superViewHeight-tableViewHeight);
     self.venueMap.scrollEnabled = YES;
     self.venueMap.zoomEnabled   = NO;
     [self.view addSubview:self.venueMap];
@@ -75,12 +76,12 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
                     animated:YES];
 
     [self.venueMap setCenterCoordinate:venueCoordinate animated:YES];
-    self.venueMap.showsUserLocation = YES;
+     self.venueMap .showsUserLocation = YES;
     
 
     //initialisation cf didUpdateUserLocation below
-    self.venue.distanceFromUserToVenue = 0;
-    self.venue.shouldDisplayDistanceFromUserToVenue = NO;
+    //self.venue.distanceFromUserToVenue = 0;
+    //self.venue.shouldDisplayDistanceFromUserToVenue = NO;
     
     //ADD ANNOTATION
     [self.venueMap addAnnotation:self.venue];
@@ -90,6 +91,8 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
 {
     [super viewWillAppear:YES];
 
+    
+    
     //1) Create http request
     NSURLSession * session  = [NSURLSession sharedSession];
     NSURL *url = [[JIPUpdateManager sharedUpdateManager] songkickURLUpcomingEventsForVenueWithId:[NSString stringWithFormat:@"%@", self.venue.id]];
@@ -118,6 +121,8 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
                                             }];
     
     [dataTask resume];
+        
+
 }
 
 
@@ -131,17 +136,6 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
 }
 
 
-//////////////////////////////////////////////
-///USE CURRENT USER LOCATION TO CALCULATE DISTANCE TO eventCoordinare
-//////////////////////////////////////////////
--(double)distanceFromUserLocationToVenue
-{
-    CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:self.venue.location.latitude
-                                                           longitude:self.venue.location.longitude];
-    
-    double distance = [self.venueMap.userLocation.location distanceFromLocation:eventLocation];
-    return distance;
-}
 
 //////////////////////////////////////////////
 ///Called when userLocation updated
@@ -169,6 +163,22 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     self.venue.shouldDisplayDistanceFromUserToVenue = NO;
     self.venue.distanceFromUserToVenue = 0;
 }
+
+
+//////////////////////////////////////////////
+///USE CURRENT USER LOCATION TO CALCULATE DISTANCE TO eventCoordinare
+//////////////////////////////////////////////
+-(double)distanceFromUserLocationToVenue
+{
+    CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:self.venue.location.latitude
+                                                           longitude:self.venue.location.longitude];
+    
+    double distance = [self.venueMap.userLocation.location distanceFromLocation:eventLocation];
+    return distance;
+}
+
+
+
 
 
 

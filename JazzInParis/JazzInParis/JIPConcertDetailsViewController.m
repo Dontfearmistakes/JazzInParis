@@ -60,9 +60,9 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     ////////////////////////////////////////////////////////////////////////
     self.venueMap = [[MKMapView alloc] initWithFrame:CGRectZero];
 
-    self.venueMap.delegate = self;
+    self.venueMap.delegate      = self;
     self.venueMap.scrollEnabled = YES;
-    self.venueMap.zoomEnabled = NO;
+    self.venueMap.zoomEnabled   = NO;
     [self.view addSubview:self.venueMap];
     
     //////////////////////////////////////////// 3) POSITIONNE MAPVIEW DANS L'ESPACE AVEC eventCoordinate COMME CENTRE
@@ -76,7 +76,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
                   animated:YES];
 
     [self.venueMap setCenterCoordinate:eventCoordinate animated:YES];
-    self.venueMap.showsUserLocation = YES;
+     self.venueMap .showsUserLocation = YES;
     
     
     //initialisation cf didUpdateUserLocation below
@@ -103,6 +103,12 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 }
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat cellHeight = (self.tableViewHeight - 55) / [self.allEventProperties count];
+    return cellHeight;
+}
 
 
 
@@ -223,23 +229,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     if (indexPath.row == 2)
     {
         JIPVenueDetailsViewController *venueDetailsVC = [[JIPVenueDetailsViewController alloc] init];
-        
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPVenue"];
-        request.predicate       = [NSPredicate predicateWithFormat:@"id == %@", self.event.venue.id];
-        NSError *error = nil;
-        NSArray *matches = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
-        
-        ////////////////////////////////////
-        if ( !matches ) //there is an error
-        {
-            NSLog(@"Core Data ERROR");
-        }
-        
-        else
-        {
-            venueDetailsVC.venue = [matches lastObject];
-        }
-        
+        venueDetailsVC.venue = self.event.venue;
         [self.navigationController pushViewController:venueDetailsVC animated:YES];
     }
     

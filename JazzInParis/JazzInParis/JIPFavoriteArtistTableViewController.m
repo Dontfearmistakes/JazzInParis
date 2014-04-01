@@ -14,8 +14,6 @@
 
 @interface JIPFavoriteArtistTableViewController ()
 
-@property (strong, nonatomic) JIPArtist * tmpArtist;
-
 @end
 
 @implementation JIPFavoriteArtistTableViewController
@@ -69,7 +67,6 @@
     
 
     JIPArtist * artist = self.favoriteArtists[indexPath.row];
-    self.tmpArtist = artist;
     cell.textLabel.text = artist.name;
     
     UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];

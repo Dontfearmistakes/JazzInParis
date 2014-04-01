@@ -231,7 +231,7 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
     NSArray *objectsToBeDeleted = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request
                                                                                                                  error:&error];
     
-    if (objectsToBeDeleted != nil)
+    if ([objectsToBeDeleted count] == 0)
         for (NSManagedObject* objectToBeDeleted in objectsToBeDeleted)
             [[JIPManagedDocument sharedManagedDocument].managedObjectContext deleteObject:objectToBeDeleted];
     

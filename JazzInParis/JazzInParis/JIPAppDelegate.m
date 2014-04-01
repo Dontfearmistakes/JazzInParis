@@ -12,14 +12,20 @@
 #import "JIPFavoriteArtistTableViewController.h"
 #import "JIPSearchArtistsViewController.h"
 #import "JIPUpdateManager.h"
+#import "JIPManagedDocument.h"
 
 @implementation JIPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    [[JIPUpdateManager sharedUpdateManager] clearOldEvents];
-    [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
+    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
+
+        [[JIPUpdateManager sharedUpdateManager] clearOldEvents];
+        [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
+
+    }];
+    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.

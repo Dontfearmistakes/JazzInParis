@@ -152,7 +152,6 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
     [textField resignFirstResponder];
     self.searchTerm = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     [self searchSongkickArtistForSearchterm:self.searchTerm];
-    [self.downTableView reloadData];
     return YES;
 }
 
