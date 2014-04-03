@@ -21,6 +21,7 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
 @interface JIPVenueDetailsViewController ()
 
 @property (strong, nonatomic) NSArray *venueDetailsRows;
+@property (nonatomic) CGFloat tableViewHeight;
 @property (strong, nonatomic) UITableView *topTableView;
 @property (strong, nonatomic) MKMapView *venueMap;
 
@@ -41,12 +42,9 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     
     ///////////////////////////////////////////////////// 1) TABLE VIEW WITH EVENT DETAILS
     //////////////////////////////////////////////////////////////////////////////////////
-    CGFloat superViewWidth  = self.view.bounds.size.width;
-    CGFloat superViewHeight = self.view.bounds.size.height;
-    CGFloat tableViewHeight = superViewHeight * JIPVenueDetailsTableViewHeightPercenatge;
     
-    CGRect frame = CGRectMake(0, 0, superViewWidth, tableViewHeight);
-    self.topTableView = [[UITableView alloc] initWithFrame:frame];
+
+    self.topTableView = [[UITableView alloc] initWithFrame:CGRectZero];
     
     //Resizing when super view redraw itself (rotation for example)
     self.topTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -57,7 +55,7 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     
     ///////////////////////////////////////////////////// 2) DESSINE MAPVIEW
     ////////////////////////////////////////////////////////////////////////
-    self.venueMap = [[MKMapView alloc] initWithFrame:CGRectMake(0, tableViewHeight, superViewWidth, superViewHeight-tableViewHeight)];
+    self.venueMap = [[MKMapView alloc] initWithFrame:CGRectZero];
     
     self.venueMap.delegate      = self;
     self.venueMap.scrollEnabled = YES;
@@ -86,6 +84,38 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     //ADD ANNOTATION
     [self.venueMap addAnnotation:self.venue];
 }
+
+
+////////////////////////////
+-(void)viewWillLayoutSubviews
+//called when bounds are redrawn
+{
+
+    
+    CGFloat superViewWidth  = self.view.bounds.size.width;
+    CGFloat superViewHeight = self.view.bounds.size.height;
+    self.tableViewHeight    = superViewHeight * JIPVenueDetailsTableViewHeightPercenatge;
+    
+    self.topTableView.frame = CGRectMake(0, 0, superViewWidth, self.tableViewHeight);
+    self.venueMap    .frame = CGRectMake(0, self.tableViewHeight, superViewWidth, superViewHeight - self.tableViewHeight);
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    [self viewWillLayoutSubviews]; // calling it first to make sure that all size have already been recalculated before sizing the cell
+    CGFloat cellHeight = (self.tableViewHeight - 55) / [self.venueDetailsRows count];
+    return cellHeight;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    CGFloat cellHeight = (self.tableViewHeight - 55) / self.venueDetailsRows.count;
+//    return cellHeight;
+//}
 
 -(void)viewWillAppear:(BOOL)animated
 {

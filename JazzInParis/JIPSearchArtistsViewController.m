@@ -16,6 +16,7 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
 @interface JIPSearchArtistsViewController ()
 
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) UIView *contentSubview;
 @property (nonatomic)         CGFloat searchBarHeight;
 @property (strong, nonatomic) UITableView * downTableView;
 @property (strong, nonatomic) UITextField * searchBar;
@@ -46,19 +47,46 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
     return UIInterfaceOrientationMaskAll;
 }
 
-//////////////////////////////////////////////////////////////////////
+
+////////////////
+-(void)loadView
+{
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = [UIColor greenColor];
+    self.contentSubview = [[UIView alloc] init];
+    self.contentSubview.backgroundColor = [UIColor orangeColor];
+    [view addSubview:self.contentSubview];
+    
+    self.view = view;
+}
+
+
+/////////////////////////////
+-(void)viewWillLayoutSubviews
+{
+    self.contentSubview.frame = CGRectMake(
+                                           0,
+                                           self.topLayoutGuide.length,
+                                           CGRectGetWidth(self.view.frame),
+                                           CGRectGetHeight(self.view.frame) - self.topLayoutGuide.length - self.bottomLayoutGuide.length
+                                           );
+}
+
+
+////////////////////////////////
 -(void)viewDidLayoutSubviews
 //called when bounds are redrawn
 {
-    CGFloat superViewWidth = self.view.bounds.size.width;
-    CGFloat superViewHeight = self.view.bounds.size.height;
+    CGFloat superViewWidth  = self.contentSubview.bounds.size.width;
+    CGFloat superViewHeight = self.contentSubview.bounds.size.height;
     
-    self.searchBarHeight = superViewHeight * JIPSearchArtistSearchBarHeightPercenatge;
+    self.searchBarHeight     = superViewHeight * JIPSearchArtistSearchBarHeightPercenatge;
     
-    self.searchBar.frame     = CGRectMake(4, 70, superViewWidth, self.searchBarHeight);
+    self.searchBar.frame     = CGRectMake(4, 4, superViewWidth-8, self.searchBarHeight);
 
-    self.downTableView.frame = CGRectMake(0, (70+self.searchBarHeight), superViewWidth, superViewHeight - self.searchBarHeight);
+    self.downTableView.frame = CGRectMake(0, (8 + self.searchBarHeight), superViewWidth, (superViewHeight - self.searchBarHeight));
 }
+
 
 //////////////////////////////////////////////////////////////////////
 - (void)viewDidLoad
@@ -66,21 +94,21 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
     [super viewDidLoad];
 	
     //1) setup the search text field
-    self.searchBar = [[UITextField alloc] initWithFrame:CGRectZero];
-    self.searchBar.borderStyle = UITextBorderStyleRoundedRect;
-    self.searchBar.backgroundColor = [UIColor whiteColor];
-    self.searchBar.font = [UIFont systemFontOfSize:24];
-    self.searchBar.delegate = self;
-    self.searchBar.placeholder = @"Enter Artist's name";
-    self.searchBar.clearButtonMode = UITextFieldViewModeAlways;
+    self.searchBar                        = [[UITextField alloc] initWithFrame:CGRectZero];
+    self.searchBar.borderStyle            = UITextBorderStyleRoundedRect;
+    self.searchBar.backgroundColor        = [UIColor whiteColor];
+    self.searchBar.font                   = [UIFont systemFontOfSize:24];
+    self.searchBar.delegate               = self;
+    self.searchBar.placeholder            = @"Enter Artist's name";
+    self.searchBar.clearButtonMode        = UITextFieldViewModeAlways;
     self.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    [self.view addSubview: self.searchBar];
+    [self.contentSubview addSubview: self.searchBar];
 
     //2) setup the tableView
-    self.downTableView = [[UITableView alloc] initWithFrame:CGRectZero];
+    self.downTableView            = [[UITableView alloc] initWithFrame:CGRectZero];
     self.downTableView.dataSource = self;
-    self.downTableView.delegate = self;
-    [self.view addSubview:self.downTableView];
+    self.downTableView.delegate   = self;
+    [self.contentSubview addSubview:self.downTableView];
     
     //3) Activity Indicator
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width/2 - 22, self.view.bounds.size.height/2 -22, 44, 44)];

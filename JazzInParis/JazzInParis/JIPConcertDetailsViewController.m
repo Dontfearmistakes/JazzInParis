@@ -20,10 +20,11 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 
 @interface JIPConcertDetailsViewController ()
 
-@property (strong, nonatomic) NSArray *allEventProperties;
-@property (nonatomic) CGFloat tableViewHeight;
+@property (strong, nonatomic) UIView      *contentSubview;
+@property (strong, nonatomic) NSArray     *allEventProperties;
+@property (nonatomic)         CGFloat      tableViewHeight;
 @property (strong, nonatomic) UITableView *topTableView;
-@property (strong, nonatomic) MKMapView *venueMap;
+@property (strong, nonatomic) MKMapView   *venueMap;
 
 -(double)distanceFromUserLocationToEvent;
 
@@ -41,6 +42,30 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 }
 
 
+////////////////
+-(void)loadView
+{
+    UIView *view         = [[UIView alloc] init];
+    view.backgroundColor = [UIColor greenColor];
+    self.contentSubview  = [[UIView alloc] init];
+    self.contentSubview.backgroundColor = [UIColor orangeColor];
+    [view addSubview:self.contentSubview];
+    
+    self.view = view;
+}
+
+
+/////////////////////////////
+-(void)viewWillLayoutSubviews
+{
+    self.contentSubview.frame = CGRectMake(
+                                           0,
+                                           0,
+                                           CGRectGetWidth(self.view.frame),
+                                           CGRectGetHeight(self.view.frame) - self.bottomLayoutGuide.length
+                                           );
+}
+
 ///////////////////
 - (void)viewDidLoad
 {
@@ -52,9 +77,10 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     self.topTableView = [[UITableView alloc] initWithFrame:CGRectZero];
     //Sizes are implemented in viewDidLayoutSubviews
     
-    self.topTableView.dataSource = self;
-    self.topTableView.delegate = self;
-    [self.view addSubview:self.topTableView];
+    self.topTableView.dataSource       = self;
+    self.topTableView.delegate         = self;
+    self.topTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.contentSubview addSubview:self.topTableView];
     
     ///////////////////////////////////////////////////// 2) DESSINE MAPVIEW
     ////////////////////////////////////////////////////////////////////////
@@ -63,10 +89,11 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     self.venueMap.delegate      = self;
     self.venueMap.scrollEnabled = YES;
     self.venueMap.zoomEnabled   = NO;
-    [self.view addSubview:self.venueMap];
+    self.venueMap.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.contentSubview addSubview:self.venueMap];
     
     //////////////////////////////////////////// 3) POSITIONNE MAPVIEW DANS L'ESPACE AVEC eventCoordinate COMME CENTRE
-    //////////////////////////////////////////////// + TRACK USER
+    ////////////////////////////////////////////    + TRACK USER
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     CLLocationCoordinate2D eventCoordinate = CLLocationCoordinate2DMake(self.event.location.latitude, self.event.location.longitude);
     double regionWidth = 2500;
@@ -93,19 +120,19 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 -(void)viewDidLayoutSubviews
 //called when bounds are redrawn
 {
-    CGFloat superViewWidth  = self.view.bounds.size.width;
-    CGFloat superViewHeight = self.view.bounds.size.height;
+    CGFloat superViewWidth  = self.contentSubview.bounds.size.width;
+    CGFloat superViewHeight = self.contentSubview.bounds.size.height;
     self.tableViewHeight    = superViewHeight * JIPConcertDetailsTableViewHeightPercenatge;
     
     self.topTableView.frame = CGRectMake(0, 0, superViewWidth, self.tableViewHeight);
-    
-    self.venueMap.frame     = CGRectMake(0, self.tableViewHeight, superViewWidth, superViewHeight - self.tableViewHeight);
+    self.venueMap    .frame = CGRectMake(0, self.tableViewHeight, superViewWidth, superViewHeight - self.tableViewHeight);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self viewDidLayoutSubviews]; // calling it first to make sure that all size have already been recalculated before sizing the cell
     CGFloat cellHeight = (self.tableViewHeight - 55) / [self.allEventProperties count];
     return cellHeight;
 }
@@ -195,7 +222,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     cell.backgroundColor = [UIColor blueColor];
     
     //BUTTONS ON CELL 0, 2 and 3
-    if (indexPath.row != 1)
+    if (indexPath.row == 2 || indexPath.row == 3)
     {
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     }
@@ -217,13 +244,7 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //GO TO ARTIST DETAILS VC
-    if (indexPath.row == 0)
-    {
-        JIPArtistDetailsViewController *artistDetailsVC = [[JIPArtistDetailsViewController alloc] init];
-        artistDetailsVC.artist = self.event.artist;
-        [self.navigationController pushViewController:artistDetailsVC animated:YES];
-    }
+
     
     //GO TO VENUE DETAILS VC
     if (indexPath.row == 2)

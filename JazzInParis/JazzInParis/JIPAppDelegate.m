@@ -59,7 +59,7 @@
     ///////////////////////  STYLING  ////////////////////
     //////////////////////////////////////////////////////
     upcomingEventsNC.navigationBar.barTintColor = Rgb2UIColor(255, 177, 91);
-    searchArtistsNC .navigationBar.barTintColor = Rgb2UIColor(255, 177, 91);
+    searchArtistsNC .navigationBar.barTintColor = [UIColor whiteColor];
     favoriteArtistNC.navigationBar.barTintColor = Rgb2UIColor(255, 177, 91);
     upcomingEventsNC.navigationBar.tintColor    = Rgb2UIColor(41, 59, 255);
     searchArtistsNC .navigationBar.tintColor    = Rgb2UIColor(41, 59, 255);
