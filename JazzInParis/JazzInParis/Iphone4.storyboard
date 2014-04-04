@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="jSg-DM-PId">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <scenes>
+        <!--Search Artist Table View Controller - Search Artist-->
+        <scene sceneID="ueJ-fq-ZQb">
+            <objects>
+                <tableViewController id="mbH-FO-pnw" customClass="JIPSearchArtistTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="bP0-rw-uFx">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="GMB-Ts-KUu">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="mbH-FO-pnw" id="IZy-ab-vlG"/>
+                            </connections>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="fZz-3H-0EH">
+                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fZz-3H-0EH" id="Swc-Jv-N7t">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="mbH-FO-pnw" id="w3J-U6-Ixo"/>
+                            <outlet property="delegate" destination="mbH-FO-pnw" id="O3d-jr-BTw"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Search Artist" id="QYy-AQ-EJ8">
+                        <barButtonItem key="rightBarButtonItem" title="Item" systemItem="search" id="xJe-4x-w1k">
+                            <connections>
+                                <action selector="searchClickAction:" destination="mbH-FO-pnw" id="iUw-Cq-nRN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="searchBar" destination="GMB-Ts-KUu" id="mDN-IF-veu"/>
+                        <outlet property="searchDisplayController" destination="uxE-JB-JAj" id="15o-Xz-oF5"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3hv-Ko-KOL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="uxE-JB-JAj">
+                    <connections>
+                        <outlet property="delegate" destination="mbH-FO-pnw" id="0tz-ig-D1w"/>
+                        <outlet property="searchBar" destination="GMB-Ts-KUu" id="xe9-k9-xEY"/>
+                        <outlet property="searchContentsController" destination="mbH-FO-pnw" id="kAO-tF-sf9"/>
+                        <outlet property="searchResultsDataSource" destination="mbH-FO-pnw" id="W2h-db-Pgd"/>
+                        <outlet property="searchResultsDelegate" destination="mbH-FO-pnw" id="Ovc-A8-Rzg"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="919" y="-11"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="tQU-Kw-Hv3">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jSg-DM-PId" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="7ez-jB-NgC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="mbH-FO-pnw" kind="relationship" relationship="rootViewController" id="OVo-v0-HvK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hXJ-LA-JJ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="393" y="-11"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

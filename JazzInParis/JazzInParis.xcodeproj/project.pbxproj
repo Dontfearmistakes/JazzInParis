@@ -32,6 +32,8 @@
 		50A52FC7189ED5D9001D9779 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50A52FC5189ED5D9001D9779 /* InfoPlist.strings */; };
 		50A52FC9189ED5D9001D9779 /* JazzInParisTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A52FC8189ED5D9001D9779 /* JazzInParisTests.m */; };
 		50A52FD4189ED91C001D9779 /* JIPUpComingEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */; };
+		50AEB97F18EEDB920055FE07 /* Iphone4.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50AEB97E18EEDB920055FE07 /* Iphone4.storyboard */; };
+		50AEB98218EEDFC00055FE07 /* JIPSearchArtistTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AEB98118EEDFC00055FE07 /* JIPSearchArtistTableViewController.m */; };
 		50D334DA18B6573F00E21622 /* JIPExtendNSLogFunctionality.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D334D918B6573F00E21622 /* JIPExtendNSLogFunctionality.m */; };
 		50D4BB3118B49D0700E7CF12 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50D4BB2F18B49D0700E7CF12 /* Model.xcdatamodeld */; };
 		50DAA79118AB8E52003DDADA /* NSDate+Formatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DAA79018AB8E52003DDADA /* NSDate+Formatting.m */; };
@@ -97,6 +99,9 @@
 		50A52FC8189ED5D9001D9779 /* JazzInParisTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JazzInParisTests.m; sourceTree = "<group>"; };
 		50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPUpComingEventsViewController.h; sourceTree = "<group>"; };
 		50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPUpComingEventsViewController.m; sourceTree = "<group>"; };
+		50AEB97E18EEDB920055FE07 /* Iphone4.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Iphone4.storyboard; path = JazzInParis/Iphone4.storyboard; sourceTree = "<group>"; };
+		50AEB98018EEDFC00055FE07 /* JIPSearchArtistTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPSearchArtistTableViewController.h; sourceTree = "<group>"; };
+		50AEB98118EEDFC00055FE07 /* JIPSearchArtistTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPSearchArtistTableViewController.m; sourceTree = "<group>"; };
 		50D334D818B6573F00E21622 /* JIPExtendNSLogFunctionality.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JIPExtendNSLogFunctionality.h; path = ../JIPExtendNSLogFunctionality.h; sourceTree = "<group>"; };
 		50D334D918B6573F00E21622 /* JIPExtendNSLogFunctionality.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JIPExtendNSLogFunctionality.m; path = ../JIPExtendNSLogFunctionality.m; sourceTree = "<group>"; };
 		50D4BB3018B49D0700E7CF12 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -151,6 +156,8 @@
 				50FCB09C18CE140800AD4402 /* JIPUpcomingEventsCDTVC.m */,
 				5008E04518DC992F00530542 /* JIPSearchArtistsViewController.h */,
 				5008E04618DC992F00530542 /* JIPSearchArtistsViewController.m */,
+				50AEB98018EEDFC00055FE07 /* JIPSearchArtistTableViewController.h */,
+				50AEB98118EEDFC00055FE07 /* JIPSearchArtistTableViewController.m */,
 				508FF5DF18E5ED3500B53743 /* JIPFavoriteArtistTableViewController.h */,
 				508FF5E018E5ED3500B53743 /* JIPFavoriteArtistTableViewController.m */,
 			);
@@ -191,6 +198,7 @@
 		50A52F97189ED5D9001D9779 = {
 			isa = PBXGroup;
 			children = (
+				50AEB97E18EEDB920055FE07 /* Iphone4.storyboard */,
 				50A52FA9189ED5D9001D9779 /* JazzInParis */,
 				50A52FC2189ED5D9001D9779 /* JazzInParisTests */,
 				50A52FA2189ED5D9001D9779 /* Frameworks */,
@@ -396,6 +404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50A52FAE189ED5D9001D9779 /* InfoPlist.strings in Resources */,
+				50AEB97F18EEDB920055FE07 /* Iphone4.storyboard in Resources */,
 				50A52FB6189ED5D9001D9779 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -434,6 +443,7 @@
 				508598D418AA46330048D760 /* JIPVenue.m in Sources */,
 				50A1524F18CF5F8E00AB2D9F /* JIPEvent+Create.m in Sources */,
 				50D334DA18B6573F00E21622 /* JIPExtendNSLogFunctionality.m in Sources */,
+				50AEB98218EEDFC00055FE07 /* JIPSearchArtistTableViewController.m in Sources */,
 				50A52FD4189ED91C001D9779 /* JIPUpComingEventsViewController.m in Sources */,
 				50A52FB4189ED5D9001D9779 /* JIPAppDelegate.m in Sources */,
 				50DAA79118AB8E52003DDADA /* NSDate+Formatting.m in Sources */,
@@ -573,6 +583,7 @@
 				GCC_PREFIX_HEADER = "JazzInParis/JazzInParis-Prefix.pch";
 				INFOPLIST_FILE = "JazzInParis/JazzInParis-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -586,6 +597,7 @@
 				GCC_PREFIX_HEADER = "JazzInParis/JazzInParis-Prefix.pch";
 				INFOPLIST_FILE = "JazzInParis/JazzInParis-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
