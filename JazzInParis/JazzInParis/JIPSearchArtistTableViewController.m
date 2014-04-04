@@ -9,7 +9,8 @@
 #import "JIPArtistDetailsViewController.h"
 #import "JIPManagedDocument.h"
 #import "JIPArtist+Create.h"
-
+#import "ECSlidingViewController.h"
+#import "SideMenuViewController.h"
 
 
 
@@ -37,7 +38,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    if (![self.slidingViewController.underLeftViewController isKindOfClass:[SideMenuViewController class]]) {
+        self.slidingViewController.underLeftViewController  = [self.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
+    }
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -82,6 +85,7 @@
     
     return cell;
 }
+
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -144,15 +148,25 @@
 */
 
 - (IBAction)searchClickAction:(id)sender {
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    
+    [self.searchBar becomeFirstResponder];
+
 }
 
+-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    
+    NSLog(@"END");
+    [self.searchBar resignFirstResponder];
+
+}
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     NSLog(@"button clicked");
     NSString* searchTerm = self.searchDisplayController.searchBar.text;
     [self searchSongkickArtistForSearchterm:searchTerm];
-    [searchBar resignFirstResponder];
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -201,5 +215,9 @@
                                                 
                                             }];
     [dataTask resume];
+}
+- (IBAction)revealMenu:(id)sender {
+    [self.slidingViewController anchorTopViewTo:ECRight];
+
 }
 @end

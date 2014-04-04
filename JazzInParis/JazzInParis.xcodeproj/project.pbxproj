@@ -44,6 +44,9 @@
 		50FCB09818CE12B500AD4402 /* JIPCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FCB09718CE12B500AD4402 /* JIPCoreDataTableViewController.m */; };
 		50FCB09A18CE130D00AD4402 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FCB09918CE130C00AD4402 /* CoreData.framework */; };
 		50FCB09D18CE140800AD4402 /* JIPUpcomingEventsCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FCB09C18CE140800AD4402 /* JIPUpcomingEventsCDTVC.m */; };
+		DB1FE86518EEED110032A1F9 /* ECSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1FE86218EEED110032A1F9 /* ECSlidingViewController.m */; };
+		DB1FE86618EEED110032A1F9 /* InitialSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1FE86418EEED110032A1F9 /* InitialSlidingViewController.m */; };
+		DB1FE86918EEEE7F0032A1F9 /* SideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1FE86818EEEE7F0032A1F9 /* SideMenuViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +121,12 @@
 		50FCB09918CE130C00AD4402 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		50FCB09B18CE140800AD4402 /* JIPUpcomingEventsCDTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPUpcomingEventsCDTVC.h; sourceTree = "<group>"; };
 		50FCB09C18CE140800AD4402 /* JIPUpcomingEventsCDTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPUpcomingEventsCDTVC.m; sourceTree = "<group>"; };
+		DB1FE86118EEED110032A1F9 /* ECSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECSlidingViewController.h; sourceTree = "<group>"; };
+		DB1FE86218EEED110032A1F9 /* ECSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECSlidingViewController.m; sourceTree = "<group>"; };
+		DB1FE86318EEED110032A1F9 /* InitialSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialSlidingViewController.h; sourceTree = "<group>"; };
+		DB1FE86418EEED110032A1F9 /* InitialSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialSlidingViewController.m; sourceTree = "<group>"; };
+		DB1FE86718EEEE7F0032A1F9 /* SideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuViewController.h; sourceTree = "<group>"; };
+		DB1FE86818EEEE7F0032A1F9 /* SideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +241,7 @@
 		50A52FA9189ED5D9001D9779 /* JazzInParis */ = {
 			isa = PBXGroup;
 			children = (
+				DB1FE85F18EEECFE0032A1F9 /* Lib */,
 				50A52FB2189ED5D9001D9779 /* JIPAppDelegate.h */,
 				50A52FB3189ED5D9001D9779 /* JIPAppDelegate.m */,
 				501FB95F18D1BFCE00845256 /* JIPManagedDocument.h */,
@@ -319,11 +329,32 @@
 		50FB3192189EE04F00137949 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				DB1FE86718EEEE7F0032A1F9 /* SideMenuViewController.h */,
+				DB1FE86818EEEE7F0032A1F9 /* SideMenuViewController.m */,
 				5049960018E59FEE008D5413 /* Abstract */,
 				5008E04818DC995F00530542 /* RootVCs */,
 				505A641F18ED9DCA00FC6577 /* NotRootVCs */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		DB1FE85F18EEECFE0032A1F9 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				DB1FE86018EEED110032A1F9 /* ECSLiding */,
+			);
+			name = Lib;
+			sourceTree = "<group>";
+		};
+		DB1FE86018EEED110032A1F9 /* ECSLiding */ = {
+			isa = PBXGroup;
+			children = (
+				DB1FE86118EEED110032A1F9 /* ECSlidingViewController.h */,
+				DB1FE86218EEED110032A1F9 /* ECSlidingViewController.m */,
+				DB1FE86318EEED110032A1F9 /* InitialSlidingViewController.h */,
+				DB1FE86418EEED110032A1F9 /* InitialSlidingViewController.m */,
+			);
+			path = ECSLiding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -445,6 +476,7 @@
 				50D334DA18B6573F00E21622 /* JIPExtendNSLogFunctionality.m in Sources */,
 				50AEB98218EEDFC00055FE07 /* JIPSearchArtistTableViewController.m in Sources */,
 				50A52FD4189ED91C001D9779 /* JIPUpComingEventsViewController.m in Sources */,
+				DB1FE86518EEED110032A1F9 /* ECSlidingViewController.m in Sources */,
 				50A52FB4189ED5D9001D9779 /* JIPAppDelegate.m in Sources */,
 				50DAA79118AB8E52003DDADA /* NSDate+Formatting.m in Sources */,
 				5051B4F518D9A6D600BBE2DB /* JIPUpdateManager.m in Sources */,
@@ -456,12 +488,14 @@
 				50FB3190189EE02800137949 /* JIPEvent.m in Sources */,
 				508598DA18AA74BF0048D760 /* JIPArtist.m in Sources */,
 				5008E04718DC992F00530542 /* JIPSearchArtistsViewController.m in Sources */,
+				DB1FE86618EEED110032A1F9 /* InitialSlidingViewController.m in Sources */,
 				508598D718AA551C0048D760 /* JIPVenueDetailsViewController.m in Sources */,
 				50FCB09D18CE140800AD4402 /* JIPUpcomingEventsCDTVC.m in Sources */,
 				50A52FB0189ED5D9001D9779 /* main.m in Sources */,
 				5015AAAE18A159ED000A7625 /* JIPConcertDetailsViewController.m in Sources */,
 				508FF5E118E5ED3500B53743 /* JIPFavoriteArtistTableViewController.m in Sources */,
 				50D4BB3118B49D0700E7CF12 /* Model.xcdatamodeld in Sources */,
+				DB1FE86918EEEE7F0032A1F9 /* SideMenuViewController.m in Sources */,
 				50FCB09818CE12B500AD4402 /* JIPCoreDataTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

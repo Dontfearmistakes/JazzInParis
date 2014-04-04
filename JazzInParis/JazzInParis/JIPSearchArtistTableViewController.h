@@ -12,5 +12,6 @@
 
 - (IBAction)searchClickAction:(id)sender;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+- (IBAction)revealMenu:(id)sender;
 
 @end
