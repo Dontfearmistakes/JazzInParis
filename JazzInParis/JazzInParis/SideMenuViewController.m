@@ -23,6 +23,8 @@
     return self;
 }
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -30,14 +32,16 @@
 
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
         self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     float currentVersion = 7.0;
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= currentVersion) {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= currentVersion)
+    {
         // iOS 7
         self.navBar.frame = CGRectMake(self.navBar.frame.origin.x, self.navBar.frame.origin.y, self.navBar.frame.size.width, 64);
     }
 
     [self.slidingViewController setAnchorRightRevealAmount:180.0f];
-    self.slidingViewController.underLeftWidthLayout = ECFullWidth;
+     self.slidingViewController.underLeftWidthLayout = ECFullWidth;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -47,32 +51,8 @@
 }
 
 
--(void)viewWillAppear:(BOOL)animated
-{
-    //
-    [super viewWillAppear:animated];
 
-}
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/**
- *  Tells the delegate that the specified row is now deselected.
- 
- 
- *
- *  @param tableView A table-view object informing the delegate about the row deselection.
- *  @param indexPath An index path locating the deselected row in tableView.An index path locating the deselected row in tableView.
- */
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -83,11 +63,11 @@
     }
     else if (indexPath.row == 0)
     {
-        [self goTo:@"SelectionPage"];
+        [self goTo:@"Search Artist"];
     }
     else if (indexPath.row == 1)
     {
-        [self goTo:@"MonitoringPage"];
+        [self goTo:@"All Concerts"];
     }
 }
 
@@ -97,7 +77,9 @@
     
     UIViewController *newTopViewController = [self.storyboard instantiateViewControllerWithIdentifier:page];
     
-    [self.slidingViewController anchorTopViewOffScreenTo:ECRight animations:nil onComplete:^{
+    [self.slidingViewController anchorTopViewOffScreenTo:ECRight
+                                              animations:nil
+                                              onComplete:^{
         CGRect frame = self.slidingViewController.topViewController.view.frame;
         self.slidingViewController.topViewController = newTopViewController;
         self.slidingViewController.topViewController.view.frame = frame;

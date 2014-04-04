@@ -103,7 +103,7 @@
 
 
 
-//FIXME: Event Name attribute getter/setter commented out 
+#warning Event Name attribute getter/setter commented out
 ////////////////////////////////////////
 // Check if we have a custom display name for the event.
 // If not, set and use the artist's name as the display name.

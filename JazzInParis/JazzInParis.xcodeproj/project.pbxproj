@@ -159,14 +159,8 @@
 		5008E04818DC995F00530542 /* RootVCs */ = {
 			isa = PBXGroup;
 			children = (
-				50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */,
-				50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */,
-				50FCB09B18CE140800AD4402 /* JIPUpcomingEventsCDTVC.h */,
-				50FCB09C18CE140800AD4402 /* JIPUpcomingEventsCDTVC.m */,
-				5008E04518DC992F00530542 /* JIPSearchArtistsViewController.h */,
-				5008E04618DC992F00530542 /* JIPSearchArtistsViewController.m */,
-				50AEB98018EEDFC00055FE07 /* JIPSearchArtistTableViewController.h */,
-				50AEB98118EEDFC00055FE07 /* JIPSearchArtistTableViewController.m */,
+				50C9C47F18EF0A1500F2E67C /* UpComingEvents */,
+				50C9C47E18EF0A0600F2E67C /* Search Artist */,
 				508FF5DF18E5ED3500B53743 /* JIPFavoriteArtistTableViewController.h */,
 				508FF5E018E5ED3500B53743 /* JIPFavoriteArtistTableViewController.m */,
 			);
@@ -286,6 +280,28 @@
 				50A52FC5189ED5D9001D9779 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		50C9C47E18EF0A0600F2E67C /* Search Artist */ = {
+			isa = PBXGroup;
+			children = (
+				5008E04518DC992F00530542 /* JIPSearchArtistsViewController.h */,
+				5008E04618DC992F00530542 /* JIPSearchArtistsViewController.m */,
+				50AEB98018EEDFC00055FE07 /* JIPSearchArtistTableViewController.h */,
+				50AEB98118EEDFC00055FE07 /* JIPSearchArtistTableViewController.m */,
+			);
+			name = "Search Artist";
+			sourceTree = "<group>";
+		};
+		50C9C47F18EF0A1500F2E67C /* UpComingEvents */ = {
+			isa = PBXGroup;
+			children = (
+				50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */,
+				50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */,
+				50FCB09B18CE140800AD4402 /* JIPUpcomingEventsCDTVC.h */,
+				50FCB09C18CE140800AD4402 /* JIPUpcomingEventsCDTVC.m */,
+			);
+			name = UpComingEvents;
 			sourceTree = "<group>";
 		};
 		50CE606418BA9C540079F0EF /* Views */ = {

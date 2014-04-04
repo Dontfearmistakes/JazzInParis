@@ -21,7 +21,7 @@
     storyboard = [UIStoryboard storyboardWithName:@"IPhone4" bundle:nil];
   }
   
-        self.topViewController = [storyboard instantiateViewControllerWithIdentifier:@"SearchArtist"];
+    self.topViewController = [storyboard instantiateViewControllerWithIdentifier:@"Search Artist"];
 }
 
 -(void)viewDidAppear:(BOOL)animated

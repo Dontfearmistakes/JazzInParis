@@ -11,7 +11,7 @@
 @interface JIPSearchArtistTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate>
 
 - (IBAction)searchClickAction:(id)sender;
-@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 - (IBAction)revealMenu:(id)sender;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
