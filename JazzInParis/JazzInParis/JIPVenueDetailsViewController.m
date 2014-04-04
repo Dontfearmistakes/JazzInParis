@@ -78,8 +78,8 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     
 
     //initialisation cf didUpdateUserLocation below
-    //self.venue.distanceFromUserToVenue = 0;
-    //self.venue.shouldDisplayDistanceFromUserToVenue = NO;
+    self.venue.distanceFromUserToVenue = 0;
+    self.venue.shouldDisplayDistanceFromUserToVenue = NO;
     
     //ADD ANNOTATION
     [self.venueMap addAnnotation:self.venue];
@@ -110,12 +110,6 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     return cellHeight;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    CGFloat cellHeight = (self.tableViewHeight - 55) / self.venueDetailsRows.count;
-//    return cellHeight;
-//}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -255,6 +249,14 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     cell.backgroundColor = [UIColor blueColor];
     cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
     
+    //Disclosure Indicator
+    if (indexPath.row == 2)
+    {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
+
+    
     return cell;
 }
 
@@ -272,6 +274,27 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
     if (indexPath.row == 2)
     {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.venue.websiteString]];
+    }
+    
+    //Call phone number
+    if (indexPath.row == 3 || [self.venue.phone isEqualToString:@"No Phone available"] == NO)
+    {
+        
+        NSURL    *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt://%@",@"01-42-06-68-43"]];
+        
+        #warning to be fixed
+        if ([[UIApplication sharedApplication] canOpenURL:phoneUrl])
+        {
+            [[UIApplication sharedApplication] openURL:phoneUrl];
+        }
+        else
+        {
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Alert"
+                                                            message:@"Call facility is not available"
+                                                           delegate:nil cancelButtonTitle:@"ok"
+                                                otherButtonTitles:nil, nil];
+            [alert show];
+        }
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

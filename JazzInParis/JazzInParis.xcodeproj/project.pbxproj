@@ -166,6 +166,19 @@
 			name = Abstract;
 			sourceTree = "<group>";
 		};
+		505A641F18ED9DCA00FC6577 /* NotRootVCs */ = {
+			isa = PBXGroup;
+			children = (
+				5015AAAC18A159ED000A7625 /* JIPConcertDetailsViewController.h */,
+				5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */,
+				508598D518AA551C0048D760 /* JIPVenueDetailsViewController.h */,
+				508598D618AA551C0048D760 /* JIPVenueDetailsViewController.m */,
+				508598DB18AA83AB0048D760 /* JIPArtistDetailsViewController.h */,
+				508598DC18AA83AB0048D760 /* JIPArtistDetailsViewController.m */,
+			);
+			name = NotRootVCs;
+			sourceTree = "<group>";
+		};
 		50726F2F18BB56A8008F2578 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -300,12 +313,7 @@
 			children = (
 				5049960018E59FEE008D5413 /* Abstract */,
 				5008E04818DC995F00530542 /* RootVCs */,
-				5015AAAC18A159ED000A7625 /* JIPConcertDetailsViewController.h */,
-				5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */,
-				508598D518AA551C0048D760 /* JIPVenueDetailsViewController.h */,
-				508598D618AA551C0048D760 /* JIPVenueDetailsViewController.m */,
-				508598DB18AA83AB0048D760 /* JIPArtistDetailsViewController.h */,
-				508598DC18AA83AB0048D760 /* JIPArtistDetailsViewController.m */,
+				505A641F18ED9DCA00FC6577 /* NotRootVCs */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";

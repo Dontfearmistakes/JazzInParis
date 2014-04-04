@@ -221,10 +221,10 @@ const CGFloat JIPConcertDetailsTableViewHeightPercenatge = 0.5;
     cell.textLabel.text = [NSString stringWithFormat:@"%@", self.allEventProperties[indexPath.row]];
     cell.backgroundColor = [UIColor blueColor];
     
-    //BUTTONS ON CELL 0, 2 and 3
+    //Disclosure Indicator
     if (indexPath.row == 2 || indexPath.row == 3)
     {
-        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     return cell;
