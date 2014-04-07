@@ -69,6 +69,10 @@
     {
         [self goTo:@"All Concerts"];
     }
+    else if (indexPath.row == 2)
+    {
+        [self goTo:@"Favorite Artists"];
+    }
 }
 
 

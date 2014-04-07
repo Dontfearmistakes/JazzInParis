@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Max. All rights reserved.
 //
 #import "JIPSearchArtistTableViewController.h"
-#import "JIPArtistDetailsViewController.h"
+#import "JIPArtistDetailTableViewController.h"
 #import "JIPManagedDocument.h"
 #import "JIPArtist+Create.h"
 #import "ECSlidingViewController.h"
@@ -16,6 +16,8 @@
 @interface JIPSearchArtistTableViewController ()
 
 @property (strong, nonatomic) NSMutableArray * artistsDictionnaries;
+@property (strong, nonatomic) NSMutableDictionary * artistDict;
+@property (strong, nonatomic) JIPManagedDocument * managedDocument;
 
 @end
 
@@ -24,18 +26,14 @@
 
 @implementation JIPSearchArtistTableViewController
 
-////////////////////////////////////////////
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize artistDict = _artistDict;
+@synthesize managedDocument = _managedDocument;
 
 
-/////////////////////////////////
+
+////////////////////////////////////////////////
+//method for every rootVC / implements side menu
+////////////////////////////////////////////////
 - (IBAction)revealMenu:(id)sender
 {
     [self.slidingViewController anchorTopViewTo:ECRight];
@@ -45,10 +43,122 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (![self.slidingViewController.underLeftViewController isKindOfClass:[SideMenuViewController class]]) {
+    
+    #warning : Explain this line
+    if (![self.slidingViewController.underLeftViewController isKindOfClass:[SideMenuViewController class]])
+    {
         self.slidingViewController.underLeftViewController  = [self.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
     }
 }
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UITableViewDataSource
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.artistsDictionnaries count];
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"artist"];
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"artist"];
+    }
+    
+    //CELL GETS EVENT.NAME
+    cell.textLabel.text = self.artistsDictionnaries[indexPath.row][@"displayName"];
+    
+    return cell;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    _artistDict = [[NSMutableDictionary alloc]init];
+
+    _artistDict[@"name"]        = self.artistsDictionnaries[indexPath.row][@"displayName"]  ;
+    _artistDict[@"id"]          = self.artistsDictionnaries[indexPath.row][@"id"]           ;
+    _artistDict[@"songkickUri"] = self.artistsDictionnaries[indexPath.row][@"uri"]          ;
+    
+    
+    if ([self.artistsDictionnaries[0][@"displayName"]  isEqualToString: @"No upcoming concert for this artist"] == false
+        &&
+        [self.artistsDictionnaries[0][@"displayName"]  isEqualToString: @"No network connection"]               == false)
+    {
+        [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
+         {
+             _managedDocument = managedDocument;
+             [self performSegueWithIdentifier:@"ArtistDetails" sender:nil];
+         }];
+    }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+
+
+
+/////////////////////////////////////////////////
+-(void)prepareForSegue:(UIStoryboardSegue *)segue
+                sender:(id)sender
+{    
+    if ([segue.identifier isEqualToString:@"ArtistDetails"])
+    //FETCH ARTIST IN CONTEXT AND PASS IT TO artistDetailsVC.artist
+    {
+        JIPArtistDetailTableViewController *artistDetailsVC = [segue destinationViewController];
+        artistDetailsVC.artist = [JIPArtist artistWithDict:_artistDict
+                                    inManagedObjectContext:_managedDocument.managedObjectContext];
+    }
+}
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UISearchBarDelegate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////
+// Click on top left bar button (loupe) --> searBar becomes first responder
+- (IBAction)searchClickAction:(id)sender
+{
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    [self.searchBar becomeFirstResponder];
+}
+
+
+////////////////////////////////////////////////////////////
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    NSString* searchTerm = [self.searchDisplayController.searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    [self searchSongkickArtistForSearchterm:searchTerm];
+    [self.searchDisplayController setActive:NO animated:YES];
+}
+
+
+
+
+
 
 
 ////////////////////////////////////////////////////////////////
@@ -97,77 +207,6 @@
                                                 
                                             }];
     [dataTask resume];
-}
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - UITableViewDataSource
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-///////////////////////////////////////////////////////////////////////////////////////
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [self.artistsDictionnaries count];
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"artist"];
-    if (!cell)
-    {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"artist"];
-    }
-    
-    //CELL GETS EVENT.NAME
-    cell.textLabel.text = self.artistsDictionnaries[indexPath.row][@"displayName"];
-    
-    return cell;
-}
-
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - UISearchBarDelegate
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-////////////////////////////////////////////////////////////////////
-// Click on top left bar button --> searBar becomes first responder
-- (IBAction)searchClickAction:(id)sender
-{
-    #warning explain scrollRectToVisible
-    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-    [self.searchBar becomeFirstResponder];
-}
-
-
-//////////////////////////////////////////////////////////
--(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{
-    [self.searchBar resignFirstResponder];
-}
-
-
-////////////////////////////////////////////////////////////
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    NSString* searchTerm = [self.searchDisplayController.searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    [self searchSongkickArtistForSearchterm:searchTerm];
 }
 
 
