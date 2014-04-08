@@ -76,10 +76,13 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="oFO-bP-fdz">
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="LQv-mT-HnT">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="8mO-Ob-1FH" id="Bjz-Rh-77j"/>
+                            </connections>
                         </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ArtistNameCell" rowHeight="60" id="dXH-HA-UKs" customClass="JIPArtistNameCell">
@@ -122,12 +125,28 @@
                                 <action selector="revealMenu:" destination="5tH-iU-sPP" id="X6F-bL-hfa"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="ti0-fj-dt1">
+                            <connections>
+                                <action selector="searchBarButtonItemClick:" destination="5tH-iU-sPP" id="Hgr-eA-8KB"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="searchBar" destination="oFO-bP-fdz" id="ahr-eI-SUh"/>
+                        <outlet property="searchBar" destination="LQv-mT-HnT" id="G4W-8S-0Ds"/>
+                        <outlet property="searchBarButtonItem" destination="ti0-fj-dt1" id="Unf-4t-Zhg"/>
+                        <outlet property="searchDisplayController" destination="OaB-JC-ypU" id="iD6-Hl-wHc"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KPh-ZL-SNU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="OaB-JC-ypU">
+                    <connections>
+                        <outlet property="delegate" destination="5tH-iU-sPP" id="fAU-oe-tU2"/>
+                        <outlet property="searchBar" destination="LQv-mT-HnT" id="d1p-4P-R7f"/>
+                        <outlet property="searchContentsController" destination="5tH-iU-sPP" id="hON-k5-Dal"/>
+                        <outlet property="searchResultsDataSource" destination="5tH-iU-sPP" id="kJ2-7F-hov"/>
+                        <outlet property="searchResultsDelegate" destination="5tH-iU-sPP" id="7Zf-Vz-bre"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1653" y="-51"/>
         </scene>

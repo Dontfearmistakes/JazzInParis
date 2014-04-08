@@ -20,8 +20,8 @@
 
 @implementation JIPFavoriteArtistsTableViewController
 
-@synthesize searchBar  = _searchBar;
-@synthesize isFiltered = _isFiltered;
+@synthesize searchBar               = _searchBar;
+@synthesize isFiltered              = _isFiltered;
 @synthesize filteredFavoriteArtists = _filteredFavoriteArtists;
 @synthesize favoriteArtists         = _favoriteArtists;
 @synthesize artist                  = _artist;
@@ -39,10 +39,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    #warning besoin ou pas ?
-    self.searchBar.delegate = self;
-    
 }
 
 ////////////////////////////////////
@@ -72,10 +68,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_isFiltered)
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
         return [_filteredFavoriteArtists count];
+    }
     else
-        return [_favoriteArtists     count];
+    {
+        return [_favoriteArtists count];
+    }
 }
 
 
@@ -88,13 +88,13 @@
         artistNameCell = [[JIPArtistNameCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ArtistNameCell"];
     }
     
-    if (_isFiltered)
+    if (tableView == self.searchDisplayController.searchResultsTableView)
     {
-        _artist = _favoriteArtists[indexPath.row];
+        _artist = _filteredFavoriteArtists[indexPath.row];
     }
     else
     {
-        _artist  = self.favoriteArtists[indexPath.row];
+        _artist  = _favoriteArtists[indexPath.row];
     }
     
     artistNameCell.artist       = _artist;
@@ -118,30 +118,42 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
--(void)searchBar:(UISearchBar*)searchBar textDidChange:(NSString*)text
-{
-    if(text.length == 0)
-    {
-        _isFiltered = FALSE;
-    }
-    else
-    {
-        _isFiltered = TRUE;
-        _filteredFavoriteArtists = [[NSMutableArray alloc] init];
-        
-        for (JIPArtist* artist in self.favoriteArtists)
-        {
-            NSRange nameRange = [artist.name rangeOfString:text options:NSCaseInsensitiveSearch];
-
-            if(nameRange.location != NSNotFound)
-            {
-                [_filteredFavoriteArtists addObject:artist];
-            }
-        }
-    }
-    
-    [self.tableView reloadData];
+///////////////////////////////////////////////////////////////////////////
+// Click on top left bar button (loupe) --> searBar becomes first responder
+- (IBAction)searchBarButtonItemClick:(id)sender {
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    [self.searchBar becomeFirstResponder];
 }
 
+
+////////////////////////////////////////////////////////////
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    NSString* searchTerm = self.searchDisplayController.searchBar.text;
+    [self.searchDisplayController setActive:NO animated:YES];
+}
+
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString
+                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
+                                      objectAtIndex:[self.searchDisplayController.searchBar
+                                                     selectedScopeButtonIndex]]];
+    return YES;
+}
+
+
+////////////////////////////////////////////////////////
+- (void)filterContentForSearchText:(NSString*)searchText
+                             scope:(NSString*)scope
+{
+    // NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@",searchText];
+    NSPredicate *resultPredicate = [NSPredicate
+                                    predicateWithFormat:@"name contains[cd] %@",
+                                    searchText];
+    
+   _filteredFavoriteArtists = [_favoriteArtists filteredArrayUsingPredicate:resultPredicate];
+}
 
 @end

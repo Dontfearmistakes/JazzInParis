@@ -107,6 +107,16 @@
              [self performSegueWithIdentifier:@"ArtistDetails" sender:nil];
          }];
     }
+    else
+    //DEBUG
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Pas entré dans le segue"
+                                                        message:@"Dee dee doo doo."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK" 
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
