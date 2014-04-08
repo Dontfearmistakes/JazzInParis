@@ -20,6 +20,12 @@
 
 @implementation JIPFavoriteArtistsTableViewController
 
+@synthesize searchBar  = _searchBar;
+@synthesize isFiltered = _isFiltered;
+@synthesize filteredFavoriteArtists = _filteredFavoriteArtists;
+@synthesize favoriteArtists         = _favoriteArtists;
+@synthesize artist                  = _artist;
+
 ////////////////////////////////////////////////
 //method for every rootVC / implements side menu
 ////////////////////////////////////////////////
@@ -34,6 +40,9 @@
 {
     [super viewDidLoad];
     
+    #warning besoin ou pas ?
+    self.searchBar.delegate = self;
+    
 }
 
 ////////////////////////////////////
@@ -46,7 +55,7 @@
     request.predicate       = [NSPredicate predicateWithFormat:@"favorite == %@", @YES];
     
     NSError *error = nil;
-    self.favoriteArtists = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
+    _favoriteArtists = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
     
     [self.tableView reloadData];
 }
@@ -63,7 +72,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.favoriteArtists.count;
+    if (_isFiltered)
+        return [_filteredFavoriteArtists count];
+    else
+        return [_favoriteArtists     count];
 }
 
 
@@ -76,19 +88,60 @@
         artistNameCell = [[JIPArtistNameCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ArtistNameCell"];
     }
     
+    if (_isFiltered)
+    {
+        _artist = _favoriteArtists[indexPath.row];
+    }
+    else
+    {
+        _artist  = self.favoriteArtists[indexPath.row];
+    }
     
-    JIPArtist * artist  = self.favoriteArtists[indexPath.row];
-    artistNameCell.artist = artist;
-    artistNameCell.UILabel.text = artist.name;
+    artistNameCell.artist       = _artist;
+    artistNameCell.UILabel.text = _artist.name;
     
-    [[artistNameCell switchFavorite] setOn:[artist.favorite boolValue]];
-    
+    [[artistNameCell switchFavorite] setOn:[_artist.favorite boolValue]];
+
     
     //switchView.tag = indexPath.row;
     return artistNameCell;
 
 }
 
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UISearchBarDelegate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+-(void)searchBar:(UISearchBar*)searchBar textDidChange:(NSString*)text
+{
+    if(text.length == 0)
+    {
+        _isFiltered = FALSE;
+    }
+    else
+    {
+        _isFiltered = TRUE;
+        _filteredFavoriteArtists = [[NSMutableArray alloc] init];
+        
+        for (JIPArtist* artist in self.favoriteArtists)
+        {
+            NSRange nameRange = [artist.name rangeOfString:text options:NSCaseInsensitiveSearch];
+
+            if(nameRange.location != NSNotFound)
+            {
+                [_filteredFavoriteArtists addObject:artist];
+            }
+        }
+    }
+    
+    [self.tableView reloadData];
+}
 
 
 @end
