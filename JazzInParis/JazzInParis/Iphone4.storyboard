@@ -379,10 +379,10 @@
             </objects>
             <point key="canvasLocation" x="527" y="-36"/>
         </scene>
-        <!--Search Artist Table View Controller - All concerts-->
+        <!--Upcoming EventsCDTVC - All concerts-->
         <scene sceneID="2Zr-pD-P1w">
             <objects>
-                <tableViewController id="W7c-xh-g1z" customClass="JIPSearchArtistTableViewController" sceneMemberID="viewController">
+                <tableViewController id="W7c-xh-g1z" customClass="JIPUpcomingEventsCDTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="d1c-oL-MK6">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -396,13 +396,33 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="MuD-vN-KpT">
-                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UpcomingEventCell" textLabel="30w-BR-8dh" detailTextLabel="qxN-qP-czs" rowHeight="50" style="IBUITableViewCellStyleSubtitle" id="MuD-vN-KpT" customClass="JIPUpcomingEventCell">
+                                <rect key="frame" x="0.0" y="66" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MuD-vN-KpT" id="SmI-mn-nx8">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="49"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="30w-BR-8dh">
+                                            <rect key="frame" x="15" y="6" width="34" height="22"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qxN-qP-czs">
+                                            <rect key="frame" x="15" y="28" width="43" height="15"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="subtitleLabel" destination="qxN-qP-czs" id="iQI-DO-D6A"/>
+                                    <outlet property="titleLabel" destination="30w-BR-8dh" id="lz4-Sz-cFj"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -416,14 +436,15 @@
                                 <action selector="revealMenu:" destination="W7c-xh-g1z" id="wOJ-UF-f3V"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" systemItem="search" id="5Fz-78-n3o">
+                        <barButtonItem key="rightBarButtonItem" title="Item" systemItem="search" id="Hed-lm-RAC">
                             <connections>
-                                <action selector="searchClickAction:" destination="W7c-xh-g1z" id="f6z-Fj-Gf8"/>
+                                <action selector="searchBarButtonItemClick:" destination="W7c-xh-g1z" id="wpj-cf-Q9O"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="searchBar" destination="3NE-bi-biI" id="A0Z-zo-H13"/>
+                        <outlet property="searchBar" destination="3NE-bi-biI" id="Ck7-Ed-LzB"/>
+                        <outlet property="searchBarButtonItem" destination="Hed-lm-RAC" id="jLn-Em-drj"/>
                         <outlet property="searchDisplayController" destination="uxE-JB-JAj" id="Neh-Ph-JuM"/>
                     </connections>
                 </tableViewController>

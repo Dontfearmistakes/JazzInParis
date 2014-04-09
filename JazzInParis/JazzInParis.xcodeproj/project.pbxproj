@@ -10,6 +10,7 @@
 		5008E04718DC992F00530542 /* JIPSearchArtistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5008E04618DC992F00530542 /* JIPSearchArtistsViewController.m */; };
 		5015AAAE18A159ED000A7625 /* JIPConcertDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */; };
 		501FB96118D1BFCE00845256 /* JIPManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 501FB96018D1BFCE00845256 /* JIPManagedDocument.m */; };
+		5040392C18F5649200AE815A /* JIPUpcomingEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5040392B18F5649200AE815A /* JIPUpcomingEventCell.m */; };
 		5051B4F518D9A6D600BBE2DB /* JIPUpdateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5051B4F418D9A6D600BBE2DB /* JIPUpdateManager.m */; };
 		5069740F18F1811800A4E23C /* JIPArtistNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5069740E18F1811800A4E23C /* JIPArtistNameCell.m */; };
 		5069741218F1823B00A4E23C /* JIPArtistDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5069741118F1823B00A4E23C /* JIPArtistDetailTableViewController.m */; };
@@ -70,6 +71,8 @@
 		5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPConcertDetailsViewController.m; sourceTree = "<group>"; };
 		501FB95F18D1BFCE00845256 /* JIPManagedDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPManagedDocument.h; sourceTree = "<group>"; };
 		501FB96018D1BFCE00845256 /* JIPManagedDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPManagedDocument.m; sourceTree = "<group>"; };
+		5040392A18F5649200AE815A /* JIPUpcomingEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPUpcomingEventCell.h; sourceTree = "<group>"; };
+		5040392B18F5649200AE815A /* JIPUpcomingEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPUpcomingEventCell.m; sourceTree = "<group>"; };
 		5051B4F318D9A6D600BBE2DB /* JIPUpdateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPUpdateManager.h; sourceTree = "<group>"; };
 		5051B4F418D9A6D600BBE2DB /* JIPUpdateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPUpdateManager.m; sourceTree = "<group>"; };
 		5069740D18F1811800A4E23C /* JIPArtistNameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPArtistNameCell.h; sourceTree = "<group>"; };
@@ -306,8 +309,6 @@
 		50C9C47F18EF0A1500F2E67C /* UpComingEvents */ = {
 			isa = PBXGroup;
 			children = (
-				50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */,
-				50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */,
 				50FCB09B18CE140800AD4402 /* JIPUpcomingEventsCDTVC.h */,
 				50FCB09C18CE140800AD4402 /* JIPUpcomingEventsCDTVC.m */,
 			);
@@ -321,6 +322,8 @@
 				509759D018A900F800E1482E /* JIPMyPinView.m */,
 				5069740D18F1811800A4E23C /* JIPArtistNameCell.h */,
 				5069740E18F1811800A4E23C /* JIPArtistNameCell.m */,
+				5040392A18F5649200AE815A /* JIPUpcomingEventCell.h */,
+				5040392B18F5649200AE815A /* JIPUpcomingEventCell.m */,
 				5069741318F1828300A4E23C /* JIPYouTubeVideoCell.h */,
 				5069741418F1828300A4E23C /* JIPYouTubeVideoCell.m */,
 			);
@@ -348,6 +351,8 @@
 		50FA943618F2FB78008A761D /* Trash */ = {
 			isa = PBXGroup;
 			children = (
+				50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */,
+				50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */,
 				508FF5DF18E5ED3500B53743 /* JIPFavoriteArtistTableViewController.h */,
 				508FF5E018E5ED3500B53743 /* JIPFavoriteArtistTableViewController.m */,
 				508598DB18AA83AB0048D760 /* JIPArtistDetailsViewController.h */,
@@ -526,6 +531,7 @@
 				508598D418AA46330048D760 /* JIPVenue.m in Sources */,
 				50A1524F18CF5F8E00AB2D9F /* JIPEvent+Create.m in Sources */,
 				50D334DA18B6573F00E21622 /* JIPExtendNSLogFunctionality.m in Sources */,
+				5040392C18F5649200AE815A /* JIPUpcomingEventCell.m in Sources */,
 				50AEB98218EEDFC00055FE07 /* JIPSearchArtistTableViewController.m in Sources */,
 				50A52FD4189ED91C001D9779 /* JIPUpComingEventsViewController.m in Sources */,
 				DB1FE86518EEED110032A1F9 /* ECSlidingViewController.m in Sources */,

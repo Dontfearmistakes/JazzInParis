@@ -15,13 +15,28 @@
 #import "JIPManagedDocument.h"
 #import "JIPUpdateManager.h"
 #import "JIPConcertDetailsViewController.h"
+#import "ECSlidingViewController.h"
+#import "JIPUpcomingEventCell.h"
 
 
 @implementation JIPUpcomingEventsCDTVC
 
+@synthesize filteredUpcomingEvents = _filteredUpcomingEvents;
+@synthesize event                  = _event;
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////
+//method for every rootVC / implements side menu
+////////////////////////////////////////////////
+
+- (IBAction)revealMenu:(id)sender {
+    [self.slidingViewController anchorTopViewTo:ECRight];
+}
+
 
 ////////////////////////////////////////////////////////////
 -(void)viewWillAppear:(BOOL)animated
@@ -56,20 +71,41 @@
 #pragma mark - UITableViewDataSource
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    //Here, the table view passed as an argument can be either the regular tableView (appearing the 1st time the view loads)
+    //                                                  or the self.searchDisplayController.searchResultsTableView (if the searchBar is used)
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        return [_filteredUpcomingEvents count];
+    }
+    else
+    {
+        return [super tableView:tableView numberOfRowsInSection:section];
+    }
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"eventCell"];
-    if (!cell)
+    //ICI self.tableView est TOUJOURS UITableView et non pas UISearchResultsTableView (c'est pour ça qu'on l'utilise pour chopper là cellule)
+    //Alors que le tableView passé en argument est l'un ou l'autre (selon que les résultats affichés sont filtrés oun non)
+    JIPUpcomingEventCell *upcomingEventCell = [self.tableView dequeueReusableCellWithIdentifier:@"UpcomingEventCell"];
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView)
     {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"eventCell"];
+        _event = _filteredUpcomingEvents[indexPath.row];
+    }
+    else
+    {
+        _event = [self.fetchedResultsController objectAtIndexPath:indexPath];
     }
 
-    JIPEvent *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = event.name;
-    cell.detailTextLabel.text  = [NSString stringWithFormat:@"@ %@", event.venue.name];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    upcomingEventCell.titleLabel.text    = _event.name;
+    upcomingEventCell.subtitleLabel.text = [NSString stringWithFormat:@"@ %@", _event.venue.name];
     
-    return cell;
+    return upcomingEventCell;
+    
 }
 
 
@@ -111,6 +147,11 @@
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -129,6 +170,51 @@
     //PUSH VC//////////////////////
     [self.navigationController pushViewController:concertDetailsVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UISearchBarDelegate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////
+// Click on top left bar button (loupe) --> searBar becomes first responder
+- (IBAction)searchBarButtonItemClick:(id)sender
+{
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    [self.searchBar becomeFirstResponder];
+}
+
+
+////////////////////////////////////////////////////////////
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+#warning : this method is never called ...
+    [self.searchDisplayController setActive:NO animated:YES];
+}
+
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+#warning : à quoi sert scope ?? il est nil...
+    [self filterContentForSearchText:searchString
+                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    return YES;
+}
+
+
+////////////////////////////////////////////////////////
+- (void)filterContentForSearchText:(NSString*)searchText
+                             scope:(NSString*)scope
+{
+#warning : what is diacritic ?
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchText];
+    
+   _filteredUpcomingEvents = [self.fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:resultPredicate];
 }
 
 @end

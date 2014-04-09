@@ -13,11 +13,12 @@
 
 @property (strong, nonatomic) NSArray              * favoriteArtists;
 @property (strong, nonatomic) NSArray              * filteredFavoriteArtists;
+@property (nonatomic)         BOOL                   isFiltered;
+@property (strong, nonatomic) JIPArtist            * artist;
+
 @property (strong, nonatomic) IBOutlet UISearchBar * searchBar;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *searchBarButtonItem;
 - (IBAction)searchBarButtonItemClick:(id)sender;
-@property (nonatomic)         BOOL        isFiltered;
-@property (strong, nonatomic) JIPArtist * artist;
 
 
 @end

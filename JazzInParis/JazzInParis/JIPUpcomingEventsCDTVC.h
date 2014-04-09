@@ -7,7 +7,18 @@
 //
 
 #import "JIPCoreDataTableViewController.h"
+#import "JIPEvent.h"
 
-@interface JIPUpcomingEventsCDTVC : JIPCoreDataTableViewController
+@interface JIPUpcomingEventsCDTVC : JIPCoreDataTableViewController <UISearchBarDelegate, UISearchDisplayDelegate>
+
+
+
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *searchBarButtonItem;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+
+@property (strong, nonatomic) NSArray              * filteredUpcomingEvents;
+@property (nonatomic)         BOOL                   isFiltered;
+@property (strong, nonatomic) JIPEvent             * event;
+
 
 @end
