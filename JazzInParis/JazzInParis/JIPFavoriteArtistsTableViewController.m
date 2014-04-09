@@ -68,6 +68,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    //Here, the table view passed as an argument can be either the regular tableView (appearing the 1st time the view loads)
+    //                                                  or the self.searchDisplayController.searchResultsTableView (if the searchBar is used)
     if (tableView == self.searchDisplayController.searchResultsTableView)
     {
         return [_filteredFavoriteArtists count];
@@ -79,14 +81,12 @@
 }
 
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JIPArtistNameCell *artistNameCell = [tableView dequeueReusableCellWithIdentifier:@"ArtistNameCell"];
-    if (!artistNameCell)
-    {
-        artistNameCell = [[JIPArtistNameCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ArtistNameCell"];
-    }
+    //ICI self.tableView est TOUJOURS UITableView et non pas UISearchResultsTableView (c'est pour ça qu'on l'utilise pour chopper là cellule)
+    //Alors que le tableView passé en argument est l'un ou l'autre (selon que les résultats affichés sont filtrés oun non)
+    JIPArtistNameCell *artistNameCell = [self.tableView dequeueReusableCellWithIdentifier:@"ArtistNameCell"];
     
     if (tableView == self.searchDisplayController.searchResultsTableView)
     {
@@ -102,14 +102,15 @@
     
     [[artistNameCell switchFavorite] setOn:[_artist.favorite boolValue]];
 
-    
-    //switchView.tag = indexPath.row;
     return artistNameCell;
-
 }
 
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+        return 60;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,7 +121,8 @@
 
 ///////////////////////////////////////////////////////////////////////////
 // Click on top left bar button (loupe) --> searBar becomes first responder
-- (IBAction)searchBarButtonItemClick:(id)sender {
+- (IBAction)searchBarButtonItemClick:(id)sender
+{
     [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     [self.searchBar becomeFirstResponder];
 }
@@ -129,17 +131,16 @@
 ////////////////////////////////////////////////////////////
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    NSString* searchTerm = self.searchDisplayController.searchBar.text;
+    #warning : this method is never called ...
     [self.searchDisplayController setActive:NO animated:YES];
 }
 
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
+    #warning : à quoi sert scope ?? il est nil...
     [self filterContentForSearchText:searchString
-                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
-                                      objectAtIndex:[self.searchDisplayController.searchBar
-                                                     selectedScopeButtonIndex]]];
+                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     return YES;
 }
 
@@ -148,10 +149,8 @@
 - (void)filterContentForSearchText:(NSString*)searchText
                              scope:(NSString*)scope
 {
-    // NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@",searchText];
-    NSPredicate *resultPredicate = [NSPredicate
-                                    predicateWithFormat:@"name contains[cd] %@",
-                                    searchText];
+    #warning : what is diacritic ?
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchText];
     
    _filteredFavoriteArtists = [_favoriteArtists filteredArrayUsingPredicate:resultPredicate];
 }

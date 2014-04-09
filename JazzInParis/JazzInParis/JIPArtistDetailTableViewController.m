@@ -23,20 +23,6 @@
 @synthesize artistNameNavItem = _artistNameNavItem;
 
 
-////////////////////////////////////////////////////////////////////
-#warning how to keep sizes upon rotate ??
-////////////////////////////////////////////////////////////////////
-//-(void)viewDidLayoutSubviews
-//called when bounds are redrawn
-//{
-//    CGFloat superViewWidth = self.view.bounds.size.width;
-//    CGFloat superViewHeight = self.view.bounds.size.height;
-//    
-//    self.tableView.frame = CGRectMake(0,0, superViewWidth, superViewHeight);
-//    
-//}
-
-
 /////////////////////
 - (void)viewDidLoad
 {
@@ -120,7 +106,6 @@
        nameCell = [tableView dequeueReusableCellWithIdentifier:@"ArtistNameCell" forIndexPath:indexPath];
        nameCell.artist = self.artist;
         
-      #warning : pourquoi pas d'alloc init ?  Et si le dequeueReusableCellWithIdentifier ne renvoie rien ?
       [[nameCell switchFavorite] setOn:[self.artist.favorite boolValue]];
        return nameCell;
     }

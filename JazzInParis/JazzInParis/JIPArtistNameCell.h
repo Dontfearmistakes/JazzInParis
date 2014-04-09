@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UISwitch *switchFavorite;
 
 @property (strong, nonatomic) IBOutlet UILabel *UILabel;
+@property (strong, nonatomic) IBOutlet UILabel *testLabel;
 
 @property (strong, nonatomic) JIPArtist *artist;
 

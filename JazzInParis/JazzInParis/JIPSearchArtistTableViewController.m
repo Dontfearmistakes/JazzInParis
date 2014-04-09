@@ -44,7 +44,7 @@
 {
     [super viewDidLoad];
     
-    #warning : Explain this line
+    //Page qui appraît au lancement de l'appli = rattacher le side menu à la page de lancement
     if (![self.slidingViewController.underLeftViewController isKindOfClass:[SideMenuViewController class]])
     {
         self.slidingViewController.underLeftViewController  = [self.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
