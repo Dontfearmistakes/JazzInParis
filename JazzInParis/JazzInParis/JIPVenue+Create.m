@@ -22,14 +22,15 @@
     NSError *error = nil;
     NSArray *matches = [context executeFetchRequest:request error:&error];
     venue = [matches lastObject];
-    //fetchRequest returns nil, there's an error
+    
+    // 1) fetchRequest returns nil, there's an error
     if ( !matches )
     {
         //handle error
         NSLog(@"CORE DATA FETCH REQUEST ERROR");
     }
     
-    //there's no match in the database yet, let's create a Venue object in the database
+    // 2) there's no match in the database yet, let's create a Venue object in the database
     else if ([matches count] == 0 )
     {
         venue = [NSEntityDescription insertNewObjectForEntityForName:@"JIPVenue"
@@ -49,7 +50,8 @@
         venue.websiteString = venueDict[@"websiteString"];
     }
     
-    //or the object exist is missing properties (API Call specific for Venue is being done now)
+    // 3) the object has already been created upon upcomingEvents API call
+    // but is missing properties (API Call specific for Venue is being done now)
     else if ([matches count] == 1  && (venue.desc == nil || [venue.desc isEqualToString:@""] || [venue.desc isEqualToString:@"No description available"] ))
     {
         venue.street        = [venueDict[@"street"] description];
@@ -64,43 +66,6 @@
     }
     
     //there's already an object with that name in the database
-    else
-    {
-        venue = [matches lastObject];//there's one object in matches anyway
-    }
-    
-    return venue;
-}
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
-+ (JIPVenue *)venueWithId:(NSString *)venueId
-   inManagedObjectContext:(NSManagedObjectContext *)context
-{
-    JIPVenue *venue = nil;
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPVenue"];
-    request.predicate = [NSPredicate predicateWithFormat:@"id = %@", venueId];
-    
-    NSError *error = nil;
-    NSArray *matches = [context executeFetchRequest:request error:&error];
-    
-    //fetchRequest returns nil, there's an error
-    if ( !matches )
-    {
-        //handle error
-        NSLog(@"CORE DATA FETCH REQUEST ERROR");
-    }
-    
-    //there's no match in the database
-    else if ([matches count] == 0)
-    {
-        NSLog(@"NO VENUE WITH THIS id YET LET'S DOWNLOAD. ID = %@", venueId);
-    }
-    
-    //there's a match
     else
     {
         venue = [matches lastObject];//there's one object in matches anyway

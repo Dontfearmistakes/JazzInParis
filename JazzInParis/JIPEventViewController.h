@@ -11,16 +11,20 @@
 #import "JIPVenue.h"
 
 @interface JIPEventViewController : UIViewController
-@property (strong, nonatomic) IBOutlet UILabel *artistNameLabel;
-@property (strong, nonatomic) IBOutlet UILabel *concertNameLabel;
-@property (strong, nonatomic) IBOutlet UITextView *venueAdressTxtView;
-@property (strong, nonatomic) IBOutlet UIButton *checkMapButton;
+@property (strong, nonatomic) IBOutlet UILabel  *concertNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel  *concertDateLabel;
+
+
+
+@property (strong, nonatomic) IBOutlet UIButton   *checkMapButton;
 
 @property (strong, nonatomic) JIPEvent    *event;
 @property (strong, nonatomic) JIPVenue    *venue;
 
 
 - (IBAction)checkMapClick:(id)sender;
+- (IBAction)concertDetailsClick:(id)sender;
+
 
 
 @end

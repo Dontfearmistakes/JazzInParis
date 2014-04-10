@@ -135,30 +135,30 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
     
     [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
         
-        for (NSDictionary * dictionnaryFromApi in dictionnariesOfEventsFromApi)
+        for (NSDictionary * eventDictFromApi in dictionnariesOfEventsFromApi)
         {
             NSMutableDictionary * eventDict = [[NSMutableDictionary alloc]init];
             
             //event details
-            eventDict[@"id"]        = dictionnaryFromApi[@"id"];
-            eventDict[@"name"]      = dictionnaryFromApi[@"displayName"];
-            eventDict[@"lat"]       = [NSString stringWithFormat:@"%@", dictionnaryFromApi[@"location"][@"lat"]];
-            eventDict[@"long"]      = [NSString stringWithFormat:@"%@", dictionnaryFromApi[@"location"][@"lng"]];
-            eventDict[@"date"]      = [NSDate dateFromAPIString:dictionnaryFromApi[@"start"][@"date"]] ;
-            eventDict[@"venue"]     = dictionnaryFromApi[@"venue"][@"displayName"];
-            eventDict[@"artist"]    = dictionnaryFromApi[@"performance"][0][@"artist"][@"displayName"] ;
-            eventDict[@"uriString"] = dictionnaryFromApi[@"uri"];
+            eventDict[@"id"]        = eventDictFromApi[@"id"];
+            eventDict[@"name"]      = eventDictFromApi[@"displayName"];
+            eventDict[@"lat"]       = [NSString stringWithFormat:@"%@", eventDictFromApi[@"location"][@"lat"]];
+            eventDict[@"long"]      = [NSString stringWithFormat:@"%@", eventDictFromApi[@"location"][@"lng"]];
+            eventDict[@"date"]      = [NSDate dateFromAPIString:eventDictFromApi[@"start"][@"date"]] ;
+            eventDict[@"venue"]     = eventDictFromApi[@"venue"][@"displayName"];
+            eventDict[@"artist"]    = eventDictFromApi[@"performance"][0][@"artist"][@"displayName"] ;
+            eventDict[@"uriString"] = eventDictFromApi[@"uri"];
             
             //artist details
-            eventDict[@"artistId"]  = dictionnaryFromApi[@"performance"][0][@"artist"][@"id"];
-            eventDict[@"artistUri"] = dictionnaryFromApi[@"performance"][0][@"artist"][@"uri"];
+            eventDict[@"artistId"]  = eventDictFromApi[@"performance"][0][@"artist"][@"id"];
+            eventDict[@"artistUri"] = eventDictFromApi[@"performance"][0][@"artist"][@"uri"];
             
             
             //venue details
-            eventDict[@"venueId"]   = dictionnaryFromApi[@"venue"][@"id"];
-            eventDict[@"venueUri"]  = dictionnaryFromApi[@"venue"][@"uri"];
-            eventDict[@"venueName"] = dictionnaryFromApi[@"venue"][@"displayName"];
-            eventDict[@"venueCity"] = dictionnaryFromApi[@"location"][@"city"];
+            eventDict[@"venueId"]   = eventDictFromApi[@"venue"][@"id"];
+            eventDict[@"venueUri"]  = eventDictFromApi[@"venue"][@"uri"];
+            eventDict[@"venueName"] = eventDictFromApi[@"venue"][@"displayName"];
+            eventDict[@"venueCity"] = eventDictFromApi[@"location"][@"city"];
             
 
             [JIPEvent eventWithSongkickInfo:eventDict
@@ -226,15 +226,20 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 {
     
     NSFetchRequest *request     = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
-    request.predicate           = [NSPredicate predicateWithFormat:@"id = %@", artist.id]; //all JIPEvents for this artist
+    //request.predicate         = [NSPredicate predicateWithFormat:@"artist.id = %@", artist.id]; //all JIPEvents for this artist
     NSError *error = nil;
+    
+    #warning fetch not working, objectsToBeDeleted is always empty
     NSArray *objectsToBeDeleted = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request
                                                                                                                  error:&error];
-    
-    if ([objectsToBeDeleted count] == 0)
+    //SI on a des JIPEvents à supprimer
+    if (! [objectsToBeDeleted count] == 0)
+    {
         for (NSManagedObject* objectToBeDeleted in objectsToBeDeleted)
+        {
             [[JIPManagedDocument sharedManagedDocument].managedObjectContext deleteObject:objectToBeDeleted];
-    
+        }
+    }
     
 }
 

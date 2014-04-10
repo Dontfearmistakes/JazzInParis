@@ -8,6 +8,10 @@
 
 #import "JIPEventViewController.h"
 #import "JIPVenueMapVC.h"
+#import "NSDate+Formatting.h"
+#import "JIPManagedDocument.h"
+#import "JIPUpdateManager.h"
+#import "JIPVenue+Create.h"
 
 @interface JIPEventViewController ()
 
@@ -15,9 +19,9 @@
 
 @implementation JIPEventViewController
 
-@synthesize artistNameLabel    = _artistNameLabel;
+@synthesize concertDateLabel   = _concertDateLabel;
 @synthesize concertNameLabel   = _concertNameLabel;
-@synthesize venueAdressTxtView = _venueAdressTxtView;
+
 @synthesize checkMapButton     = _checkMapButton;
 @synthesize event              = _event;
 
@@ -27,9 +31,39 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    _artistNameLabel   .text = _event.artist.name;
     _concertNameLabel  .text = _event.name;
-    _venueAdressTxtView.text = _event.venue.street;
+    _concertDateLabel  .text = [NSDate stringFromDate:_event.date];
+    
+    
+    
+    // Create http request
+    NSURLSession * session  = [NSURLSession sharedSession];
+    NSURL *url = [[JIPUpdateManager sharedUpdateManager] songkickURLUpcomingEventsForVenueWithId:[NSString stringWithFormat:@"%@", _event.venue.id]];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
+                                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                
+                                                NSError *localError = nil;
+                                                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
+                                                NSDictionary *dictionnaryOfVenue = parsedObject[@"resultsPage"][@"results"][@"venue"];
+                                                
+                                                [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
+                                                 {
+                                                     _venue = [JIPVenue venueWithDict:@{    @"id"            : dictionnaryOfVenue[@"id"],
+                                                                                            @"street"        : dictionnaryOfVenue[@"street"],
+                                                                                            @"capacity"      : dictionnaryOfVenue[@"capacity"],
+                                                                                            @"desc"          : dictionnaryOfVenue[@"description"],
+                                                                                            @"phone"         : dictionnaryOfVenue[@"phone"],
+                                                                                            @"websiteString" : dictionnaryOfVenue[@"website"],
+                                                                                            @"city"          : dictionnaryOfVenue[@"city"][@"displayName"]
+                                                                                            }
+                                                                   inManagedObjectContext:managedDocument.managedObjectContext];
+                                                 }
+                                                 ];
+                                                
+                                            }];
+    
+    [dataTask resume];
 }
 
 
@@ -37,6 +71,11 @@
 - (IBAction)checkMapClick:(id)sender
 {
     [self performSegueWithIdentifier:@"VenueMapView" sender:nil];
+}
+
+- (IBAction)concertDetailsClick:(id)sender
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.event.uriString]];
 }
 
 
@@ -49,6 +88,7 @@
     {
         JIPVenueMapVC *venueMapVC        = [segue destinationViewController];
                        venueMapVC.event  = _event;
+                       venueMapVC.venue  = _venue;
     }
 }
 
