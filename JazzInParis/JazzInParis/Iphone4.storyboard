@@ -392,7 +392,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
-                                <outlet property="delegate" destination="W7c-xh-g1z" id="lk9-gN-Zod"/>
+                                <outlet property="delegate" destination="W7c-xh-g1z" id="pjg-cX-zAN"/>
                             </connections>
                         </searchBar>
                         <prototypes>
@@ -446,6 +446,7 @@
                         <outlet property="searchBar" destination="3NE-bi-biI" id="Ck7-Ed-LzB"/>
                         <outlet property="searchBarButtonItem" destination="Hed-lm-RAC" id="jLn-Em-drj"/>
                         <outlet property="searchDisplayController" destination="uxE-JB-JAj" id="Neh-Ph-JuM"/>
+                        <segue destination="P5z-kD-Lh4" kind="push" identifier="EventDetails" id="Ltx-E9-XPS"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W59-8L-O4c" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -460,6 +461,95 @@
                 </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1653" y="1329"/>
+        </scene>
+        <!--Event View Controller-->
+        <scene sceneID="bPU-bI-unG">
+            <objects>
+                <viewController id="P5z-kD-Lh4" customClass="JIPEventViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TUE-p3-MXb"/>
+                        <viewControllerLayoutGuide type="bottom" id="ryf-5r-Kxv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ML5-L4-DkZ">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Artist Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKW-SY-Vee">
+                                <rect key="frame" x="50" y="51" width="250" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Concert Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tu2-wo-pqg">
+                                <rect key="frame" x="50" y="93" width="240" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AnL-7O-y29">
+                                <rect key="frame" x="50" y="338" width="79" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Check map">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="checkMapClick:" destination="P5z-kD-Lh4" eventType="touchUpInside" id="pmP-Mi-bbn"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Venue Adress" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q6J-Hh-aRl">
+                                <rect key="frame" x="50" y="141" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="7jq-OJ-Szz" customClass="JIP"/>
+                    <connections>
+                        <outlet property="artistNameLabel" destination="gKW-SY-Vee" id="Hzf-qA-kSs"/>
+                        <outlet property="checkMapButton" destination="AnL-7O-y29" id="bkE-Vi-b6u"/>
+                        <outlet property="concertNameLabel" destination="tu2-wo-pqg" id="vYF-C3-6zP"/>
+                        <outlet property="venueAdressTxtView" destination="q6J-Hh-aRl" id="1Sa-zc-1Px"/>
+                        <segue destination="cpd-fZ-ZId" kind="push" identifier="VenueMapView" id="alA-Eq-pyW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lux-lR-ync" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2152" y="1329"/>
+        </scene>
+        <!--Venue MapVC - Venue Name-->
+        <scene sceneID="Aax-lu-ChC">
+            <objects>
+                <viewController id="cpd-fZ-ZId" customClass="JIPVenueMapVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ubw-si-bG4"/>
+                        <viewControllerLayoutGuide type="bottom" id="Kw8-QA-wZH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tCe-Qd-Ui5">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="FqX-vu-zQw">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="cpd-fZ-ZId" id="XxS-fQ-3WK"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Venue Name" id="QXu-ZB-DXX"/>
+                    <connections>
+                        <outlet property="mapView" destination="FqX-vu-zQw" id="j0X-kC-JsB"/>
+                        <outlet property="venueNameNavItem" destination="QXu-ZB-DXX" id="fTy-vY-v8A"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Jm-fB-gyX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2625" y="1329"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XjK-OU-rNO">

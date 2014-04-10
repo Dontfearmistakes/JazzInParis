@@ -17,11 +17,13 @@
 #import "JIPConcertDetailsViewController.h"
 #import "ECSlidingViewController.h"
 #import "JIPUpcomingEventCell.h"
+#import "JIPEventViewController.h"
 
 
 @implementation JIPUpcomingEventsCDTVC
 
 @synthesize filteredUpcomingEvents = _filteredUpcomingEvents;
+@synthesize selectedEvent          = _selectedEvent;
 @synthesize event                  = _event;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,21 +31,22 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-////////////////////////////////////////////////
-//method for every rootVC / implements side menu
-////////////////////////////////////////////////
 
-- (IBAction)revealMenu:(id)sender {
+//method for every rootVC / implements side menu
+- (IBAction)revealMenu:(id)sender
+{
     [self.slidingViewController anchorTopViewTo:ECRight];
 }
 
 
-////////////////////////////////////////////////////////////
+
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self createFetchResultsController];
 }
+
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -66,6 +69,7 @@
                                                                                        cacheName:nil];
 }
 
+
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 #pragma mark - UITableViewDataSource
@@ -86,6 +90,9 @@
     }
 }
 
+
+
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //ICI self.tableView est TOUJOURS UITableView et non pas UISearchResultsTableView (c'est pour ça qu'on l'utilise pour chopper là cellule)
@@ -101,7 +108,7 @@
         _event = [self.fetchedResultsController objectAtIndexPath:indexPath];
     }
 
-    upcomingEventCell.titleLabel.text    = _event.name;
+    upcomingEventCell.titleLabel   .text = _event.name;
     upcomingEventCell.subtitleLabel.text = [NSString stringWithFormat:@"@ %@", _event.venue.name];
     
     return upcomingEventCell;
@@ -109,7 +116,9 @@
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	id <NSFetchedResultsSectionInfo> theSection = [[self.fetchedResultsController sections] objectAtIndex:section];
@@ -147,11 +156,16 @@
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 60;
 }
+
+
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -161,17 +175,25 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //CREATE VC////////////////////////
-    JIPConcertDetailsViewController *concertDetailsVC = [[JIPConcertDetailsViewController alloc] init];
+
+    _selectedEvent = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self performSegueWithIdentifier:@"EventDetails" sender:nil];
     
-    //PASSING EVENT FROM VC TO VC///////////////////
-    concertDetailsVC.event = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    //PUSH VC//////////////////////
-    [self.navigationController pushViewController:concertDetailsVC animated:YES];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+
+
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue
+                sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"EventDetails"])
+    {
+        JIPEventViewController *eventDetailsVC       = [segue destinationViewController];
+                                eventDetailsVC.event = _selectedEvent;
+    }
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -193,14 +215,14 @@
 ////////////////////////////////////////////////////////////
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-#warning : this method is never called ...
+    #warning : this method is never called ...
     [self.searchDisplayController setActive:NO animated:YES];
 }
 
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
-#warning : à quoi sert scope ?? il est nil...
+    #warning : à quoi sert scope ?? il est nil...
     [self filterContentForSearchText:searchString
                                scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     return YES;
@@ -211,7 +233,7 @@
 - (void)filterContentForSearchText:(NSString*)searchText
                              scope:(NSString*)scope
 {
-#warning : what is diacritic ?
+    #warning : what is diacritic ?
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchText];
     
    _filteredUpcomingEvents = [self.fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:resultPredicate];

@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSArray              * filteredUpcomingEvents;
 @property (nonatomic)         BOOL                   isFiltered;
 @property (strong, nonatomic) JIPEvent             * event;
+@property (strong, nonatomic) JIPEvent             * selectedEvent;
 
 
 @end
