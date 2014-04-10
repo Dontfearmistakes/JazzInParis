@@ -60,7 +60,8 @@
     
         NSPredicate * p1 = [NSPredicate predicateWithFormat:@"(date >= %@)", [NSDate date]];   //all JIPEvents starting today or later
         NSPredicate * p2 = [NSPredicate predicateWithFormat:@"(artist.favorite == %@)", @YES]; //and whose artist is a favorite
-        NSPredicate * globalPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[p1, p2]];
+        NSPredicate * p3 = [NSPredicate predicateWithFormat:@"(venue.id != nil)"];             //and venue is not undefined
+        NSPredicate * globalPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[p1, p2, p3]];
         request.predicate= globalPredicate;
     
         self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request

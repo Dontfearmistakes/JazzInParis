@@ -324,8 +324,8 @@
 		50C9C47F18EF0A1500F2E67C /* UpComingEvents */ = {
 			isa = PBXGroup;
 			children = (
-				50FCB09B18CE140800AD4402 /* JIPUpcomingEventsCDTVC.h */,
 				50FCB09C18CE140800AD4402 /* JIPUpcomingEventsCDTVC.m */,
+				50FCB09B18CE140800AD4402 /* JIPUpcomingEventsCDTVC.h */,
 			);
 			name = UpComingEvents;
 			sourceTree = "<group>";

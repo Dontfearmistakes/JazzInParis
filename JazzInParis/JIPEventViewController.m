@@ -24,6 +24,7 @@
 
 @synthesize checkMapButton     = _checkMapButton;
 @synthesize event              = _event;
+@synthesize venue              = _venue;
 
 
 - (void)viewDidLoad
@@ -36,7 +37,7 @@
     
     
     
-    // Create http request
+    // Create http request to fetch venue details
     NSURLSession * session  = [NSURLSession sharedSession];
     NSURL *url = [[JIPUpdateManager sharedUpdateManager] songkickURLUpcomingEventsForVenueWithId:[NSString stringWithFormat:@"%@", _event.venue.id]];
     
@@ -72,6 +73,8 @@
 {
     [self performSegueWithIdentifier:@"VenueMapView" sender:nil];
 }
+
+
 
 - (IBAction)concertDetailsClick:(id)sender
 {

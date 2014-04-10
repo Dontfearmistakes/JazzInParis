@@ -26,6 +26,7 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 @interface JIPUpdateManager ()
 
 @property (strong, nonatomic) NSArray * favoriteArtists;
+-(BOOL)eventLocationIsNotTooFarFromParisCenter:(CLLocation*)eventLocation;
 
 @end
 
@@ -89,36 +90,7 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 }
 
 
-/////////////////////////////////////////////////////////////////////
--(void)venueFromSongkickWithId:(NSString *)venueId
-{
-    //1) Create http request
-    NSURLSession * session  = [NSURLSession sharedSession];
-    NSURL *url = [self songkickURLUpcomingEventsForVenueWithId:venueId];
-    
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
-                                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                
-                                                NSError *localError = nil;
-                                                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
-                                                NSDictionary *dictionnaryOfVenue = parsedObject[@"resultsPage"][@"results"][@"venue"];
-                                                
-                                                [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
-                                                    
-                                                    [JIPVenue venueWithDict:@{@"id"            : dictionnaryOfVenue[@"id"],
-                                                                              @"street"        : dictionnaryOfVenue[@"street"],
-                                                                              @"capacity"      : dictionnaryOfVenue[@"capacity"],
-                                                                              @"desc"          : dictionnaryOfVenue[@"description"],
-                                                                              @"phone"         : dictionnaryOfVenue[@"phone"],
-                                                                              @"websiteString" : dictionnaryOfVenue[@"website"]
-                                                                             }
-                                                    inManagedObjectContext:managedDocument.managedObjectContext];
-                                                    }
-                                                 ];
-                                            }];
-    
-    [dataTask resume];
-}
+
 
 
 /////////////////////////////////////////////////////////////////////
@@ -160,15 +132,34 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
             eventDict[@"venueName"] = eventDictFromApi[@"venue"][@"displayName"];
             eventDict[@"venueCity"] = eventDictFromApi[@"location"][@"city"];
             
-
-            [JIPEvent eventWithSongkickInfo:eventDict
-                     inManagedObjectContext:managedDocument.managedObjectContext];
+            CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:[eventDict[@"lat"]  doubleValue]
+                                                                   longitude:[eventDict[@"long"] doubleValue]];
+            
+            //if event dans un rayon de 30km autour de Paris alors insertIntoContext
+            if ([self eventLocationIsNotTooFarFromParisCenter:eventLocation])
+            {
+                [JIPEvent eventWithSongkickInfo:eventDict
+                         inManagedObjectContext:managedDocument.managedObjectContext];
+            }
+            
         }
     }];
     
 }
 
 
+
+-(BOOL)eventLocationIsNotTooFarFromParisCenter:(CLLocation *)eventLocation
+{
+    CLLocation * parisCenter = [[CLLocation alloc] initWithLatitude:[@"48.862222" doubleValue] longitude:[@"2.34083333333333" doubleValue]];
+
+    CLLocationDistance distanceFromParisCenterToEventLocation = [parisCenter distanceFromLocation:eventLocation];
+
+    if (distanceFromParisCenterToEventLocation < [@"30000" doubleValue])
+        return YES;
+    else
+        return NO;
+}
 
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////

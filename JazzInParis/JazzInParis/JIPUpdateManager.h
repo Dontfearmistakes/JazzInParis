@@ -17,7 +17,6 @@
 -(void)updateUpcomingEventsForFavoriteArtist:(JIPArtist *)artist;
 -(void)clearOldEvents;
 -(void)clearArtistEvents:(JIPArtist *)artist;
--(void)venueFromSongkickWithId:(NSString*)venueId;
 -(NSURL *)songkickURLUpcomingEventsForVenueWithId:(NSString *)venueId;
 
 @end
