@@ -15,12 +15,12 @@
 
 @implementation JIPVenueMapVC
 
-@synthesize event            = _event  ;
-@synthesize venue            = _venue  ;
-@synthesize mapView          = _mapView;
-@synthesize venueNameNavItem = _venueNameNavItem;
-@synthesize phoneLabel       = _phoneLabel;
-@synthesize addressLabel     = _addressLabel;
+@synthesize event             = _event  ;
+@synthesize venue             = _venue  ;
+@synthesize mapView           = _mapView;
+@synthesize venueNameNavItem  = _venueNameNavItem;
+@synthesize phoneNumberButton = _phoneNumberButton;
+@synthesize addressLabel      = _addressLabel;
 @synthesize websiteButton     = _websiteButton;
 
 
@@ -30,9 +30,10 @@
     [super viewDidLoad];
     
     _venueNameNavItem.title         = _venue.name;
-    _phoneLabel.text                = _venue.phone;
     _addressLabel.text              = _venue.street;
-    [_websiteButton setTitle:_venue.websiteString forState:UIControlStateNormal];
+    
+    [_phoneNumberButton setTitle:_venue.phone         forState:UIControlStateNormal] ;
+    [_websiteButton     setTitle:_venue.websiteString forState:UIControlStateNormal];
 
 
     
@@ -60,6 +61,11 @@
 }
 
 
+- (IBAction)phoneNumberClick:(id)sender
+{
+    #warning : to fix --> not calling
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", _venue.phone]]];
+}
 
 - (IBAction)venueWebsiteClick:(id)sender
 {
@@ -136,6 +142,7 @@
     
     return view;
 }
+
 
 
 @end

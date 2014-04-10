@@ -16,8 +16,12 @@
 @property (strong, nonatomic) IBOutlet UINavigationItem *venueNameNavItem;
 @property (strong, nonatomic)          JIPEvent         *event;
 @property (strong, nonatomic)          JIPVenue         *venue;
-@property (strong, nonatomic) IBOutlet UILabel *phoneLabel;
+
+@property (strong, nonatomic) IBOutlet UIButton *phoneNumberButton;
+- (IBAction)phoneNumberClick:(id)sender;
+
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
+
 @property (strong, nonatomic) IBOutlet UIButton *websiteButton;
 - (IBAction)venueWebsiteClick:(id)sender;
 
