@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Max. All rights reserved.
 //
 #import "JIPSearchArtistTableViewController.h"
-#import "JIPArtistDetailTableViewController.h"
+#import "JIPArtistDetailVC.h"
 #import "JIPManagedDocument.h"
 #import "JIPArtist+Create.h"
 #import "ECSlidingViewController.h"
@@ -131,7 +131,7 @@
     if ([segue.identifier isEqualToString:@"ArtistDetails"])
     //FETCH ARTIST IN CONTEXT AND PASS IT TO artistDetailsVC.artist
     {
-        JIPArtistDetailTableViewController *artistDetailsVC = [segue destinationViewController];
+        JIPArtistDetailVC *artistDetailsVC = [segue destinationViewController];
         artistDetailsVC.artist = [JIPArtist artistWithDict:_artistDict
                                     inManagedObjectContext:_managedDocument.managedObjectContext];
     }
@@ -161,6 +161,7 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     NSString* searchTerm = [self.searchDisplayController.searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    #warning : bug if search term contains accents
     [self searchSongkickArtistForSearchterm:searchTerm];
     [self.searchDisplayController setActive:NO animated:YES];
 }

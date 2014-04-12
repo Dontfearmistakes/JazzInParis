@@ -28,9 +28,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="XmC-jj-ke6" kind="push" identifier="ArtistDetails" id="MSp-D6-jHX"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -53,6 +50,7 @@
                     <connections>
                         <outlet property="searchBar" destination="GMB-Ts-KUu" id="mDN-IF-veu"/>
                         <outlet property="searchDisplayController" destination="uxE-JB-JAj" id="15o-Xz-oF5"/>
+                        <segue destination="CU4-Lk-AZz" kind="push" identifier="ArtistDetails" id="0Ys-nf-r2Q"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3hv-Ko-KOL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -148,7 +146,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1645" y="-51"/>
+            <point key="canvasLocation" x="1689" y="-467"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QVN-hQ-Nbv">
@@ -167,14 +165,14 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wvf-s2-0WT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1017" y="-51"/>
+            <point key="canvasLocation" x="1009" y="-487"/>
         </scene>
         <!--Artist Detail Table View Controller - Artist Name-->
         <scene sceneID="2tl-3m-Mn1">
             <objects>
                 <tableViewController id="XmC-jj-ke6" customClass="JIPArtistDetailTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="KeL-VZ-i31">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -232,7 +230,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hDp-y8-3gY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2152" y="611"/>
+            <point key="canvasLocation" x="2322" y="-89"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tQU-Kw-Hv3">
@@ -460,7 +458,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1653" y="1329"/>
+            <point key="canvasLocation" x="1645" y="1765"/>
         </scene>
         <!--Event View Controller-->
         <scene sceneID="bPU-bI-unG">
@@ -519,7 +517,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lux-lR-ync" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2152" y="1329"/>
+            <point key="canvasLocation" x="2200" y="1961"/>
         </scene>
         <!--Venue MapVC - Venue Name-->
         <scene sceneID="Aax-lu-ChC">
@@ -598,7 +596,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Jm-fB-gyX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2625" y="1329"/>
+            <point key="canvasLocation" x="2713" y="2021"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XjK-OU-rNO">
@@ -617,7 +615,125 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cSa-Gn-GRg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1019" y="1329"/>
+            <point key="canvasLocation" x="1003" y="1709"/>
+        </scene>
+        <!--View Controller - YouTube search-->
+        <scene sceneID="Zea-Hj-5XF">
+            <objects>
+                <viewController title="YouTube search" id="DTp-LI-0BV" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="j9H-Y6-iLV"/>
+                        <viewControllerLayoutGuide type="bottom" id="OvK-jk-F7Q"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZXW-e6-j2v">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vOL-Ab-GIo" customClass="MGScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vOL-Ab-GIo" firstAttribute="bottom" secondItem="ZXW-e6-j2v" secondAttribute="bottom" id="KMa-ok-2I1"/>
+                            <constraint firstItem="vOL-Ab-GIo" firstAttribute="leading" secondItem="ZXW-e6-j2v" secondAttribute="leading" id="Om4-UT-eBu"/>
+                            <constraint firstItem="vOL-Ab-GIo" firstAttribute="trailing" secondItem="ZXW-e6-j2v" secondAttribute="trailing" id="sVl-lO-3EQ"/>
+                            <constraint firstItem="vOL-Ab-GIo" firstAttribute="top" secondItem="ZXW-e6-j2v" secondAttribute="top" id="zRw-gg-LgV"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="YouTube search" id="GEP-kA-hq1"/>
+                    <connections>
+                        <outlet property="scroller" destination="vOL-Ab-GIo" id="o7C-Tn-kT8"/>
+                        <segue destination="InQ-QP-5j7" kind="push" identifier="videoViewSegue" id="olW-t8-sFv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k2D-oz-ThH" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2735" y="611"/>
+        </scene>
+        <!--Web Video View Controller-->
+        <scene sceneID="GMe-Cz-5Jd">
+            <objects>
+                <viewController id="InQ-QP-5j7" customClass="WebVideoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="03i-AS-L5t"/>
+                        <viewControllerLayoutGuide type="bottom" id="Tni-gN-gHg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="YrK-rw-k82">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Olv-2H-qZb">
+                                <rect key="frame" x="0.0" y="73" width="320" height="269"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="269" id="G3G-eo-gWf"/>
+                                </constraints>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <constraints>
+                            <constraint firstItem="Olv-2H-qZb" firstAttribute="leading" secondItem="YrK-rw-k82" secondAttribute="leading" id="0pD-XA-QUU"/>
+                            <constraint firstItem="Olv-2H-qZb" firstAttribute="trailing" secondItem="YrK-rw-k82" secondAttribute="trailing" id="Pz8-Fi-1u2"/>
+                            <constraint firstItem="Olv-2H-qZb" firstAttribute="top" secondItem="YrK-rw-k82" secondAttribute="top" constant="73" id="jgc-qS-zc6"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="N0s-Im-6w5"/>
+                    <connections>
+                        <outlet property="webView" destination="Olv-2H-qZb" id="UE4-H9-2dg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MNc-vL-GF3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3456" y="611"/>
+        </scene>
+        <!--Artist DetailVC-->
+        <scene sceneID="Le2-7v-mIv">
+            <objects>
+                <viewController id="CU4-Lk-AZz" customClass="JIPArtistDetailVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HSp-NO-NhP"/>
+                        <viewControllerLayoutGuide type="bottom" id="1MZ-cy-LQt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Z7Z-xP-7Zg">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zTk-KT-f39">
+                                <rect key="frame" x="251" y="41" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="toggleFavorite:" destination="CU4-Lk-AZz" eventType="valueChanged" id="5WC-ZQ-71c"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add/Remove to favorites" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VxS-qb-VHg">
+                                <rect key="frame" x="20" y="46" width="191" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Anu-qY-AwT">
+                                <rect key="frame" x="20" y="108" width="153" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Show YouTube Videos">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="DTp-LI-0BV" kind="push" identifier="pushToYTBrowser" id="oqX-gs-4rk"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="dAW-J2-qwM"/>
+                    <connections>
+                        <outlet property="favoriteSwitchView" destination="zTk-KT-f39" id="d4f-X6-Dy8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ghf-6Y-7c9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2180" y="611"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

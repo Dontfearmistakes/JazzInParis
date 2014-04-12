@@ -34,8 +34,7 @@
     
     _concertNameLabel  .text = _event.name;
     _concertDateLabel  .text = [NSDate stringFromDate:_event.date];
-    
-    
+        
     
     // Create http request to fetch venue details
     NSURLSession * session  = [NSURLSession sharedSession];
