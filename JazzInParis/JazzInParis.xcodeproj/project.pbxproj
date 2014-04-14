@@ -322,8 +322,8 @@
 		505A641F18ED9DCA00FC6577 /* NotRootVCs */ = {
 			isa = PBXGroup;
 			children = (
-				502A222A18F9815C00CB7926 /* JIPArtistDetailsTVC.m */,
 				502A222918F9815C00CB7926 /* JIPArtistDetailsTVC.h */,
+				502A222A18F9815C00CB7926 /* JIPArtistDetailsTVC.m */,
 				50E7988C18F57937002B8D3E /* Event Details */,
 				5022AAA218F6A55600401DBB /* VenueDetails */,
 			);

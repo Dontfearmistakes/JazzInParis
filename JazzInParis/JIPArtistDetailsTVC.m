@@ -68,7 +68,7 @@
     //    UITableViewCell *theCellClicked = [self.tableView cellForRowAtIndexPath:indexPath];
     //    if (theCellClicked == _showYouTubeCell)
 
-    if (indexPath.section == 2)
+    if (indexPath.section == 3)
     {
         [self performSegueWithIdentifier:@"pushToYTBrowser" sender:nil];
         
