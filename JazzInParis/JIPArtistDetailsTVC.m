@@ -17,10 +17,21 @@
 @implementation JIPArtistDetailsTVC
 
 @synthesize artist             = _artist;
+@synthesize artistImageView    = _artistImageView;
 @synthesize searchString       = _searchString;
 @synthesize favoriteSwitchView = _favoriteSwitchView;
 @synthesize showYouTubeCell    = _showYouTubeCell;
 
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.title = _artist.name;
+    [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
+    
+    [_artistImageView setImage:[UIImage imageNamed:@"mathieuchedid.png"]];
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {

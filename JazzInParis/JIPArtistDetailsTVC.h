@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSString   * searchString;
 @property (strong, nonatomic) IBOutlet UISwitch *favoriteSwitchView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *showYouTubeCell;
+@property (strong, nonatomic) IBOutlet UIImageView *artistImageView;
 
 - (IBAction)toggleFavorite:(id)sender;
 

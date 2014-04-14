@@ -14,6 +14,7 @@
 #import "JIPArtistNameCell.h"
 #import "JIPArtist.h"
 
+
 @interface JIPFavoriteArtistsTableViewController ()
 
 @end
@@ -40,7 +41,7 @@
 {
     [super viewDidLoad];
     
-
+    [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
 }
 
 ////////////////////////////////////
@@ -60,18 +61,11 @@
     {
         [self.searchBar setHidden:YES];
     }
-
-    [self applyBackgroundWallpaperInTableView:self.tableView];
     
-    [self.tableView reloadData];
+    #warning : is this line useful ?
+    //[self.tableView reloadData];
 }
 
-//////////////////////////////////////////////////////////////////
--(void)applyBackgroundWallpaperInTableView:(UITableView*)tableView
-{
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miles2.png"]];
-    [tableView setBackgroundView:imageView];
-}
 
 
 //called whenever a character is put in searchBar
@@ -80,7 +74,7 @@
 {
     controller.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     controller.searchResultsTableView.backgroundColor = [UIColor clearColor];
-    [self applyBackgroundWallpaperInTableView:controller.searchResultsTableView];
+    [JIPDesign applyBackgroundWallpaperInTableView:controller.searchResultsTableView];
     
 }
 

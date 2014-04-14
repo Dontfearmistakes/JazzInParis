@@ -16,6 +16,7 @@
 		5051B4F518D9A6D600BBE2DB /* JIPUpdateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5051B4F418D9A6D600BBE2DB /* JIPUpdateManager.m */; };
 		5069740F18F1811800A4E23C /* JIPArtistNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5069740E18F1811800A4E23C /* JIPArtistNameCell.m */; };
 		5069741518F1828300A4E23C /* JIPYouTubeVideoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5069741418F1828300A4E23C /* JIPYouTubeVideoCell.m */; };
+		5074704218FBFE470040C7FC /* JIPDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = 5074704118FBFE470040C7FC /* JIPDesign.m */; };
 		508598D418AA46330048D760 /* JIPVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D318AA46330048D760 /* JIPVenue.m */; };
 		508598D718AA551C0048D760 /* JIPVenueDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D618AA551C0048D760 /* JIPVenueDetailsViewController.m */; };
 		508598DA18AA74BF0048D760 /* JIPArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D918AA74BF0048D760 /* JIPArtist.m */; };
@@ -121,6 +122,8 @@
 		5069740E18F1811800A4E23C /* JIPArtistNameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPArtistNameCell.m; sourceTree = "<group>"; };
 		5069741318F1828300A4E23C /* JIPYouTubeVideoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPYouTubeVideoCell.h; sourceTree = "<group>"; };
 		5069741418F1828300A4E23C /* JIPYouTubeVideoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPYouTubeVideoCell.m; sourceTree = "<group>"; };
+		5074704018FBFE470040C7FC /* JIPDesign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPDesign.h; sourceTree = "<group>"; };
+		5074704118FBFE470040C7FC /* JIPDesign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPDesign.m; sourceTree = "<group>"; };
 		508598D218AA46330048D760 /* JIPVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPVenue.h; sourceTree = "<group>"; };
 		508598D318AA46330048D760 /* JIPVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPVenue.m; sourceTree = "<group>"; };
 		508598D518AA551C0048D760 /* JIPVenueDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPVenueDetailsViewController.h; sourceTree = "<group>"; };
@@ -515,6 +518,8 @@
 				501FB96018D1BFCE00845256 /* JIPManagedDocument.m */,
 				5051B4F318D9A6D600BBE2DB /* JIPUpdateManager.h */,
 				5051B4F418D9A6D600BBE2DB /* JIPUpdateManager.m */,
+				5074704018FBFE470040C7FC /* JIPDesign.h */,
+				5074704118FBFE470040C7FC /* JIPDesign.m */,
 				50FB3192189EE04F00137949 /* ViewControllers */,
 				50CE606418BA9C540079F0EF /* Views */,
 				50FB3191189EE04500137949 /* Models */,
@@ -829,6 +834,7 @@
 				50916F3C18F81AC1006D5C26 /* UIColor+MGExpanded.m in Sources */,
 				501FB96118D1BFCE00845256 /* JIPManagedDocument.m in Sources */,
 				50916F4118F81AC1006D5C26 /* MGBox.m in Sources */,
+				5074704218FBFE470040C7FC /* JIPDesign.m in Sources */,
 				509759D118A900F800E1482E /* JIPMyPinView.m in Sources */,
 				50916F4318F81AC1006D5C26 /* MGLayoutManager.m in Sources */,
 				508598DD18AA83AB0048D760 /* JIPArtistDetailsViewController.m in Sources */,
