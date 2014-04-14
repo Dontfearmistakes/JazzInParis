@@ -67,7 +67,7 @@
 
 -(void)applyBackgroundWallpaperInTableView:(UITableView*)tableView
 {
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miles.png"]];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miles2.png"]];
     [tableView setBackgroundView:imageView];
 }
 

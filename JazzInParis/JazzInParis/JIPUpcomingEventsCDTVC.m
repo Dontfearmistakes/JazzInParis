@@ -47,7 +47,7 @@
 
 -(void)applyBackgroundWallpaperInTableView:(UITableView*)tableView
 {
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miles.png"]];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miles2.png"]];
     [tableView setBackgroundView:imageView];
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,6 +58,7 @@
 {
     [super viewWillAppear:animated];
     [self createFetchResultsController];
+
     
     if ([[self.fetchedResultsController fetchedObjects] count] == 0)
     {
@@ -128,7 +129,7 @@
         _event = [self.fetchedResultsController objectAtIndexPath:indexPath];
     }
 
-    upcomingEventCell.titleLabel   .text = _event.name;
+    upcomingEventCell.titleLabel   .text   = _event.name;
     upcomingEventCell.subtitleLabel.text = [NSString stringWithFormat:@"@ %@", _event.venue.name];
     
     return upcomingEventCell;
@@ -177,23 +178,30 @@
 
 
 
+
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     
-    UIView *headerBackground=[[UIView alloc]initWithFrame:CGRectMake(0,0,tableView.bounds.size.width,30)];
-    headerBackground.backgroundColor=[UIColor blackColor];
+    UIView * headerBackground = [[UIView alloc]initWithFrame:CGRectMake(0,0,tableView.bounds.size.width,25)];
+             headerBackground.backgroundColor = Rgb2UIColor(66, 66, 66);
     
     UILabel *headerLabel = [[UILabel alloc] init];
     NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
     headerLabel.text = sectionTitle;
-    headerLabel.frame = CGRectMake(15, 4, tableView.bounds.size.width, 30);
-    headerLabel.backgroundColor = [UIColor blackColor];
+    headerLabel.frame = CGRectMake(15, 5, tableView.bounds.size.width, 15);
+    headerLabel.backgroundColor = Rgb2UIColor(66, 66, 66);
     headerLabel.textColor = [UIColor whiteColor];
     
     [headerBackground addSubview:headerLabel];
-
+    
     
     return headerBackground;
+    
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 25;
 }
 
 
