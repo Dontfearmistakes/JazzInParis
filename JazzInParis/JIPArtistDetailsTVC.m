@@ -20,7 +20,6 @@
 @synthesize artistImageView    = _artistImageView;
 @synthesize searchString       = _searchString;
 @synthesize favoriteSwitchView = _favoriteSwitchView;
-@synthesize showYouTubeCell    = _showYouTubeCell;
 
 
 -(void)viewDidLoad
@@ -63,12 +62,18 @@
 
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    #warning - URGENT : comment accéder la cell "See YouTube Videos" ??
-    UITableViewCell *theCellClicked = [self.tableView cellForRowAtIndexPath:indexPath];
-    if (theCellClicked == _showYouTubeCell)
+    
+    #warning : A URGENT : comment accéder la cell "See YouTube Videos" ??
+
+    //    UITableViewCell *theCellClicked = [self.tableView cellForRowAtIndexPath:indexPath];
+    //    if (theCellClicked == _showYouTubeCell)
+
+    if (indexPath.section == 2)
     {
         [self performSegueWithIdentifier:@"pushToYTBrowser" sender:nil];
+        
     }
+
     
 }
 
@@ -79,8 +84,7 @@
     if ([segue.identifier isEqualToString:@"pushToYTBrowser"])
     {
         YouTubeVC * youTubeVC  = [segue destinationViewController];
-        #warning - URGENT : pb avec la searchstring --> crash
-        youTubeVC.searchString = _searchString;
+        [youTubeVC setSearchString:_searchString];
     }
 }
 

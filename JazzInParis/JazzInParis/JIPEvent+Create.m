@@ -42,6 +42,7 @@
         event.longitude      = [NSNumber numberWithDouble:[eventDictionary[@"long"] doubleValue]];
         event.type           = eventDictionary[@"type"];
         event.date           = eventDictionary[@"date"];
+        event.startTime      = eventDictionary[@"startTime"];
         event.uriString      = eventDictionary[@"uriString"];
         event.ageRestriction = eventDictionary[@"ageRestriction"];
 

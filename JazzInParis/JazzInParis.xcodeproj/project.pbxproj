@@ -17,6 +17,7 @@
 		5069740F18F1811800A4E23C /* JIPArtistNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5069740E18F1811800A4E23C /* JIPArtistNameCell.m */; };
 		5069741518F1828300A4E23C /* JIPYouTubeVideoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5069741418F1828300A4E23C /* JIPYouTubeVideoCell.m */; };
 		5074704218FBFE470040C7FC /* JIPDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = 5074704118FBFE470040C7FC /* JIPDesign.m */; };
+		5074704818FC06B10040C7FC /* JIPEventDetailsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5074704718FC06B10040C7FC /* JIPEventDetailsTVC.m */; };
 		508598D418AA46330048D760 /* JIPVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D318AA46330048D760 /* JIPVenue.m */; };
 		508598D718AA551C0048D760 /* JIPVenueDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D618AA551C0048D760 /* JIPVenueDetailsViewController.m */; };
 		508598DA18AA74BF0048D760 /* JIPArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 508598D918AA74BF0048D760 /* JIPArtist.m */; };
@@ -78,7 +79,6 @@
 		50D334DA18B6573F00E21622 /* JIPExtendNSLogFunctionality.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D334D918B6573F00E21622 /* JIPExtendNSLogFunctionality.m */; };
 		50D4BB3118B49D0700E7CF12 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50D4BB2F18B49D0700E7CF12 /* Model.xcdatamodeld */; };
 		50DAA79118AB8E52003DDADA /* NSDate+Formatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DAA79018AB8E52003DDADA /* NSDate+Formatting.m */; };
-		50E7988B18F57925002B8D3E /* JIPEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E7988A18F57925002B8D3E /* JIPEventViewController.m */; };
 		50E7988F18F57A87002B8D3E /* JIPVenueMapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E7988E18F57A87002B8D3E /* JIPVenueMapVC.m */; };
 		50FA943918F30CB7008A761D /* JIPFavoriteArtistsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FA943818F30CB7008A761D /* JIPFavoriteArtistsTableViewController.m */; };
 		50FB3190189EE02800137949 /* JIPEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FB318F189EE02800137949 /* JIPEvent.m */; };
@@ -124,6 +124,8 @@
 		5069741418F1828300A4E23C /* JIPYouTubeVideoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPYouTubeVideoCell.m; sourceTree = "<group>"; };
 		5074704018FBFE470040C7FC /* JIPDesign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPDesign.h; sourceTree = "<group>"; };
 		5074704118FBFE470040C7FC /* JIPDesign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPDesign.m; sourceTree = "<group>"; };
+		5074704618FC06B10040C7FC /* JIPEventDetailsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JIPEventDetailsTVC.h; path = ../JIPEventDetailsTVC.h; sourceTree = "<group>"; };
+		5074704718FC06B10040C7FC /* JIPEventDetailsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JIPEventDetailsTVC.m; path = ../JIPEventDetailsTVC.m; sourceTree = "<group>"; };
 		508598D218AA46330048D760 /* JIPVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPVenue.h; sourceTree = "<group>"; };
 		508598D318AA46330048D760 /* JIPVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPVenue.m; sourceTree = "<group>"; };
 		508598D518AA551C0048D760 /* JIPVenueDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPVenueDetailsViewController.h; sourceTree = "<group>"; };
@@ -237,8 +239,6 @@
 		50D4BB3018B49D0700E7CF12 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		50DAA78F18AB8E52003DDADA /* NSDate+Formatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Formatting.h"; sourceTree = "<group>"; };
 		50DAA79018AB8E52003DDADA /* NSDate+Formatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Formatting.m"; sourceTree = "<group>"; };
-		50E7988918F57924002B8D3E /* JIPEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JIPEventViewController.h; path = ../JIPEventViewController.h; sourceTree = "<group>"; };
-		50E7988A18F57925002B8D3E /* JIPEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JIPEventViewController.m; path = ../JIPEventViewController.m; sourceTree = "<group>"; };
 		50E7988D18F57A87002B8D3E /* JIPVenueMapVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JIPVenueMapVC.h; path = ../JIPVenueMapVC.h; sourceTree = "<group>"; };
 		50E7988E18F57A87002B8D3E /* JIPVenueMapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JIPVenueMapVC.m; path = ../JIPVenueMapVC.m; sourceTree = "<group>"; };
 		50FA943718F30CB7008A761D /* JIPFavoriteArtistsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPFavoriteArtistsTableViewController.h; sourceTree = "<group>"; };
@@ -306,8 +306,6 @@
 			children = (
 				50E7988D18F57A87002B8D3E /* JIPVenueMapVC.h */,
 				50E7988E18F57A87002B8D3E /* JIPVenueMapVC.m */,
-				508598D518AA551C0048D760 /* JIPVenueDetailsViewController.h */,
-				508598D618AA551C0048D760 /* JIPVenueDetailsViewController.m */,
 			);
 			name = VenueDetails;
 			sourceTree = "<group>";
@@ -324,10 +322,8 @@
 		505A641F18ED9DCA00FC6577 /* NotRootVCs */ = {
 			isa = PBXGroup;
 			children = (
-				502A222918F9815C00CB7926 /* JIPArtistDetailsTVC.h */,
 				502A222A18F9815C00CB7926 /* JIPArtistDetailsTVC.m */,
-				50916F5818F821F8006D5C26 /* JIPArtistDetailVC.h */,
-				50916F5918F821F8006D5C26 /* JIPArtistDetailVC.m */,
+				502A222918F9815C00CB7926 /* JIPArtistDetailsTVC.h */,
 				50E7988C18F57937002B8D3E /* Event Details */,
 				5022AAA218F6A55600401DBB /* VenueDetails */,
 			);
@@ -346,6 +342,8 @@
 		50916EEA18F81A36006D5C26 /* YTBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				50916F4C18F81B19006D5C26 /* PhotoBox.h */,
+				50916F4D18F81B19006D5C26 /* PhotoBox.m */,
 				50916F4E18F81B19006D5C26 /* YouTubeVC.h */,
 				50916F4F18F81B19006D5C26 /* YouTubeVC.m */,
 				50916F5018F81B19006D5C26 /* WebVideoViewController.h */,
@@ -607,10 +605,8 @@
 		50E7988C18F57937002B8D3E /* Event Details */ = {
 			isa = PBXGroup;
 			children = (
-				50E7988918F57924002B8D3E /* JIPEventViewController.h */,
-				50E7988A18F57925002B8D3E /* JIPEventViewController.m */,
-				5015AAAC18A159ED000A7625 /* JIPConcertDetailsViewController.h */,
-				5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */,
+				5074704618FC06B10040C7FC /* JIPEventDetailsTVC.h */,
+				5074704718FC06B10040C7FC /* JIPEventDetailsTVC.m */,
 			);
 			name = "Event Details";
 			sourceTree = "<group>";
@@ -627,6 +623,12 @@
 		50FA943618F2FB78008A761D /* Trash */ = {
 			isa = PBXGroup;
 			children = (
+				508598D518AA551C0048D760 /* JIPVenueDetailsViewController.h */,
+				508598D618AA551C0048D760 /* JIPVenueDetailsViewController.m */,
+				5015AAAC18A159ED000A7625 /* JIPConcertDetailsViewController.h */,
+				5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */,
+				50916F5818F821F8006D5C26 /* JIPArtistDetailVC.h */,
+				50916F5918F821F8006D5C26 /* JIPArtistDetailVC.m */,
 				50A52FD2189ED91C001D9779 /* JIPUpComingEventsViewController.h */,
 				50A52FD3189ED91C001D9779 /* JIPUpComingEventsViewController.m */,
 				508FF5DF18E5ED3500B53743 /* JIPFavoriteArtistTableViewController.h */,
@@ -675,8 +677,6 @@
 			isa = PBXGroup;
 			children = (
 				50916EEA18F81A36006D5C26 /* YTBrowser */,
-				50916F4C18F81B19006D5C26 /* PhotoBox.h */,
-				50916F4D18F81B19006D5C26 /* PhotoBox.m */,
 				DB1FE86018EEED110032A1F9 /* ECSLiding */,
 			);
 			name = Lib;
@@ -824,6 +824,7 @@
 				50A52FD4189ED91C001D9779 /* JIPUpComingEventsViewController.m in Sources */,
 				DB1FE86518EEED110032A1F9 /* ECSlidingViewController.m in Sources */,
 				50A52FB4189ED5D9001D9779 /* JIPAppDelegate.m in Sources */,
+				5074704818FC06B10040C7FC /* JIPEventDetailsTVC.m in Sources */,
 				5069740F18F1811800A4E23C /* JIPArtistNameCell.m in Sources */,
 				5069741518F1828300A4E23C /* JIPYouTubeVideoCell.m in Sources */,
 				50916F5418F81B19006D5C26 /* WebVideoViewController.m in Sources */,
@@ -854,7 +855,6 @@
 				50916F3F18F81AC1006D5C26 /* UIView+MGEasyFrame.m in Sources */,
 				50916F5318F81B19006D5C26 /* YouTubeVC.m in Sources */,
 				508598D718AA551C0048D760 /* JIPVenueDetailsViewController.m in Sources */,
-				50E7988B18F57925002B8D3E /* JIPEventViewController.m in Sources */,
 				50916F3D18F81AC1006D5C26 /* UIControl+MGEvents.m in Sources */,
 				50FCB09D18CE140800AD4402 /* JIPUpcomingEventsCDTVC.m in Sources */,
 				50A52FB0189ED5D9001D9779 /* main.m in Sources */,

@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *uriString;
 @property (strong, nonatomic) NSString *ageRestriction;
+@property (strong, nonatomic) NSString *startTime;
 @property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSNumber * latitude;
 @property (strong, nonatomic) NSDate *date;

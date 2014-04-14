@@ -51,25 +51,10 @@
     {
         self.slidingViewController.underLeftViewController  = [self.storyboard instantiateViewControllerWithIdentifier:@"Menu"];
     }
-}
-
-/////////////////////////////////////////////////////////////////////
-// Code Pour afficher une backgroundImage quand la TableView est vide
-////////////////////////////////////
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self applyBackgroundWallpaperInTableView:self.tableView];
     
+    [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
 }
 
-
-
--(void)applyBackgroundWallpaperInTableView:(UITableView*)tableView
-{
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miles2.png"]];
-    [tableView setBackgroundView:imageView];
-}
 
 
 //called whenever a character is put in searchBar
@@ -78,14 +63,13 @@
 {
     controller.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     controller.searchResultsTableView.backgroundColor = [UIColor clearColor];
-    [self applyBackgroundWallpaperInTableView:controller.searchResultsTableView];
-    
+    [JIPDesign applyBackgroundWallpaperInTableView:controller.searchResultsTableView];
 }
 
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
-    #warning garder la même couleur pour pas que le user pense que la search est lancée
+    //FIXME: garder la même couleur pour pas que le user pense que la search est lancée
     [controller.searchResultsTableView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.8]]; //on pourrait aussi mettre UIColor clearColor
     [controller.searchResultsTableView setRowHeight:800];
     [controller.searchResultsTableView setScrollEnabled:NO];
@@ -183,7 +167,7 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     NSString* searchTerm = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    #warning : bug if search term contains accents
+    #warning : BUG if search term contains accents
     [self searchSongkickArtistForSearchterm:searchTerm];
     [textField resignFirstResponder];
     

@@ -29,8 +29,11 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = Rgb2UIColor(48, 48, 48);
+    
     _venueNameNavItem.title         = _venue.name;
     _addressLabel.text              = _venue.street;
+    
     
     [_phoneNumberButton setTitle:_venue.phone         forState:UIControlStateNormal] ;
     [_websiteButton     setTitle:_venue.websiteString forState:UIControlStateNormal];
@@ -63,7 +66,6 @@
 
 - (IBAction)phoneNumberClick:(id)sender
 {
-    #warning : to fix --> not calling
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", _venue.phone]]];
 }
 

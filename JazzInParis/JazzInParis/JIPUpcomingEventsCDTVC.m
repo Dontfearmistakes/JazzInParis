@@ -17,7 +17,7 @@
 #import "JIPConcertDetailsViewController.h"
 #import "ECSlidingViewController.h"
 #import "JIPUpcomingEventCell.h"
-#import "JIPEventViewController.h"
+#import "JIPEventDetailsTVC.h"
 
 
 @implementation JIPUpcomingEventsCDTVC
@@ -38,32 +38,24 @@
     [self.slidingViewController anchorTopViewTo:ECRight];
 }
 
-///////////////////////////BACKGROUND IMAGE/////////////////////////////////////////////////////////////////
+
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    [self applyBackgroundWallpaperInTableView:self.tableView];
+    [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
 }
 
--(void)applyBackgroundWallpaperInTableView:(UITableView*)tableView
-{
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miles2.png"]];
-    [tableView setBackgroundView:imageView];
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self createFetchResultsController];
-
     
-    if ([[self.fetchedResultsController fetchedObjects] count] == 0)
-    {
-        [self.searchBar setHidden:YES];
-    }
+    [self createFetchResultsController];
+    
+    if ( [[self.fetchedResultsController fetchedObjects] count] == 0 )
+          [self.searchBar setHidden:YES];
 }
 
 
@@ -237,8 +229,8 @@
 {
     if ([segue.identifier isEqualToString:@"EventDetails"])
     {
-        JIPEventViewController *eventDetailsVC       = [segue destinationViewController];
-                                eventDetailsVC.event = _selectedEvent;
+        JIPEventDetailsTVC   *eventDetailsVC       = [segue destinationViewController];
+                              eventDetailsVC.event = _selectedEvent;
     }
 }
 
@@ -246,6 +238,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UISearchBarDelegate
+#warning : A URGENT : SEARCHBAR filter doesnt work : fix it or leave it
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

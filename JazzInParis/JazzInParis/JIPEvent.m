@@ -24,6 +24,7 @@
 @dynamic latitude;
 @dynamic longitude;
 @dynamic date;
+@dynamic startTime;
 @dynamic venue;
 @dynamic artist;
 @dynamic name;

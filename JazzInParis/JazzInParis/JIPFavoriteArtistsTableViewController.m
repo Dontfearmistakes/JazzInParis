@@ -160,7 +160,6 @@
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
-    #warning : à quoi sert scope ?? il est nil...
     [self filterContentForSearchText:searchString
                                scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
     return YES;
@@ -171,7 +170,6 @@
 - (void)filterContentForSearchText:(NSString*)searchText
                              scope:(NSString*)scope
 {
-    #warning : what is diacritic ?
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchText];
     
    _filteredFavoriteArtists = [_favoriteArtists filteredArrayUsingPredicate:resultPredicate];

@@ -117,6 +117,7 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
             eventDict[@"lat"]       = [NSString stringWithFormat:@"%@", eventDictFromApi[@"location"][@"lat"]];
             eventDict[@"long"]      = [NSString stringWithFormat:@"%@", eventDictFromApi[@"location"][@"lng"]];
             eventDict[@"date"]      = [NSDate dateFromAPIString:eventDictFromApi[@"start"][@"date"]] ;
+            eventDict[@"startTime"] = eventDictFromApi[@"start"][@"time"] ;
             eventDict[@"venue"]     = eventDictFromApi[@"venue"][@"displayName"];
             eventDict[@"artist"]    = eventDictFromApi[@"performance"][0][@"artist"][@"displayName"] ;
             eventDict[@"uriString"] = eventDictFromApi[@"uri"];
@@ -155,7 +156,7 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 
     CLLocationDistance distanceFromParisCenterToEventLocation = [parisCenter distanceFromLocation:eventLocation];
 
-    if (distanceFromParisCenterToEventLocation < [@"30000" doubleValue])
+    if (distanceFromParisCenterToEventLocation < [@"50000" doubleValue])
         return YES;
     else
         return NO;
@@ -220,7 +221,7 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
     //request.predicate         = [NSPredicate predicateWithFormat:@"artist.id = %@", artist.id]; //all JIPEvents for this artist
     NSError *error = nil;
     
-    #warning fetch not working, objectsToBeDeleted is always empty
+    #warning : BUG fetch not working, objectsToBeDeleted is always empty
     NSArray *objectsToBeDeleted = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request
                                                                                                                  error:&error];
     //SI on a des JIPEvents à supprimer

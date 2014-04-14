@@ -54,14 +54,37 @@
     // but is missing properties (API Call specific for Venue is being done now)
     else if ([matches count] == 1  && (venue.desc == nil || [venue.desc isEqualToString:@""] || [venue.desc isEqualToString:@"No description available"] ))
     {
-        venue.street        = [venueDict[@"street"] description];
-        venue.phone         = [venueDict[@"phone"]  description];
-        venue.websiteString = [venueDict[@"websiteString"] description];
+        //PHONE
+        if (venueDict[@"phone"] != [NSNull null])
+            venue.phone      = venueDict[@"phone"];
+        else
+            venue.phone     = @"No phone available";
+        
+        
+        //Website
+        if (venueDict[@"websiteString"] != [NSNull null])
+            venue.websiteString      = venueDict[@"websiteString"];
+        else
+            venue.websiteString     = @"No website available";
+        
+        //City
+        if (venueDict[@"city"] != [NSNull null])
+            venue.city      = venueDict[@"city"];
+        else
+            venue.city     = @"No city Available";
+        //Street
+        if (venueDict[@"street"] != [NSNull null])
+            venue.street      = [NSString stringWithFormat:@"%@ / %@", [venueDict[@"street"] lowercaseString], venue.city];
+        else
+            venue.street     = @"No address available";
+        
+        //Capacity
         if (venueDict[@"capacity"] != [NSNull null])
-        {
             venue.capacity      = venueDict[@"capacity"];
-        }
-        venue.city          = [venueDict[@"city"] description];
+        else
+            venue.capacity     = 0;
+
+
         venue.desc          = [venueDict[@"desc"] description];
     }
     

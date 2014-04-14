@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="12F45" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="12F45" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="JIPArtist" representedClassName="JIPArtist" syncable="YES">
         <attribute name="favorite" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="id" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
@@ -15,6 +15,7 @@
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sectionIdentifier" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uriString" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="artist" maxCount="1" deletionRule="Nullify" destinationEntity="JIPArtist" inverseName="events" inverseEntity="JIPArtist" syncable="YES"/>
@@ -35,7 +36,7 @@
     </entity>
     <elements>
         <element name="JIPArtist" positionX="0" positionY="0" width="128" height="118"/>
-        <element name="JIPEvent" positionX="-297" positionY="-153" width="128" height="208"/>
+        <element name="JIPEvent" positionX="-297" positionY="-153" width="128" height="223"/>
         <element name="JIPVenue" positionX="-576" positionY="-33" width="128" height="208"/>
     </elements>
 </model>

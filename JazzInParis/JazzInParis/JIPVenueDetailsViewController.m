@@ -282,7 +282,7 @@ const CGFloat JIPVenueDetailsTableViewHeightPercenatge = 0.5;
         
         NSURL    *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt://%@",@"01-42-06-68-43"]];
         
-        #warning to be fixed
+
         if ([[UIApplication sharedApplication] canOpenURL:phoneUrl])
         {
             [[UIApplication sharedApplication] openURL:phoneUrl];
