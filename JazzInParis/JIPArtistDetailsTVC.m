@@ -59,24 +59,6 @@
 
 
 
-
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    #warning : A URGENT : comment accéder la cell "See YouTube Videos" ??
-
-    //    UITableViewCell *theCellClicked = [self.tableView cellForRowAtIndexPath:indexPath];
-    //    if (theCellClicked == _showYouTubeCell)
-
-    if (indexPath.section == 3)
-    {
-        [self performSegueWithIdentifier:@"pushToYTBrowser" sender:nil];
-        
-    }
-
-    
-}
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     _searchString = _artist.name;

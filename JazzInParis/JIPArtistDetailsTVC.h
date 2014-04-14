@@ -1,7 +1,7 @@
 //
 //  JIPArtistDetailsTVC.h
 //  JazzInParis
-//
+// pushToYTBrowser
 //  Created by Max on 12/04/14.
 //  Copyright (c) 2014 Max. All rights reserved.
 //
@@ -18,5 +18,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *artistImageView;
 
 - (IBAction)toggleFavorite:(id)sender;
+@property (strong, nonatomic) IBOutlet UITableViewCell *youTubeCell;
 
 @end

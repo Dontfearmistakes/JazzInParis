@@ -60,6 +60,7 @@
     if ([_favoriteArtists count] == 0)
     {
         [self.searchBar setHidden:YES];
+
     }
     
     #warning : is this line useful ?

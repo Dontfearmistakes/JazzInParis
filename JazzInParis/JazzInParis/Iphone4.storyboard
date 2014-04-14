@@ -79,7 +79,7 @@
                         <sections>
                             <tableViewSection headerTitle="" id="2wM-fm-bbb">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="136" id="d2x-kB-Pex">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="136" id="d2x-kB-Pex">
                                         <rect key="frame" x="0.0" y="35" width="320" height="136"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d2x-kB-Pex" id="y72-oV-EjG">
@@ -98,7 +98,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="" id="9Xr-ud-7Wb">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5wG-1g-Bh8">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5wG-1g-Bh8">
                                         <rect key="frame" x="0.0" y="191" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5wG-1g-Bh8" id="Jmb-cn-qUy">
@@ -144,12 +144,15 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.19095004560000001" green="0.19297445260000001" blue="0.19331660580000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <segue destination="DTp-LI-0BV" kind="push" identifier="pushToYTBrowser" id="2vH-6C-OEN"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="" id="eEs-1j-LSr">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="126" id="Qrl-sU-okB">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="126" id="Qrl-sU-okB">
                                         <rect key="frame" x="0.0" y="319" width="320" height="126"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qrl-sU-okB" id="ZXC-ZQ-zXd">
@@ -163,7 +166,7 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ovH-Fb-Hc4">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ovH-Fb-Hc4">
                                                     <rect key="frame" x="20" y="40" width="280" height="72"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="0.19095004560000001" green="0.19297445260000001" blue="0.19331660580000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -188,7 +191,7 @@
                     <connections>
                         <outlet property="artistImageView" destination="z2t-DM-3bL" id="kUY-Bz-2L4"/>
                         <outlet property="favoriteSwitchView" destination="o9C-ZT-aEt" id="7bq-ei-GCm"/>
-                        <segue destination="DTp-LI-0BV" kind="push" identifier="pushToYTBrowser" id="1Kz-aY-Yga"/>
+                        <outlet property="youTubeCell" destination="7GB-bW-iRI" id="VHq-kt-Rg6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eD7-RN-0qA" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -196,9 +196,10 @@
                                                 self.artistsDictionnaries = [[NSMutableArray alloc] init];
                                                 
                                                 //1) Si on reçoit une réponse json mais vide : pas de concerts à venir
-                                                if (resultsDict) {
-                                                    if (!resultsDict[@"resultsPage"][@"results"][@"artist"]) {
-                                                        
+                                                if (resultsDict)
+                                                {
+                                                    if (!resultsDict[@"resultsPage"][@"results"][@"artist"])
+                                                    {
                                                         [self.artistsDictionnaries addObject:@{@"displayName": @"No upcoming concert for this artist"}];
                                                     }
                                                 }
