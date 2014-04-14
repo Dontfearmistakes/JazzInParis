@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JIPSearchArtistTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate>
+@interface JIPSearchArtistTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate, UITextFieldDelegate>
 
-- (IBAction)searchClickAction:(id)sender;
 - (IBAction)revealMenu:(id)sender;
-@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *searchNavBarButton;
+
+
 
 @end

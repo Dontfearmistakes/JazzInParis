@@ -39,12 +39,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+
 }
 
 ////////////////////////////////////
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
@@ -53,12 +56,33 @@
     NSError *error = nil;
     _favoriteArtists = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
     
+    if ([_favoriteArtists count] == 0)
+    {
+        [self.searchBar setHidden:YES];
+    }
+
+    [self applyBackgroundWallpaperInTableView:self.tableView];
+    
     [self.tableView reloadData];
 }
 
+//////////////////////////////////////////////////////////////////
+-(void)applyBackgroundWallpaperInTableView:(UITableView*)tableView
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miles.png"]];
+    [tableView setBackgroundView:imageView];
+}
 
 
-
+//called whenever a character is put in searchBar
+//here we want want to keep miles.png as a background image when searchBar is used
+- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
+{
+    controller.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    controller.searchResultsTableView.backgroundColor = [UIColor clearColor];
+    [self applyBackgroundWallpaperInTableView:controller.searchResultsTableView];
+    
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,9 +105,11 @@
 }
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     //ICI self.tableView est TOUJOURS UITableView et non pas UISearchResultsTableView (c'est pour ça qu'on l'utilise pour chopper là cellule)
     //Alors que le tableView passé en argument est l'un ou l'autre (selon que les résultats affichés sont filtrés oun non)
     JIPArtistNameCell *artistNameCell = [self.tableView dequeueReusableCellWithIdentifier:@"ArtistNameCell"];
@@ -106,7 +132,9 @@
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
         return 60;

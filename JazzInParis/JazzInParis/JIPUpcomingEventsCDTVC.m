@@ -38,6 +38,19 @@
     [self.slidingViewController anchorTopViewTo:ECRight];
 }
 
+///////////////////////////BACKGROUND IMAGE/////////////////////////////////////////////////////////////////
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self applyBackgroundWallpaperInTableView:self.tableView];
+}
+
+-(void)applyBackgroundWallpaperInTableView:(UITableView*)tableView
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miles.png"]];
+    [tableView setBackgroundView:imageView];
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -45,7 +58,13 @@
 {
     [super viewWillAppear:animated];
     [self createFetchResultsController];
+    
+    if ([[self.fetchedResultsController fetchedObjects] count] == 0)
+    {
+        [self.searchBar setHidden:YES];
+    }
 }
+
 
 
 
@@ -158,10 +177,29 @@
 
 
 
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    
+    UIView *headerBackground=[[UIView alloc]initWithFrame:CGRectMake(0,0,tableView.bounds.size.width,30)];
+    headerBackground.backgroundColor=[UIColor blackColor];
+    
+    UILabel *headerLabel = [[UILabel alloc] init];
+    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
+    headerLabel.text = sectionTitle;
+    headerLabel.frame = CGRectMake(15, 4, tableView.bounds.size.width, 30);
+    headerLabel.backgroundColor = [UIColor blackColor];
+    headerLabel.textColor = [UIColor whiteColor];
+    
+    [headerBackground addSubview:headerLabel];
+
+    
+    return headerBackground;
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    return 40;
 }
 
 

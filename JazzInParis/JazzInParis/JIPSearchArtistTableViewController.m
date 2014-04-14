@@ -6,11 +6,12 @@
 //  Copyright (c) 2014 Max. All rights reserved.
 //
 #import "JIPSearchArtistTableViewController.h"
-#import "JIPArtistDetailVC.h"
+#import "JIPArtistDetailsTVC.h"
 #import "JIPManagedDocument.h"
 #import "JIPArtist+Create.h"
 #import "ECSlidingViewController.h"
 #import "SideMenuViewController.h"
+#import "JIPSearchArtistNameCell.h"
 
 
 @interface JIPSearchArtistTableViewController ()
@@ -39,7 +40,8 @@
     [self.slidingViewController anchorTopViewTo:ECRight];
 }
 
-////////////////////
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -51,8 +53,44 @@
     }
 }
 
+/////////////////////////////////////////////////////////////////////
+// Code Pour afficher une backgroundImage quand la TableView est vide
+////////////////////////////////////
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self applyBackgroundWallpaperInTableView:self.tableView];
+    
+}
 
 
+
+-(void)applyBackgroundWallpaperInTableView:(UITableView*)tableView
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miles.png"]];
+    [tableView setBackgroundView:imageView];
+}
+
+
+//called whenever a character is put in searchBar
+//here we want want to keep miles.png as a background image when searchBar is used
+- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
+{
+    controller.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    controller.searchResultsTableView.backgroundColor = [UIColor clearColor];
+    [self applyBackgroundWallpaperInTableView:controller.searchResultsTableView];
+    
+}
+
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    #warning garder la même couleur pour pas que le user pense que la search est lancée
+    [controller.searchResultsTableView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.8]]; //on pourrait aussi mettre UIColor clearColor
+    [controller.searchResultsTableView setRowHeight:800];
+    [controller.searchResultsTableView setScrollEnabled:NO];
+    return NO;
+}
 
 
 
@@ -64,34 +102,28 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-///////////////////////////////////////////////////////////////////////////////////////
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.artistsDictionnaries count];
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"artist"];
-    if (!cell)
-    {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"artist"];
-    }
+    JIPSearchArtistNameCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"artist"];
     
     //CELL GETS EVENT.NAME
-    cell.textLabel.text = self.artistsDictionnaries[indexPath.row][@"displayName"];
+    cell.artistNameLabel.text = self.artistsDictionnaries[indexPath.row][@"displayName"];
     
     return cell;
 }
 
 
-//////////////////////////////////////////////////////////////////////////////////////////
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     _artistDict = [[NSMutableDictionary alloc]init];
-
     _artistDict[@"name"]        = self.artistsDictionnaries[indexPath.row][@"displayName"]  ;
     _artistDict[@"id"]          = self.artistsDictionnaries[indexPath.row][@"id"]           ;
     _artistDict[@"songkickUri"] = self.artistsDictionnaries[indexPath.row][@"uri"]          ;
@@ -129,10 +161,10 @@
                 sender:(id)sender
 {    
     if ([segue.identifier isEqualToString:@"ArtistDetails"])
-    //FETCH ARTIST IN CONTEXT AND PASS IT TO artistDetailsVC.artist
+    //SAVE ARTIST IN CONTEXT AND PASS IT TO artistDetailsVC.artist
     {
-        JIPArtistDetailVC *artistDetailsVC = [segue destinationViewController];
-        artistDetailsVC.artist = [JIPArtist artistWithDict:_artistDict
+        JIPArtistDetailsTVC *artistDetailsTVC = [segue destinationViewController];
+        artistDetailsTVC.artist = [JIPArtist artistWithDict:_artistDict
                                     inManagedObjectContext:_managedDocument.managedObjectContext];
     }
 }
@@ -143,36 +175,27 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UITextFieldDelegate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSString* searchTerm = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    #warning : bug if search term contains accents
+    [self searchSongkickArtistForSearchterm:searchTerm];
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UISearchBarDelegate
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-///////////////////////////////////////////////////////////////////////////
-// Click on top left bar button (loupe) --> searBar becomes first responder
-- (IBAction)searchClickAction:(id)sender
-{
-    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-    [self.searchBar becomeFirstResponder];
-}
-
-
-////////////////////////////////////////////////////////////
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    NSString* searchTerm = [self.searchDisplayController.searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    #warning : bug if search term contains accents
-    [self searchSongkickArtistForSearchterm:searchTerm];
-    [self.searchDisplayController setActive:NO animated:YES];
-}
-
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////
 -(void)searchSongkickArtistForSearchterm:(NSString *)searchTerm
 {
     
