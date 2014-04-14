@@ -60,7 +60,7 @@
     if ([_favoriteArtists count] == 0)
     {
         [self.searchBar setHidden:YES];
-
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
     }
     
     #warning : is this line useful ?

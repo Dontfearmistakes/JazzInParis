@@ -22,8 +22,6 @@
 
 @implementation JIPUpcomingEventsCDTVC
 
-@synthesize filteredUpcomingEvents = _filteredUpcomingEvents;
-@synthesize selectedEvent          = _selectedEvent;
 @synthesize event                  = _event;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,9 +51,6 @@
     [super viewWillAppear:animated];
     
     [self createFetchResultsController];
-    
-    if ( [[self.fetchedResultsController fetchedObjects] count] == 0 )
-          [self.searchBar setHidden:YES];
 }
 
 
@@ -90,37 +85,16 @@
 ////////////////////////////////////////////////////////////
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    //Here, the table view passed as an argument can be either the regular tableView (appearing the 1st time the view loads)
-    //                                                  or the self.searchDisplayController.searchResultsTableView (if the searchBar is used)
-    if (tableView == self.searchDisplayController.searchResultsTableView)
-    {
-        return [_filteredUpcomingEvents count];
-    }
-    else
-    {
-        return [super tableView:tableView numberOfRowsInSection:section];
-    }
-}
 
 
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //ICI self.tableView est TOUJOURS UITableView et non pas UISearchResultsTableView (c'est pour ça qu'on l'utilise pour chopper là cellule)
-    //Alors que le tableView passé en argument est l'un ou l'autre (selon que les résultats affichés sont filtrés oun non)
-    JIPUpcomingEventCell *upcomingEventCell = [self.tableView dequeueReusableCellWithIdentifier:@"UpcomingEventCell"];
-    
-    if (tableView == self.searchDisplayController.searchResultsTableView)
-    {
-        _event = _filteredUpcomingEvents[indexPath.row];
-    }
-    else
-    {
-        _event = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    }
 
+    _event = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+    JIPUpcomingEventCell *upcomingEventCell = [self.tableView dequeueReusableCellWithIdentifier:@"UpcomingEventCell"];
     upcomingEventCell.titleLabel   .text   = _event.name;
     upcomingEventCell.subtitleLabel.text = [NSString stringWithFormat:@"@ %@", _event.venue.name];
     
@@ -235,48 +209,6 @@
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - UISearchBarDelegate
-#warning : A URGENT : SEARCHBAR filter doesnt work : fix it or leave it
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-///////////////////////////////////////////////////////////////////////////
-// Click on top left bar button (loupe) --> searBar becomes first responder
-- (IBAction)searchBarButtonItemClick:(id)sender
-{
-    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-    [self.searchBar becomeFirstResponder];
-}
-
-
-////////////////////////////////////////////////////////////
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    #warning : this method is never called ...
-    [self.searchDisplayController setActive:NO animated:YES];
-}
-
-
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
-{
-    #warning : à quoi sert scope ?? il est nil...
-    [self filterContentForSearchText:searchString
-                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
-    return YES;
-}
-
-
-////////////////////////////////////////////////////////
-- (void)filterContentForSearchText:(NSString*)searchText
-                             scope:(NSString*)scope
-{
-    #warning : what is diacritic ?
-    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchText];
-    
-   _filteredUpcomingEvents = [self.fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:resultPredicate];
-}
 
 @end

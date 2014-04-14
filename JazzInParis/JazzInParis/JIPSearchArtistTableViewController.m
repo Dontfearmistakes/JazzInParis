@@ -29,8 +29,8 @@
 
 @synthesize artistDict = _artistDict;
 @synthesize managedDocument = _managedDocument;
-
-
+@synthesize searchArtistTextField = _searchArtistTextField;
+@synthesize tapGesture           = _tapGesture;
 
 ////////////////////////////////////////////////
 //method for every rootVC / implements side menu
@@ -53,27 +53,14 @@
     }
     
     [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
+    
+    _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOnTableView:)];
+    [self.tableView addGestureRecognizer:_tapGesture];
 }
 
-
-
-//called whenever a character is put in searchBar
-//here we want want to keep miles.png as a background image when searchBar is used
-- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
+-(void) didTapOnTableView:(id) sender
 {
-    controller.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    controller.searchResultsTableView.backgroundColor = [UIColor clearColor];
-    [JIPDesign applyBackgroundWallpaperInTableView:controller.searchResultsTableView];
-}
-
-
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
-{
-    //FIXME: garder la même couleur pour pas que le user pense que la search est lancée
-    [controller.searchResultsTableView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.8]]; //on pourrait aussi mettre UIColor clearColor
-    [controller.searchResultsTableView setRowHeight:800];
-    [controller.searchResultsTableView setScrollEnabled:NO];
-    return NO;
+    [_searchArtistTextField resignFirstResponder];
 }
 
 
@@ -88,6 +75,15 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if ([self.artistsDictionnaries count] != 0)
+    {
+        [self.tableView removeGestureRecognizer:_tapGesture];
+    }
+    else
+    {
+        [self.tableView addGestureRecognizer:_tapGesture];
+    }
+    
     return [self.artistsDictionnaries count];
 }
 
@@ -173,6 +169,8 @@
     
     return YES;
 }
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

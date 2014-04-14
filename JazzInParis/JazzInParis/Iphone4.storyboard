@@ -42,7 +42,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="r8t-pd-V5q">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="3dZ-WP-YFb">
+                        <barButtonItem key="leftBarButtonItem" image="menuIcon" id="3dZ-WP-YFb">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="revealMenu:" destination="mbH-FO-pnw" id="hSE-f0-xeC"/>
                             </connections>
@@ -60,7 +61,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="searchNavBarButton" destination="Hx8-oU-u7O" id="bML-d7-Pdg"/>
+                        <outlet property="searchArtistTextField" destination="sBE-2g-POp" id="3Cj-cB-n2p"/>
                         <segue destination="3N1-EL-i97" kind="push" identifier="ArtistDetails" id="njn-IU-hsv"/>
                     </connections>
                 </tableViewController>
@@ -251,7 +252,8 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Favorite Artists" id="hi3-KC-wWv">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="HbO-Gl-FgM">
+                        <barButtonItem key="leftBarButtonItem" image="menuIcon" id="HbO-Gl-FgM">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="revealMenu:" destination="5tH-iU-sPP" id="X6F-bL-hfa"/>
                             </connections>
@@ -432,17 +434,9 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="3NE-bi-biI">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="W7c-xh-g1z" id="pjg-cX-zAN"/>
-                            </connections>
-                        </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UpcomingEventCell" textLabel="30w-BR-8dh" detailTextLabel="qxN-qP-czs" rowHeight="40" style="IBUITableViewCellStyleSubtitle" id="MuD-vN-KpT" customClass="JIPUpcomingEventCell">
-                                <rect key="frame" x="0.0" y="99" width="320" height="40"/>
+                                <rect key="frame" x="0.0" y="55" width="320" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MuD-vN-KpT" id="SmI-mn-nx8">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="40"/>
@@ -477,33 +471,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="All concerts" id="6WJ-Vu-hDz">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="5T8-ko-8TS">
+                        <barButtonItem key="leftBarButtonItem" image="menuIcon" id="5T8-ko-8TS">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="revealMenu:" destination="W7c-xh-g1z" id="wOJ-UF-f3V"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" systemItem="search" id="Hed-lm-RAC">
-                            <connections>
-                                <action selector="searchBarButtonItemClick:" destination="W7c-xh-g1z" id="wpj-cf-Q9O"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="searchBar" destination="3NE-bi-biI" id="Ck7-Ed-LzB"/>
-                        <outlet property="searchBarButtonItem" destination="Hed-lm-RAC" id="jLn-Em-drj"/>
                         <segue destination="QbP-ia-AHo" kind="push" identifier="EventDetails" id="DiD-7X-QWk"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W59-8L-O4c" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="N0v-oE-22r">
-                    <connections>
-                        <outlet property="delegate" destination="W7c-xh-g1z" id="bcT-iF-GYS"/>
-                        <outlet property="searchBar" destination="3NE-bi-biI" id="J5M-QE-jJt"/>
-                        <outlet property="searchContentsController" destination="W7c-xh-g1z" id="sf4-r4-N1c"/>
-                        <outlet property="searchResultsDataSource" destination="W7c-xh-g1z" id="5c7-Oh-7kD"/>
-                        <outlet property="searchResultsDelegate" destination="W7c-xh-g1z" id="xbL-OU-L2m"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1653" y="1417"/>
         </scene>
@@ -790,9 +769,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ilj-C3-LN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2244" y="1405"/>
+            <point key="canvasLocation" x="2206" y="1417"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="menuIcon" width="16" height="16"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

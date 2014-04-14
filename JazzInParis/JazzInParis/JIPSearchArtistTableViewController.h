@@ -11,8 +11,8 @@
 @interface JIPSearchArtistTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate, UITextFieldDelegate>
 
 - (IBAction)revealMenu:(id)sender;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *searchNavBarButton;
 
-
+@property (strong, nonatomic) IBOutlet UITextField *searchArtistTextField;
+@property (strong, nonatomic)          UITapGestureRecognizer * tapGesture;
 
 @end

@@ -14,10 +14,8 @@
 
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *searchBarButtonItem;
-@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
-@property (strong, nonatomic) NSArray              * filteredUpcomingEvents;
-@property (nonatomic)         BOOL                   isFiltered;
+
 @property (strong, nonatomic) JIPEvent             * event;
 @property (strong, nonatomic) JIPEvent             * selectedEvent;
 
