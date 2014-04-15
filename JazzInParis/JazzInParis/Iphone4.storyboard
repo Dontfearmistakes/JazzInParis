@@ -424,10 +424,10 @@
         <!--Page View Controller-->
         <scene sceneID="xi2-gZ-fQ4">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="v4C-hF-W3M" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="pageVC" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="v4C-hF-W3M" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2vW-Af-uoi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="451" y="-116"/>
+            <point key="canvasLocation" x="431" y="929"/>
         </scene>
         <!--Page ContentVC-->
         <scene sceneID="Cj3-6M-fUf">
@@ -458,7 +458,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="49b-qb-w0l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="451" y="1228"/>
+            <point key="canvasLocation" x="423" y="1614"/>
         </scene>
         <!--Managing Page Content-->
         <scene sceneID="CSj-T7-caN">
@@ -477,7 +477,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vdy-av-oEj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="451" y="544"/>
+            <point key="canvasLocation" x="431" y="284"/>
         </scene>
         <!--Upcoming EventsCDTVC - All concerts-->
         <scene sceneID="2Zr-pD-P1w">

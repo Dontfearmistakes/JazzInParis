@@ -25,6 +25,14 @@
     pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     pageControl.backgroundColor = [UIColor whiteColor];
     
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (![userDefaults objectForKey:@"firstLaunch"])
+    {
+        [userDefaults setBool:YES forKey:@"firstLaunch"];
+    }
+    
+    
     [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
 
         [[JIPUpdateManager sharedUpdateManager] clearOldEvents];
