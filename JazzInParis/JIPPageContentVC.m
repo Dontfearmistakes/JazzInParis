@@ -23,9 +23,24 @@
     [super viewDidLoad];
 
     [_initialTextView setText:_contentText];
+    
+    if (self.pageIndex == 3)
+    {
+        [self.finishWelcomePageControllerButton setHidden:NO];
+    }
 }
 
 
 
+
+- (IBAction)finishWelcomePageControllerClick:(id)sender {
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:NO forKey:@"firstLaunch"];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [(UINavigationController *)self.presentingViewController popToRootViewControllerAnimated:YES];
+    }];
+}
 
 @end

@@ -12,5 +12,7 @@
 @property (strong, nonatomic) IBOutlet UITextView *initialTextView;
 @property NSUInteger pageIndex;
 @property NSString  *contentText;
+@property (strong, nonatomic) IBOutlet UIButton *finishWelcomePageControllerButton;
+- (IBAction)finishWelcomePageControllerClick:(id)sender;
 
 @end

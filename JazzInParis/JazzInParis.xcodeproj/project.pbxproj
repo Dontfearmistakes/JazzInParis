@@ -30,6 +30,7 @@
 		5029346818FD5BE4009A4F2F /* WikipediaHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5029346718FD5BE4009A4F2F /* WikipediaHelper.m */; };
 		5029346C18FD6416009A4F2F /* JIPPageContentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5029346B18FD6416009A4F2F /* JIPPageContentVC.m */; };
 		5029346F18FD6575009A4F2F /* JIPManagingPageContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5029346E18FD6575009A4F2F /* JIPManagingPageContent.m */; };
+		5029347218FD79AC009A4F2F /* JIPInitialVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5029347118FD79AB009A4F2F /* JIPInitialVC.m */; };
 		502A222818F97ABB00CB7926 /* JIPSearchArtistNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 502A222718F97ABB00CB7926 /* JIPSearchArtistNameCell.m */; };
 		502A222B18F9815C00CB7926 /* JIPArtistDetailsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 502A222A18F9815C00CB7926 /* JIPArtistDetailsTVC.m */; };
 		5040392C18F5649200AE815A /* JIPUpcomingEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5040392B18F5649200AE815A /* JIPUpcomingEventCell.m */; };
@@ -172,6 +173,8 @@
 		5029346B18FD6416009A4F2F /* JIPPageContentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JIPPageContentVC.m; path = ../JIPPageContentVC.m; sourceTree = "<group>"; };
 		5029346D18FD6575009A4F2F /* JIPManagingPageContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JIPManagingPageContent.h; path = ../JIPManagingPageContent.h; sourceTree = "<group>"; };
 		5029346E18FD6575009A4F2F /* JIPManagingPageContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JIPManagingPageContent.m; path = ../JIPManagingPageContent.m; sourceTree = "<group>"; };
+		5029347018FD79AB009A4F2F /* JIPInitialVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JIPInitialVC.h; path = ../JIPInitialVC.h; sourceTree = "<group>"; };
+		5029347118FD79AB009A4F2F /* JIPInitialVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JIPInitialVC.m; path = ../JIPInitialVC.m; sourceTree = "<group>"; };
 		502A222618F97ABB00CB7926 /* JIPSearchArtistNameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JIPSearchArtistNameCell.h; path = ../JIPSearchArtistNameCell.h; sourceTree = "<group>"; };
 		502A222718F97ABB00CB7926 /* JIPSearchArtistNameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JIPSearchArtistNameCell.m; path = ../JIPSearchArtistNameCell.m; sourceTree = "<group>"; };
 		502A222918F9815C00CB7926 /* JIPArtistDetailsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JIPArtistDetailsTVC.h; path = ../JIPArtistDetailsTVC.h; sourceTree = "<group>"; };
@@ -633,6 +636,8 @@
 			children = (
 				50FA943618F2FB78008A761D /* Trash */,
 				DB1FE85F18EEECFE0032A1F9 /* Lib */,
+				5029347018FD79AB009A4F2F /* JIPInitialVC.h */,
+				5029347118FD79AB009A4F2F /* JIPInitialVC.m */,
 				5029346D18FD6575009A4F2F /* JIPManagingPageContent.h */,
 				5029346E18FD6575009A4F2F /* JIPManagingPageContent.m */,
 				5029346A18FD6416009A4F2F /* JIPPageContentVC.h */,
@@ -991,6 +996,7 @@
 				DB1FE86618EEED110032A1F9 /* InitialSlidingViewController.m in Sources */,
 				50916F3F18F81AC1006D5C26 /* UIView+MGEasyFrame.m in Sources */,
 				5029346418FD5B2A009A4F2F /* UIRefreshControl+AFNetworking.m in Sources */,
+				5029347218FD79AC009A4F2F /* JIPInitialVC.m in Sources */,
 				50916F5318F81B19006D5C26 /* YouTubeVC.m in Sources */,
 				508598D718AA551C0048D760 /* JIPVenueDetailsViewController.m in Sources */,
 				5029345518FD5B2A009A4F2F /* AFHTTPRequestOperation.m in Sources */,
