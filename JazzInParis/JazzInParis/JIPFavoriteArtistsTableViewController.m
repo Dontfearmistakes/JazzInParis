@@ -11,8 +11,8 @@
 #import "JIPFavoriteArtistsTableViewController.h"
 #import "ECSlidingViewController.h"
 #import "SideMenuViewController.h"
-#import "JIPArtistNameCell.h"
 #import "JIPArtist.h"
+#import "JIPUpdateManager.h"
 
 
 @interface JIPFavoriteArtistsTableViewController ()
@@ -49,13 +49,7 @@
 {
     [super viewWillAppear:animated];
     
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
-    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
-    request.predicate       = [NSPredicate predicateWithFormat:@"favorite == %@", @YES];
-    
-    NSError *error = nil;
-    _favoriteArtists = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
+    [self fetchfavoriteArtist];
     
     if ([_favoriteArtists count] == 0)
     {
@@ -65,6 +59,18 @@
     
     #warning : is this line useful ?
     //[self.tableView reloadData];
+}
+
+
+
+-(void)fetchfavoriteArtist
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
+    request.predicate       = [NSPredicate predicateWithFormat:@"favorite == %@", @YES];
+    
+    NSError *error = nil;
+    _favoriteArtists = [[[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
 }
 
 
@@ -95,6 +101,7 @@
     }
     else
     {
+
         return [_favoriteArtists count];
     }
 }
@@ -107,7 +114,7 @@
     
     //ICI self.tableView est TOUJOURS UITableView et non pas UISearchResultsTableView (c'est pour ça qu'on l'utilise pour chopper là cellule)
     //Alors que le tableView passé en argument est l'un ou l'autre (selon que les résultats affichés sont filtrés oun non)
-    JIPArtistNameCell *artistNameCell = [self.tableView dequeueReusableCellWithIdentifier:@"ArtistNameCell"];
+    UITableViewCell *artistNameCell = [self.tableView dequeueReusableCellWithIdentifier:@"FavoriteArtistCell"];
     
     if (tableView == self.searchDisplayController.searchResultsTableView)
     {
@@ -118,17 +125,42 @@
         _artist  = _favoriteArtists[indexPath.row];
     }
     
-    artistNameCell.artist       = _artist;
-    artistNameCell.UILabel.text = _artist.name;
-    
-    [[artistNameCell switchFavorite] setOn:[_artist.favorite boolValue]];
+    artistNameCell.textLabel.text      = _artist.name;
 
     return artistNameCell;
 }
 
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
 
 
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [self removeFromFavorites:indexPath];
+        [_favoriteArtists removeObject:_favoriteArtists[indexPath.row]];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+    }
+
+}
+
+- (void)removeFromFavorites:(NSIndexPath *)ip
+{
+    JIPArtist * artist = _favoriteArtists[ip.row];
+    
+    //1) On update l'attribut favorite
+    [artist setFavorite:[NSNumber numberWithBool:NO]];
+    
+    //2) On efface les Events liés à cet artiste
+    [[JIPUpdateManager sharedUpdateManager] clearArtistEvents:artist];
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

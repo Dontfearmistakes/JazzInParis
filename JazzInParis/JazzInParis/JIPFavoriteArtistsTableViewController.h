@@ -11,7 +11,7 @@
 
 @interface JIPFavoriteArtistsTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate>
 
-@property (strong, nonatomic) NSArray              * favoriteArtists;
+@property (strong, nonatomic) NSMutableArray       * favoriteArtists;
 @property (strong, nonatomic) NSArray              * filteredFavoriteArtists;
 @property (nonatomic)         BOOL                   isFiltered;
 @property (strong, nonatomic) JIPArtist            * artist;
