@@ -9,6 +9,7 @@
 #import "JIPArtistDetailsTVC.h"
 #import "JIPUpdateManager.h"
 #import "YouTubeVC.h"
+#import "WikipediaHelper.h"
 
 @interface JIPArtistDetailsTVC ()
 
@@ -29,13 +30,12 @@
     self.title = _artist.name;
     [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
     
-    [_artistImageView setImage:[UIImage imageNamed:@"mathieuchedid.png"]];
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     [_favoriteSwitchView setOn:[_artist.favorite boolValue]];
 }
 
