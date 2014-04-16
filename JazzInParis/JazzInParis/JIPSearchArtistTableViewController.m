@@ -54,6 +54,7 @@
     
     [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
     
+    
     _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOnTableView:)];
     [self.tableView addGestureRecognizer:_tapGesture];
 }
@@ -75,6 +76,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    //Enable -didTapOnTableView if tableView is empty
     if ([self.artistsDictionnaries count] != 0)
     {
         [self.tableView removeGestureRecognizer:_tapGesture];
@@ -108,35 +110,17 @@
     _artistDict[@"id"]          = self.artistsDictionnaries[indexPath.row][@"id"]           ;
     _artistDict[@"songkickUri"] = self.artistsDictionnaries[indexPath.row][@"uri"]          ;
     
-    
-    if ([self.artistsDictionnaries[0][@"displayName"]  isEqualToString: @"No upcoming concert for this artist"] == false
-        &&
-        [self.artistsDictionnaries[0][@"displayName"]  isEqualToString: @"No network connection"]               == false)
-    {
-        [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
-         {
-             _managedDocument = managedDocument;
-             [self performSegueWithIdentifier:@"ArtistDetails" sender:nil];
-         }];
-    }
-    else
-    //DEBUG
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Pas entré dans le segue"
-                                                        message:@"Dee dee doo doo."
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK" 
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
-    
+    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
+     {
+         _managedDocument = managedDocument;
+         [self performSegueWithIdentifier:@"ArtistDetails" sender:nil];
+     }];
+
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
 
-
-/////////////////////////////////////////////////
 -(void)prepareForSegue:(UIStoryboardSegue *)segue
                 sender:(id)sender
 {    
@@ -198,14 +182,30 @@
                                                 {
                                                     if (!resultsDict[@"resultsPage"][@"results"][@"artist"])
                                                     {
-                                                        [self.artistsDictionnaries addObject:@{@"displayName": @"No upcoming concert for this artist"}];
+                                                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                                            
+                                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No upcoming concert for this artist"
+                                                                                                            message:@"Check the spelling"
+                                                                                                           delegate:self
+                                                                                                  cancelButtonTitle:@"OK"
+                                                                                                  otherButtonTitles:nil];
+                                                            [alert show];
+                                                        }];
                                                     }
                                                 }
                                                 
                                                 //2) Si pas de réponse : pas de réseau
                                                 else
                                                 {
-                                                    [self.artistsDictionnaries addObject:@{@"displayName": @"No network connection"}];
+                                                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                                    
+                                                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No network connection"
+                                                                                                        message:@"Check your internet conncetion"
+                                                                                                       delegate:self
+                                                                                              cancelButtonTitle:@"OK"
+                                                                                              otherButtonTitles:nil];
+                                                        [alert show];
+                                                    }];
                                                 }
                                                 
                                                 
