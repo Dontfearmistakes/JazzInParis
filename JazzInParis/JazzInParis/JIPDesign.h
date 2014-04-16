@@ -10,6 +10,7 @@
 
 @interface JIPDesign : NSObject
 
-+(void)applyBackgroundWallpaperInTableView:(UITableView*)tableView;
++(void)applyBackgroundWallpaperInTableView     :(UITableView*)tableView;
++(void)applyBackgroundWallpaperInViewController:(UIViewController*)viewController;
 
 @end

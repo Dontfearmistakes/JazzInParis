@@ -445,6 +445,19 @@
 			name = Abstract;
 			sourceTree = "<group>";
 		};
+		504A1EFE18FE927D00629F6A /* InitialPageContent */ = {
+			isa = PBXGroup;
+			children = (
+				5029347018FD79AB009A4F2F /* JIPInitialVC.h */,
+				5029347118FD79AB009A4F2F /* JIPInitialVC.m */,
+				5029346D18FD6575009A4F2F /* JIPManagingPageContent.h */,
+				5029346E18FD6575009A4F2F /* JIPManagingPageContent.m */,
+				5029346A18FD6416009A4F2F /* JIPPageContentVC.h */,
+				5029346B18FD6416009A4F2F /* JIPPageContentVC.m */,
+			);
+			name = InitialPageContent;
+			sourceTree = "<group>";
+		};
 		505A641F18ED9DCA00FC6577 /* NotRootVCs */ = {
 			isa = PBXGroup;
 			children = (
@@ -636,12 +649,7 @@
 			children = (
 				50FA943618F2FB78008A761D /* Trash */,
 				DB1FE85F18EEECFE0032A1F9 /* Lib */,
-				5029347018FD79AB009A4F2F /* JIPInitialVC.h */,
-				5029347118FD79AB009A4F2F /* JIPInitialVC.m */,
-				5029346D18FD6575009A4F2F /* JIPManagingPageContent.h */,
-				5029346E18FD6575009A4F2F /* JIPManagingPageContent.m */,
-				5029346A18FD6416009A4F2F /* JIPPageContentVC.h */,
-				5029346B18FD6416009A4F2F /* JIPPageContentVC.m */,
+				504A1EFE18FE927D00629F6A /* InitialPageContent */,
 				50A52FB2189ED5D9001D9779 /* JIPAppDelegate.h */,
 				50A52FB3189ED5D9001D9779 /* JIPAppDelegate.m */,
 				501FB95F18D1BFCE00845256 /* JIPManagedDocument.h */,

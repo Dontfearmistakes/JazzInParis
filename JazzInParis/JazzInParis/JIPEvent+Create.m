@@ -42,11 +42,14 @@
         event.longitude      = [NSNumber numberWithDouble:[eventDictionary[@"long"] doubleValue]];
         event.type           = eventDictionary[@"type"];
         event.date           = eventDictionary[@"date"];
-        event.startTime      = eventDictionary[@"startTime"];
         event.uriString      = eventDictionary[@"uriString"];
         event.ageRestriction = eventDictionary[@"ageRestriction"];
 
-        
+        if (eventDictionary[@"startTime"] != [NSNull null])
+        event.startTime      = eventDictionary[@"startTime"];
+        else
+        event.startTime      = @"Unknown Time";
+
         NSMutableDictionary * venueDict = [[NSMutableDictionary alloc] init];
         venueDict[@"name"]    = eventDictionary[@"venueName"];
         venueDict[@"long"]    = eventDictionary[@"long"];

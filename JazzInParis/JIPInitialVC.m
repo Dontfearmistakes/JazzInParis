@@ -14,25 +14,22 @@
 
 @implementation JIPInitialVC
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
 
--(void)viewWillAppear:(BOOL)animated
+
+-(void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
+
     if ([userDefaults boolForKey:@"firstLaunch"] == YES)
     {
         [self performSegueWithIdentifier:@"initialLaunchSegue" sender:nil];
     }
     else
     {
-        [self performSegueWithIdentifier:@"regularLaunchSegue" sender:nil];
+      [self performSegueWithIdentifier:@"regularLaunchSegue" sender:nil];
     }
 }
 

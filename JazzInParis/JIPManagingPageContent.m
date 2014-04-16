@@ -21,10 +21,10 @@
 {
     [super viewDidLoad];
     
-    _pageContents = @[@"Over 200 Tips and Tricks",
-                    @"Discover Hidden Features",
-                    @"Bookmark Favorite Tip",
-                    @"Free Regular Update"];
+    _pageContents = @[@"Welcome to Dontfearmistakes, the Paris Jazz concerts app !\r\r  Be informed about your favorites artists concerts in Paris and say goodbye to missed concerts !",
+                    @"Start by adding your favorite artists from the 'Search Artist' tab.\r\r Then follow their upcoming concerts in the 'All Concerts' tab.",
+                    @"Want to stop following an artist ?\r\r Manage your list from the 'Favorite Artist' tab.",
+                    @"Enjoy the Paris Jazz scene !"];
     
     // Create page view controller
     self.pageViewController            = [self.storyboard instantiateViewControllerWithIdentifier:@"pageVC"];
@@ -41,6 +41,8 @@
     [self.view addSubview:            _pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
 }
+
+
 
 
 #pragma mark - Page View Controller Data Source

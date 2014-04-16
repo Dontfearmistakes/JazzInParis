@@ -8,6 +8,7 @@
 
 #import "JIPPageContentVC.h"
 
+
 @interface JIPPageContentVC ()
 
 @end
@@ -21,6 +22,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [JIPDesign applyBackgroundWallpaperInViewController:self];
+    
+    [_initialTextView.layer setBorderWidth: 10.0];
+    [_initialTextView.layer setBorderColor:[Rgb2UIColor(49, 49, 49) CGColor]];
+
+    _initialTextView.layer.cornerRadius = 10.0f;
 
     [_initialTextView setText:_contentText];
     
@@ -38,9 +46,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:NO forKey:@"firstLaunch"];
     
-    [self dismissViewControllerAnimated:YES completion:^{
-        [(UINavigationController *)self.presentingViewController popToRootViewControllerAnimated:YES];
-    }];
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 @end

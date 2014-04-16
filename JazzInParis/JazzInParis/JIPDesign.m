@@ -17,4 +17,11 @@
     [tableView setBackgroundView:imageView];
 }
 
+
++(void)applyBackgroundWallpaperInViewController:(UIViewController*)viewController
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"milesDavisInitial.png"]];
+    [viewController.view addSubview:imageView];
+    [viewController.view sendSubviewToBack:imageView];
+}
 @end
