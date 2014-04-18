@@ -81,15 +81,15 @@
                         <sections>
                             <tableViewSection headerTitle="" id="2wM-fm-bbb">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="136" id="d2x-kB-Pex">
-                                        <rect key="frame" x="0.0" y="35" width="320" height="136"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="200" id="d2x-kB-Pex">
+                                        <rect key="frame" x="0.0" y="35" width="320" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d2x-kB-Pex" id="y72-oV-EjG">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="135"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="199"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z2t-DM-3bL">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="135"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="199"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
@@ -101,7 +101,7 @@
                             <tableViewSection headerTitle="" id="9Xr-ud-7Wb">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5wG-1g-Bh8">
-                                        <rect key="frame" x="0.0" y="191" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="255" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5wG-1g-Bh8" id="Jmb-cn-qUy">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -130,7 +130,7 @@
                             <tableViewSection headerTitle="" id="0Nk-85-Sny">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="7GB-bW-iRI">
-                                        <rect key="frame" x="0.0" y="255" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="319" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7GB-bW-iRI" id="w4n-sE-lrI">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -149,37 +149,6 @@
                                         <connections>
                                             <segue destination="DTp-LI-0BV" kind="push" identifier="pushToYTBrowser" id="2vH-6C-OEN"/>
                                         </connections>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="" id="eEs-1j-LSr">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="126" id="Qrl-sU-okB">
-                                        <rect key="frame" x="0.0" y="319" width="320" height="126"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qrl-sU-okB" id="ZXC-ZQ-zXd">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="125"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Wikipedia" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mlF-G5-OoO">
-                                                    <rect key="frame" x="20" y="11" width="75" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ovH-Fb-Hc4">
-                                                    <rect key="frame" x="20" y="40" width="280" height="72"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="0.19095004560000001" green="0.19297445260000001" blue="0.19331660580000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.19095004560000001" green="0.19297445260000001" blue="0.19331660580000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -464,10 +433,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="miles2" translatesAutoresizingMaskIntoConstraints="NO" id="gQZ-Om-EfT">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="GEu-ez-ksv">
                                 <rect key="frame" x="20" y="164" width="280" height="144"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.19215686274509802" green="0.19215686274509802" blue="0.19215686274509802" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.19215686274509802" green="0.19215686274509802" blue="0.19215686274509802" alpha="0.76000000000000001" colorSpace="calibratedRGB"/>
                                 <string key="text">Welcome to Dontfearmistakes, the Paris concerts app ! 
 Keep posted on your favorites artists upcoming concerts in Paris and goodbye to missed concerts !</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -475,7 +448,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ks7-t0-iUg">
-                                <rect key="frame" x="129" y="365" width="63" height="43"/>
+                                <rect key="frame" x="129" y="262" width="63" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Go !">
@@ -508,7 +481,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                     <view key="view" contentMode="scaleToFill" id="3NB-Y8-I23">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="GTO-vF-pJZ"/>
                 </viewController>
@@ -569,10 +542,21 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addMoreArtistsButton" destination="cLx-s7-Aq7" id="0my-W7-EXP"/>
                         <segue destination="QbP-ia-AHo" kind="push" identifier="EventDetails" id="DiD-7X-QWk"/>
+                        <segue destination="mbH-FO-pnw" kind="push" identifier="searchArtists" id="6RI-AJ-bkk"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W59-8L-O4c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cLx-s7-Aq7">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.19215686269999999" green="0.19215686269999999" blue="0.19215686269999999" alpha="0.76000000000000001" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="No concerts. Add more artists >">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </objects>
             <point key="canvasLocation" x="2371" y="1425"/>
         </scene>
@@ -762,15 +746,15 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                         <sections>
                             <tableViewSection headerTitle="" id="WDX-Cl-J4X">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="136" id="PVu-Kv-KAq">
-                                        <rect key="frame" x="0.0" y="35" width="320" height="136"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="200" id="PVu-Kv-KAq">
+                                        <rect key="frame" x="0.0" y="35" width="320" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PVu-Kv-KAq" id="c0T-3a-Fdr">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="135"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="199"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mxv-dh-XHl">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="135"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="199"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
@@ -782,14 +766,14 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                             <tableViewSection headerTitle="" id="mAM-uD-hjn">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="xbr-RL-kW2">
-                                        <rect key="frame" x="0.0" y="191" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="255" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xbr-RL-kW2" id="BCV-vs-tTZ">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Concert Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tu2-wo-pqg">
-                                                    <rect key="frame" x="20" y="11" width="240" height="21"/>
+                                                    <rect key="frame" x="20" y="11" width="280" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -804,7 +788,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                             <tableViewSection headerTitle="" id="cZY-Zc-zPD">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="1rN-Yq-8xg">
-                                        <rect key="frame" x="0.0" y="255" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="319" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1rN-Yq-8xg" id="udp-Dc-bjx">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -826,7 +810,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                             <tableViewSection headerTitle="" id="LWv-JR-Dhm">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="Sae-sx-ExF">
-                                        <rect key="frame" x="0.0" y="319" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="383" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Sae-sx-ExF" id="OFu-XY-40G">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -853,8 +837,8 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                     </tableView>
                     <navigationItem key="navigationItem" id="3hw-2u-4NU"/>
                     <connections>
+                        <outlet property="artistImageView" destination="Mxv-dh-XHl" id="deL-jl-yD9"/>
                         <outlet property="concertDateLabel" destination="tu2-wo-pqg" id="WeF-Co-b0T"/>
-                        <outlet property="eventImageView" destination="Mxv-dh-XHl" id="dw9-j9-w7j"/>
                         <segue destination="cpd-fZ-ZId" kind="push" identifier="VenueMapView" id="iEN-GU-oAi"/>
                     </connections>
                 </tableViewController>
@@ -923,10 +907,14 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
     </scenes>
     <resources>
         <image name="menuIcon" width="16" height="16"/>
+        <image name="miles2" width="422" height="760"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="6RI-AJ-bkk"/>
+    </inferredMetricsTieBreakers>
 </document>

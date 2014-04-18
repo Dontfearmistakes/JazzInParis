@@ -21,9 +21,9 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     UIPageControl *pageControl = [UIPageControl appearance];
-    pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-    pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
-    pageControl.backgroundColor = [UIColor whiteColor];
+    pageControl.pageIndicatorTintColor = [UIColor whiteColor];
+    pageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
+    pageControl.backgroundColor = [UIColor blackColor];
     
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -39,6 +39,8 @@
         [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
 
     }];
+
+
     
     return YES;
 }

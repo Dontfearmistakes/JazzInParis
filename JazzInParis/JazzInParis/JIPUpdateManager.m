@@ -66,12 +66,15 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
     for (JIPArtist * artist in self.favoriteArtists)
     {
         NSURL *url = [self songkickURLUpcomingEventsForArtist:artist];
+
         NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                     
                                                     [self insertJIPEventsFromJSON:data error:&error];
+                                                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                                                 }];
         [dataTask resume];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     }
 }
 
@@ -85,8 +88,10 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                     
                                                     [self insertJIPEventsFromJSON:data error:&error];
+                                                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                                                 }];
     [dataTask resume];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
 

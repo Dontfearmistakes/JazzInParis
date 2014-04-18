@@ -23,7 +23,7 @@
 @implementation JIPUpcomingEventsCDTVC
 
 @synthesize event                  = _event;
-
+@synthesize addMoreArtistsButton   = _addMoreArtistsButton;
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,8 +75,36 @@
                                                                             managedObjectContext:[JIPManagedDocument sharedManagedDocument].managedObjectContext
                                                                               sectionNameKeyPath:@"sectionIdentifier"
                                                                                        cacheName:nil];
+
+    if ([[self.fetchedResultsController fetchedObjects] count] == 0)
+    {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 30, 280, 40)];
+        label.text     = @"No concerts yet";
+        label.textColor= [UIColor whiteColor];
+        label.textAlignment = NSTextAlignmentCenter;
+        [self.view addSubview:label];
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [button addTarget:self
+                   action:@selector(segueToSearchArtists)
+         forControlEvents:UIControlEventTouchUpInside];
+        
+        [button setTitle:@"Add more artists" forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+        button.frame = CGRectMake(20.0, 80.0, 280.0, 40.0);
+        button.backgroundColor = Rgb2UIColorWithAlpha(49,49,49,0.7);
+        button.layer.cornerRadius = 8;
+        button.layer.borderWidth = 1;
+        button.layer.borderColor = [UIColor grayColor].CGColor;
+        button.clipsToBounds = YES;
+        [self.view addSubview:button];
+    }
 }
 
+-(void)segueToSearchArtists
+{
+     [self performSegueWithIdentifier:@"searchArtists" sender:nil];
+}
 
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////

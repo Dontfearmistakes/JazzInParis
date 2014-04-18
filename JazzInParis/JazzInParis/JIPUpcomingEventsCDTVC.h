@@ -14,6 +14,7 @@
 
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *searchBarButtonItem;
+@property (strong, nonatomic) IBOutlet UIButton *addMoreArtistsButton;
 
 
 @property (strong, nonatomic) JIPEvent             * event;

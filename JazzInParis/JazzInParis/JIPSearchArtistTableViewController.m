@@ -146,9 +146,17 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSString* searchTerm = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    #warning : BUG if search term contains accents
-    [self searchSongkickArtistForSearchterm:searchTerm];
+    NSString* searchTerm = [[textField.text stringByReplacingOccurrencesOfString:@" " withString:@"+"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    // convert to a data object, using a lossy conversion to ASCII
+    NSData *asciiEncoded = [searchTerm dataUsingEncoding:NSASCIIStringEncoding
+                                            allowLossyConversion:YES];
+    
+    // take the data object and recreate a string using the lossy conversion
+    NSString *searchTerm2 = [[NSString alloc] initWithData:asciiEncoded
+                                            encoding:NSASCIIStringEncoding];
+
+    [self searchSongkickArtistForSearchterm:searchTerm2];
     [textField resignFirstResponder];
     
     return YES;
@@ -220,10 +228,12 @@
                                                 //4) Dans tous les cas, on recharge le TableView
                                                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                                                     [self.tableView reloadData];
+                                                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                                                 }];
                                                 
                                             }];
     [dataTask resume];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
 

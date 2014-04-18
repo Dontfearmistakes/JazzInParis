@@ -23,13 +23,19 @@
 @synthesize favoriteSwitchView = _favoriteSwitchView;
 
 
+
+
 -(void)viewDidLoad
 {
     [super viewDidLoad];
     
+    //Remove space between navBar and 1st cell
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 7){
+        self.tableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0);
+    }
+    
     self.title = _artist.name;
     [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
-    
 }
 
 
@@ -37,6 +43,29 @@
 {
     [super viewWillAppear:animated];
     [_favoriteSwitchView setOn:[_artist.favorite boolValue]];
+
+    //fetching GoogleImage
+    NSURLSession * session    = [NSURLSession sharedSession];
+    NSString* cleanArtistName = [_artist.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%@", cleanArtistName]];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
+                                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                
+                                                NSError      *localError   = nil;
+                                                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
+                                                NSString     * imageId     = parsedObject[@"responseData"][@"results"][0][@"imageId"];
+                                                
+                                                NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://t1.gstatic.com/images?q=tbn:%@",imageId]];
+                                                NSData *myData  = [NSData dataWithContentsOfURL:imageUrl];
+                                                UIImage *googleImage  = [[UIImage alloc] initWithData:myData];
+
+                                                [_artistImageView setImage:googleImage];
+                                                                  
+                                                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                                            }];
+    [dataTask resume];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
 

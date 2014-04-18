@@ -21,7 +21,10 @@
 {
     [super viewDidLoad];
     
-    _pageContents = @[@"Welcome to Dontfearmistakes, the Paris Jazz concerts app !\r\r  Be informed about your favorites artists concerts in Paris and say goodbye to missed concerts !",
+    [[self navigationController] setNavigationBarHidden:YES];
+
+    
+    _pageContents = @[@"Welcome to Dontfearmistakes, the Paris Jazz concerts app !\r\r  Be informed about your favorit artists concerts in Paris and say goodbye to missed concerts !",
                     @"Start by adding your favorite artists from the 'Search Artist' tab.\r\r Then follow their upcoming concerts in the 'All Concerts' tab.",
                     @"Want to stop following an artist ?\r\r Manage your list from the 'Favorite Artist' tab.",
                     @"Enjoy the Paris Jazz scene !"];

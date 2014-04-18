@@ -19,7 +19,7 @@
 
 @implementation JIPEventDetailsTVC
 
-@synthesize eventImageView     = _eventImageView;
+@synthesize artistImageView     = _artistImageView;
 @synthesize concertDateLabel   = _concertDateLabel;
 @synthesize event              = _event;
 @synthesize venue              = _venue;
@@ -27,13 +27,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = _event.name;
-    [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
-    _eventImageView.image = [UIImage imageNamed:@"mathieuchedid"];
-    _concertDateLabel  .text = [NSString stringWithFormat:@"%@ @ %@", [NSDate stringFromDate:_event.date], _event.startTime];
     
-    //FIXME: mettre une condition if(toutes les infos sur ce venue pas déjà dans core data) pour pas refaire le download à chaque fois
-    // Create http request to fetch venue details
+    [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
+    //Remove space between navBar and 1st cell
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 7){
+        self.tableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0);
+    }
+
+    self.title             = _event.name;
+    _concertDateLabel.text = [NSString stringWithFormat:@"%@ @ %@", [NSDate stringFromDate:_event.date], _event.startTime];
+    
+    
+    // Create http request to fetch venue details in prevision of next VC
     NSURLSession * session  = [NSURLSession sharedSession];
     NSURL *url = [[JIPUpdateManager sharedUpdateManager] songkickURLUpcomingEventsForVenueWithId:[NSString stringWithFormat:@"%@", _event.venue.id]];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
@@ -56,14 +61,42 @@
                                                                inManagedObjectContext:managedDocument.managedObjectContext];
                                                  }
                                                  ];
+                                                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                                                 
                                             }];
     
     [dataTask resume];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
 
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    //fetching GoogleImage
+    NSURLSession * session    = [NSURLSession sharedSession];
+    NSString* cleanArtistName = [_event.artist.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%@", cleanArtistName]];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
+                                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                
+                                                NSError      *localError   = nil;
+                                                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
+                                                NSString     * imageId     = parsedObject[@"responseData"][@"results"][0][@"imageId"];
+                                                
+                                                NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://t1.gstatic.com/images?q=tbn:%@",imageId]];
+                                                NSData *myData  = [NSData dataWithContentsOfURL:imageUrl];
+                                                UIImage *googleImage  = [[UIImage alloc] initWithData:myData];
+                                                
+                                                [_artistImageView setImage:googleImage];
+                                                
+                                                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                                            }];
+    [dataTask resume];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+}
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

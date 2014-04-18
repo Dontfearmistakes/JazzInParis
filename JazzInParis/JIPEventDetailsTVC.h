@@ -11,8 +11,8 @@
 
 @interface JIPEventDetailsTVC : UITableViewController
 
-@property (strong, nonatomic) IBOutlet UIImageView *eventImageView;
-@property (strong, nonatomic) IBOutlet UILabel  *concertDateLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *artistImageView;
+@property (strong, nonatomic) IBOutlet UILabel     *concertDateLabel;
 
 @property (strong, nonatomic) JIPEvent    *event;
 @property (strong, nonatomic) JIPVenue    *venue;

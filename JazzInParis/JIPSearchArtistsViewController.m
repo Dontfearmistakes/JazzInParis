@@ -123,7 +123,6 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
 -(void)searchSongkickArtistForSearchterm:(NSString *)searchTerm
 {
 
-    [self.activityIndicator startAnimating];
 
     //1) Create http request
     NSURLSession * session   = [NSURLSession sharedSession];
@@ -163,11 +162,12 @@ const CGFloat JIPSearchArtistSearchBarHeightPercenatge = 0.09;
                                                 //4) Dans tous les cas, on recharge le TableView
                                                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                                                     [self.downTableView reloadData];
-                                                    [self.activityIndicator stopAnimating];
+                                                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                                                 }];
                                                 
                                             }];
     [dataTask resume];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
 
