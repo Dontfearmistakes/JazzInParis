@@ -25,5 +25,27 @@
     [viewController.view sendSubviewToBack:imageView];
 }
 
++(UILabel*)emptyTableViewLabelWithString:(NSString*)string
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 30, 280, 40)];
+    label.text     = string;
+    label.textColor= [UIColor whiteColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    return label;
+}
+
++(UIButton*)emptyTableViewButtonWithString:(NSString*)string
+{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [button setTitle:string forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    button.frame = CGRectMake(20.0, 80.0, 280.0, 40.0);
+    button.backgroundColor = Rgb2UIColorWithAlpha(49,49,49,0.7);
+    button.layer.cornerRadius = 8;
+    button.layer.borderWidth = 1;
+    button.layer.borderColor = [UIColor grayColor].CGColor;
+    button.clipsToBounds = YES;
+    return button;
+}
 
 @end

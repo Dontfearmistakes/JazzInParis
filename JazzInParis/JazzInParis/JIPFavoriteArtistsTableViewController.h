@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JIPArtist.h"
 
-@interface JIPFavoriteArtistsTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate>
+@interface JIPFavoriteArtistsTableViewController : UITableViewController <UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
 
 @property (strong, nonatomic) NSMutableArray       * favoriteArtists;
 @property (strong, nonatomic) NSArray              * filteredFavoriteArtists;

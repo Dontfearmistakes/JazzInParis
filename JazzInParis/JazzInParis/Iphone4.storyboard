@@ -167,7 +167,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eD7-RN-0qA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3224" y="611"/>
+            <point key="canvasLocation" x="3908" y="571"/>
         </scene>
         <!--Favorite Artists Table View Controller - Favorite Artists-->
         <scene sceneID="CrZ-gk-Y0C">
@@ -228,6 +228,8 @@
                         <outlet property="searchBar" destination="LQv-mT-HnT" id="G4W-8S-0Ds"/>
                         <outlet property="searchBarButtonItem" destination="ti0-fj-dt1" id="Unf-4t-Zhg"/>
                         <outlet property="searchDisplayController" destination="OaB-JC-ypU" id="iD6-Hl-wHc"/>
+                        <segue destination="3N1-EL-i97" kind="push" identifier="artistDetails" id="93o-04-vje"/>
+                        <segue destination="mbH-FO-pnw" kind="push" identifier="searchArtists" id="KJD-30-6ps"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KPh-ZL-SNU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -697,7 +699,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k2D-oz-ThH" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3725" y="275"/>
+            <point key="canvasLocation" x="4501" y="591"/>
         </scene>
         <!--Web Video View Controller-->
         <scene sceneID="GMe-Cz-5Jd">
@@ -733,7 +735,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MNc-vL-GF3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4158" y="275"/>
+            <point key="canvasLocation" x="4962" y="591"/>
         </scene>
         <!--Event DetailsTVC-->
         <scene sceneID="tx9-JQ-Ks5">
@@ -915,6 +917,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="6RI-AJ-bkk"/>
+        <segue reference="93o-04-vje"/>
+        <segue reference="KJD-30-6ps"/>
     </inferredMetricsTieBreakers>
 </document>

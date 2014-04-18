@@ -78,25 +78,13 @@
 
     if ([[self.fetchedResultsController fetchedObjects] count] == 0)
     {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 30, 280, 40)];
-        label.text     = @"No concerts yet";
-        label.textColor= [UIColor whiteColor];
-        label.textAlignment = NSTextAlignmentCenter;
+        UILabel *label = [JIPDesign emptyTableViewLabelWithString:@"No upcoming concerts yet..."];
         [self.view addSubview:label];
         
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        UIButton *button = [JIPDesign emptyTableViewButtonWithString:@"Add more artists"];;
         [button addTarget:self
                    action:@selector(segueToSearchArtists)
          forControlEvents:UIControlEventTouchUpInside];
-        
-        [button setTitle:@"Add more artists" forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont boldSystemFontOfSize:20];
-        button.frame = CGRectMake(20.0, 80.0, 280.0, 40.0);
-        button.backgroundColor = Rgb2UIColorWithAlpha(49,49,49,0.7);
-        button.layer.cornerRadius = 8;
-        button.layer.borderWidth = 1;
-        button.layer.borderColor = [UIColor grayColor].CGColor;
-        button.clipsToBounds = YES;
         [self.view addSubview:button];
     }
 }

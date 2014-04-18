@@ -13,6 +13,7 @@
 #import "SideMenuViewController.h"
 #import "JIPArtist.h"
 #import "JIPUpdateManager.h"
+#import "JIPArtistDetailVC.h"
 
 
 @interface JIPFavoriteArtistsTableViewController ()
@@ -44,6 +45,8 @@
     [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
 }
 
+
+
 ////////////////////////////////////
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -55,10 +58,23 @@
     {
         [self.searchBar setHidden:YES];
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        
+        UILabel *label = [JIPDesign emptyTableViewLabelWithString:@"No favorite artists yet..."];
+        [self.view addSubview:label];
+        
+        UIButton *button = [JIPDesign emptyTableViewButtonWithString:@"Add more artists"];
+        [button addTarget:self
+                   action:@selector(segueToSearchArtists)
+         forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:button];
     }
     
-    #warning : is this line useful ?
-    //[self.tableView reloadData];
+    [self.tableView reloadData];
+}
+
+-(void)segueToSearchArtists
+{
+    [self performSegueWithIdentifier:@"searchArtists" sender:nil];
 }
 
 
@@ -75,15 +91,6 @@
 
 
 
-//called whenever a character is put in searchBar
-//here we want want to keep miles.png as a background image when searchBar is used
-- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
-{
-    controller.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    controller.searchResultsTableView.backgroundColor = [UIColor clearColor];
-    [JIPDesign applyBackgroundWallpaperInTableView:controller.searchResultsTableView];
-    
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,6 +138,22 @@
 }
 
 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    _artist = _favoriteArtists[indexPath.row];
+    [self performSegueWithIdentifier:@"artistDetails" sender:nil];
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"artistDetails"])
+    {
+        JIPArtistDetailVC * artistDetailsVC  = [segue destinationViewController];
+        artistDetailsVC.artist = _artist;
+    }
+}
+
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
@@ -138,18 +161,24 @@
 }
 
 
+
+
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
         // Delete the row from the data source
         [self removeFromFavorites:indexPath];
         [_favoriteArtists removeObject:_favoriteArtists[indexPath.row]];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        
     }
 
 }
+
+
+
 
 - (void)removeFromFavorites:(NSIndexPath *)ip
 {
@@ -161,6 +190,9 @@
     //2) On efface les Events liés à cet artiste
     [[JIPUpdateManager sharedUpdateManager] clearArtistEvents:artist];
 }
+
+
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -206,6 +238,24 @@
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchText];
     
    _filteredFavoriteArtists = [_favoriteArtists filteredArrayUsingPredicate:resultPredicate];
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UISearchDisplayDelegate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//called whenever a character is put in searchBar
+- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
+{
+    controller.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    controller.searchResultsTableView.backgroundColor = [UIColor clearColor];
+    //here we want want to keep miles.png as a background image when searchBar is used
+    [JIPDesign applyBackgroundWallpaperInTableView:controller.searchResultsTableView];
+    
 }
 
 @end
