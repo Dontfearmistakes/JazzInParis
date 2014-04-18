@@ -27,6 +27,7 @@
 @synthesize filteredFavoriteArtists = _filteredFavoriteArtists;
 @synthesize favoriteArtists         = _favoriteArtists;
 @synthesize artist                  = _artist;
+@synthesize editBarButton           = _editBarButton;
 
 ////////////////////////////////////////////////
 //method for every rootVC / implements side menu
@@ -58,18 +59,23 @@
     {
         [self.searchBar setHidden:YES];
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
-        
-        UILabel *label = [JIPDesign emptyTableViewLabelWithString:@"No favorite artists yet..."];
-        [self.view addSubview:label];
-        
-        UIButton *button = [JIPDesign emptyTableViewButtonWithString:@"Add more artists"];
-        [button addTarget:self
-                   action:@selector(segueToSearchArtists)
-         forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:button];
+
+        [self buttonIfNoFavoritesYet];
     }
     
     [self.tableView reloadData];
+}
+
+-(void)buttonIfNoFavoritesYet
+{
+    UILabel *label = [JIPDesign emptyTableViewLabelWithString:@"No favorite artists yet..."];
+    [self.view addSubview:label];
+    
+    UIButton *button = [JIPDesign emptyTableViewButtonWithString:@"Add more artists"];
+    [button addTarget:self
+               action:@selector(segueToSearchArtists)
+     forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
 }
 
 -(void)segueToSearchArtists
@@ -162,6 +168,30 @@
 
 
 
+- (IBAction)editBarButtonClick:(id)sender {
+    
+    if ([self isEditing])
+    {
+        // If the tableView is already in edit mode, turn it off.
+        // Also change the title of the button to reflect the intended verb (‘Edit’, in this case).
+        [self setEditing:NO animated:YES];
+        [_editBarButton setTitle:@"Edit"];
+        
+        if ([_favoriteArtists count] == 0)
+        {
+            [self.searchBar setHidden:YES];
+            [self.navigationItem.rightBarButtonItem setEnabled:NO];
+            [self buttonIfNoFavoritesYet];
+        }
+    }
+    else
+    {
+        [_editBarButton setTitle:@"Done"];
+        // Turn on edit mode
+        [self setEditing:YES animated:YES];
+    }
+}
+
 
 
 // Override to support editing the table view.
@@ -206,13 +236,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-///////////////////////////////////////////////////////////////////////////
-// Click on top left bar button (loupe) --> searBar becomes first responder
-- (IBAction)searchBarButtonItemClick:(id)sender
-{
-    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-    [self.searchBar becomeFirstResponder];
-}
 
 
 ////////////////////////////////////////////////////////////

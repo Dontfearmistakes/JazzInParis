@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JIPArtist.h"
 
-@interface JIPFavoriteArtistsTableViewController : UITableViewController <UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
+@interface JIPFavoriteArtistsTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate>
 
 @property (strong, nonatomic) NSMutableArray       * favoriteArtists;
 @property (strong, nonatomic) NSArray              * filteredFavoriteArtists;
@@ -17,8 +17,9 @@
 @property (strong, nonatomic) JIPArtist            * artist;
 
 @property (strong, nonatomic) IBOutlet UISearchBar * searchBar;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *searchBarButtonItem;
-- (IBAction)searchBarButtonItemClick:(id)sender;
+
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *editBarButton;
+- (IBAction)editBarButtonClick:(id)sender;
 
 
 @end

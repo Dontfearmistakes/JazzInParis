@@ -68,7 +68,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3hv-Ko-KOL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2697" y="611"/>
+            <point key="canvasLocation" x="3197" y="543"/>
         </scene>
         <!--Artist DetailsTVC-->
         <scene sceneID="L7H-8m-fVq">
@@ -217,16 +217,16 @@
                                 <action selector="revealMenu:" destination="5tH-iU-sPP" id="X6F-bL-hfa"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="ti0-fj-dt1">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="ti0-fj-dt1">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="searchBarButtonItemClick:" destination="5tH-iU-sPP" id="Hgr-eA-8KB"/>
+                                <action selector="editBarButtonClick:" destination="5tH-iU-sPP" id="agR-Om-j8Y"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="editBarButton" destination="ti0-fj-dt1" id="FLH-v8-zxb"/>
                         <outlet property="searchBar" destination="LQv-mT-HnT" id="G4W-8S-0Ds"/>
-                        <outlet property="searchBarButtonItem" destination="ti0-fj-dt1" id="Unf-4t-Zhg"/>
                         <outlet property="searchDisplayController" destination="OaB-JC-ypU" id="iD6-Hl-wHc"/>
                         <segue destination="3N1-EL-i97" kind="push" identifier="artistDetails" id="93o-04-vje"/>
                         <segue destination="mbH-FO-pnw" kind="push" identifier="searchArtists" id="KJD-30-6ps"/>
