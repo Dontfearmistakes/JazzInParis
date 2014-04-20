@@ -401,6 +401,25 @@
                                         <color key="backgroundColor" red="0.19095004560000001" green="0.19297445260000001" blue="0.19331660580000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="wWD-wF-hUo">
+                                        <rect key="frame" x="0.0" y="176" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wWD-wF-hUo" id="lT0-R2-KJh">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Paris Jazz Clubs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xne-sB-efQ">
+                                                    <rect key="frame" x="20" y="11" width="129" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.19095004560000001" green="0.19297445260000001" blue="0.19331660580000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -670,6 +689,44 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
             </objects>
             <point key="canvasLocation" x="1945" y="1409"/>
         </scene>
+        <!--Jazz Clubs MapVC-->
+        <scene sceneID="Crh-fu-evW">
+            <objects>
+                <viewController id="ixu-SN-aI4" customClass="JIPJazzClubsMapVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0Pl-D3-oRj"/>
+                        <viewControllerLayoutGuide type="bottom" id="LuJ-aq-bm2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Vw9-Sh-UBr">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g6c-rA-gcg">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="ixu-SN-aI4" id="VYi-3e-AUz"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="gb5-pf-Cmd">
+                        <barButtonItem key="leftBarButtonItem" image="menuIcon" id="N0O-nN-gcq">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="revealMenu:" destination="ixu-SN-aI4" id="Bcs-Ge-MW3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="allJazzClubsMap" destination="g6c-rA-gcg" id="C39-lz-oWW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vrg-MP-UuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2459" y="2179"/>
+        </scene>
         <!--You TubeVC - YouTube search-->
         <scene sceneID="Zea-Hj-5XF">
             <objects>
@@ -908,6 +965,25 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DU6-Oa-zLr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="41" y="1375"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="a9D-lY-NYw">
+            <objects>
+                <navigationController storyboardIdentifier="Paris Jazz Clubs" automaticallyAdjustsScrollViewInsets="NO" id="DLS-wY-FA8" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="0pb-bK-pvf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ixu-SN-aI4" kind="relationship" relationship="rootViewController" id="Zpa-Fh-4AR"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6g7-4X-HvB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1933" y="2179"/>
         </scene>
     </scenes>
     <resources>

@@ -28,7 +28,7 @@
 @property (strong, nonatomic) NSString *websiteString;
 @property (strong, nonatomic) NSNumber *capacity;
 
-//TO MANY RELATIONSHIP TO BE STORED
+//TO-MANY RELATIONSHIPS TO BE STORED
 @property (nonatomic, retain) NSSet *events;
 
 //NOT TO BE STORED

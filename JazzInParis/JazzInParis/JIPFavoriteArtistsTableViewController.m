@@ -10,7 +10,6 @@
 #import "JIPManagedDocument.h"
 #import "JIPFavoriteArtistsTableViewController.h"
 #import "ECSlidingViewController.h"
-#import "SideMenuViewController.h"
 #import "JIPArtist.h"
 #import "JIPUpdateManager.h"
 #import "JIPArtistDetailVC.h"

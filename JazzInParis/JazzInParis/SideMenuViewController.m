@@ -68,12 +68,15 @@
     {
         [self goTo:@"Favorite Artists"];
     }
+    else if (indexPath.row == 3)
+    {
+        [self goTo:@"Paris Jazz Clubs"];
+    }
 }
 
 
 -(void)goTo:(NSString*)page
 {
-    
     UIViewController *newTopViewController = [self.storyboard instantiateViewControllerWithIdentifier:page];
     
     [self.slidingViewController anchorTopViewOffScreenTo:ECRight

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5008E04718DC992F00530542 /* JIPSearchArtistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5008E04618DC992F00530542 /* JIPSearchArtistsViewController.m */; };
+		5012E5E019045A66002EA140 /* JIPJazzClubsMapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5012E5DF19045A66002EA140 /* JIPJazzClubsMapVC.m */; };
 		5015AAAE18A159ED000A7625 /* JIPConcertDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */; };
 		501FB96118D1BFCE00845256 /* JIPManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 501FB96018D1BFCE00845256 /* JIPManagedDocument.m */; };
 		5029345518FD5B2A009A4F2F /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5029343118FD5B29009A4F2F /* AFHTTPRequestOperation.m */; };
@@ -127,6 +128,8 @@
 /* Begin PBXFileReference section */
 		5008E04518DC992F00530542 /* JIPSearchArtistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JIPSearchArtistsViewController.h; path = ../JIPSearchArtistsViewController.h; sourceTree = "<group>"; };
 		5008E04618DC992F00530542 /* JIPSearchArtistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JIPSearchArtistsViewController.m; path = ../JIPSearchArtistsViewController.m; sourceTree = "<group>"; };
+		5012E5DE19045A66002EA140 /* JIPJazzClubsMapVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPJazzClubsMapVC.h; sourceTree = "<group>"; };
+		5012E5DF19045A66002EA140 /* JIPJazzClubsMapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPJazzClubsMapVC.m; sourceTree = "<group>"; };
 		5015AAAC18A159ED000A7625 /* JIPConcertDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPConcertDetailsViewController.h; sourceTree = "<group>"; };
 		5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPConcertDetailsViewController.m; sourceTree = "<group>"; };
 		501FB95F18D1BFCE00845256 /* JIPManagedDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPManagedDocument.h; sourceTree = "<group>"; };
@@ -359,6 +362,8 @@
 		5008E04818DC995F00530542 /* RootVCs */ = {
 			isa = PBXGroup;
 			children = (
+				5012E5DE19045A66002EA140 /* JIPJazzClubsMapVC.h */,
+				5012E5DF19045A66002EA140 /* JIPJazzClubsMapVC.m */,
 				50FA943418F2F5EB008A761D /* FavoriteArtists */,
 				50C9C47F18EF0A1500F2E67C /* UpComingEvents */,
 				50C9C47E18EF0A0600F2E67C /* Search Artist */,
@@ -1022,6 +1027,7 @@
 				50E7988F18F57A87002B8D3E /* JIPVenueMapVC.m in Sources */,
 				50916F3918F81AC1006D5C26 /* MediaThumbnail.m in Sources */,
 				50916F5A18F821F8006D5C26 /* JIPArtistDetailVC.m in Sources */,
+				5012E5E019045A66002EA140 /* JIPJazzClubsMapVC.m in Sources */,
 				5029346018FD5B2A009A4F2F /* UIAlertView+AFNetworking.m in Sources */,
 				50916F4618F81AC1006D5C26 /* MGMushParser.m in Sources */,
 				5029346218FD5B2A009A4F2F /* UIImageView+AFNetworking.m in Sources */,

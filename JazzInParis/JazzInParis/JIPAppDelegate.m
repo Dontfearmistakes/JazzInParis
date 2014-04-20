@@ -13,6 +13,7 @@
 #import "JIPSearchArtistsViewController.h"
 #import "JIPUpdateManager.h"
 #import "JIPManagedDocument.h"
+#import "JIPVenue+Create.h"
 
 @implementation JIPAppDelegate
 
@@ -20,6 +21,7 @@
 {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
+    //Configure PageController
     UIPageControl *pageControl = [UIPageControl appearance];
     pageControl.pageIndicatorTintColor = [UIColor whiteColor];
     pageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
@@ -35,11 +37,31 @@
     
     [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
 
-        [[JIPUpdateManager sharedUpdateManager] clearOldEvents];
-        [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
+        NSMutableArray *allJazzClubsInParis = [[NSMutableArray alloc]init];
+        
+        NSMutableDictionary *baiserSaleDict = [[NSMutableDictionary alloc] init];
+        baiserSaleDict[@"id"]        = @(-1);
+        baiserSaleDict[@"name"]      = @"Baiser Salé";
+        baiserSaleDict[@"city"]      = @"Paris";
+        baiserSaleDict[@"street"]    = @"58, rue des Lombards";
+        baiserSaleDict[@"phone"]     = @"+33 1 42 33 37 71";
+        baiserSaleDict[@"website"]   = @"http://www.lebaisersale.com";
+        baiserSaleDict[@"latitude"]  = @"48.859722222222224";
+        baiserSaleDict[@"longitude"] = @"2.348055555555556";
+        
+        [allJazzClubsInParis addObject:baiserSaleDict];
+        
+        for (NSMutableDictionary * jazzClubDict in allJazzClubsInParis)
+        {
+            [JIPVenue venueWithDict:jazzClubDict inManagedObjectContext:managedDocument.managedObjectContext];
+        }
+        
+        
 
     }];
 
+    [[JIPUpdateManager sharedUpdateManager] clearOldEvents];
+    [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
 
     
     return YES;
