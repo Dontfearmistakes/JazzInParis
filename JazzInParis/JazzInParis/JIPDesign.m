@@ -18,13 +18,11 @@
 }
 
 
-+(void)applyBackgroundWallpaperInViewController:(UIViewController*)viewController
-{
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"milesDavisInitial.png"]];
-    [viewController.view addSubview:imageView];
-    [viewController.view sendSubviewToBack:imageView];
-}
 
+
+//////////////////////////////////////////////////////////////////
+// To show in case no upcoming concerts or no favorite artist
+//////////////////////////////////////////////////////////////////
 +(UILabel*)emptyTableViewLabelWithString:(NSString*)string
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 30, 280, 40)];
@@ -34,9 +32,10 @@
     return label;
 }
 
+
 +(UIButton*)emptyTableViewButtonWithString:(NSString*)string
 {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:string forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     button.frame = CGRectMake(20.0, 80.0, 280.0, 40.0);
@@ -47,5 +46,9 @@
     button.clipsToBounds = YES;
     return button;
 }
+
+
+
+//////////////////////////////////////////////////////////////////
 
 @end

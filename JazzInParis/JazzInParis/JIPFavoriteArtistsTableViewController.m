@@ -59,14 +59,28 @@
     {
         [self.searchBar setHidden:YES];
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
-
-        [self buttonIfNoFavoritesYet];
+        [self addLabelAndButtonIfNoFavorites];
     }
     
     [self.tableView reloadData];
 }
 
--(void)buttonIfNoFavoritesYet
+
+
+
+-(void)fetchfavoriteArtist
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
+    request.predicate       = [NSPredicate predicateWithFormat:@"favorite == %@", @YES];
+    
+    NSError *error = nil;
+    _favoriteArtists = [[[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+}
+
+
+////////////////////////////////////To show if tableView is empty
+-(void)addLabelAndButtonIfNoFavorites
 {
     UILabel *label = [JIPDesign emptyTableViewLabelWithString:@"No favorite artists yet..."];
     [self.view addSubview:label];
@@ -82,19 +96,6 @@
 {
     [self performSegueWithIdentifier:@"searchArtists" sender:nil];
 }
-
-
-
--(void)fetchfavoriteArtist
-{
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
-    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
-    request.predicate       = [NSPredicate predicateWithFormat:@"favorite == %@", @YES];
-    
-    NSError *error = nil;
-    _favoriteArtists = [[[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-}
-
 
 
 
@@ -160,11 +161,6 @@
 }
 
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
 
 
 
@@ -181,7 +177,7 @@
         {
             [self.searchBar setHidden:YES];
             [self.navigationItem.rightBarButtonItem setEnabled:NO];
-            [self buttonIfNoFavoritesYet];
+            [self addLabelAndButtonIfNoFavorites];
         }
     }
     else
@@ -199,13 +195,36 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        // Delete the row from the data source
+        // Delete the row from the view and from core data
         [self removeFromFavorites:indexPath];
         [_favoriteArtists removeObject:_favoriteArtists[indexPath.row]];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        //If we are removing the last artist
+        if ([_favoriteArtists count] == 0)
+        {
+            [self.searchBar setHidden:YES];
+            [self.navigationItem.rightBarButtonItem setEnabled:NO];
+            [self performSelector:@selector(addLabelAndButtonIfNoFavorites) withObject:nil afterDelay:0.5];
+            //[self addLabelAndButtonIfNoFavorites];
+        }
     }
 
 }
+
+
+
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //Remove possibility to swipe-to-delete an artist when in search mode
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        return UITableViewCellEditingStyleNone;
+    }
+    return UITableViewCellEditingStyleDelete;
+}
+
 
 
 
@@ -229,6 +248,9 @@
         return 60;
 }
 
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UISearchBarDelegate
@@ -238,12 +260,14 @@
 
 
 
-////////////////////////////////////////////////////////////
+
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     #warning : this method is never called ...
     [self.searchDisplayController setActive:NO animated:YES];
 }
+
+
 
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
@@ -254,7 +278,9 @@
 }
 
 
-////////////////////////////////////////////////////////
+
+
+
 - (void)filterContentForSearchText:(NSString*)searchText
                              scope:(NSString*)scope
 {

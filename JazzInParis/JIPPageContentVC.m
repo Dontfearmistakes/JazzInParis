@@ -18,33 +18,26 @@
 
 @synthesize initialTextView = _initialTextView;
 @synthesize contentText     = _contentText;
+@synthesize finishWelcomePageControllerButton = _finishWelcomePageControllerButton;
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    [JIPDesign applyBackgroundWallpaperInViewController:self];
     
     
-    //[_initialTextView.layer setBorderWidth: 10.0];
-    //[_initialTextView.layer setBorderColor:[Rgb2UIColorWithAlpha(49, 49, 49, 0.7) CGColor]];
+
     _initialTextView.layer.cornerRadius = 10.0f;
 
     [_initialTextView setText:_contentText];
     
-//    CGSize textSize = { 260.0, 10000.0 };
-//    //retourne width and height de mon bloc de text en fonction de la police
-//    CGSize size = [_initialTextView.text sizeWithFont:[UIFont systemFontOfSize:14]
-//                                    constrainedToSize:textSize
-//                                        lineBreakMode:NSLineBreakByWordWrapping];
-//    
-//    [_initialTextView setFrame:CGRectMake(padding, padding+5, size.width, size.height+padding)];
-//    [_initialTextView sizeToFit];
+
     
     if (self.pageIndex == 3)
     {
-        [self.finishWelcomePageControllerButton setHidden:NO];
+        _finishWelcomePageControllerButton.layer.cornerRadius = 10.0f;
+        [_finishWelcomePageControllerButton setHidden:NO];
     }
 }
 
