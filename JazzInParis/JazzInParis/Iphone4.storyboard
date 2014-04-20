@@ -721,6 +721,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                     </navigationItem>
                     <connections>
                         <outlet property="allJazzClubsMap" destination="g6c-rA-gcg" id="C39-lz-oWW"/>
+                        <segue destination="cpd-fZ-ZId" kind="push" identifier="toVenueDetails" id="DPf-Pt-Q4V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vrg-MP-UuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -908,6 +909,44 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
             </objects>
             <point key="canvasLocation" x="2732" y="1417"/>
         </scene>
+        <!--Jazz Clubs MapVC-->
+        <scene sceneID="byC-vH-jyv">
+            <objects>
+                <viewController id="ann-bC-rUB" customClass="JIPJazzClubsMapVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="79n-SB-WuW"/>
+                        <viewControllerLayoutGuide type="bottom" id="gK8-r3-ZMg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1vE-u7-6OH">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5uK-Z5-A4V">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="ann-bC-rUB" id="EkY-8Z-fBQ"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="mwI-ef-D88">
+                        <barButtonItem key="leftBarButtonItem" image="menuIcon" id="VZr-BM-pBR">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="revealMenu:" destination="ann-bC-rUB" id="whd-Yp-Fca"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="allJazzClubsMap" destination="5uK-Z5-A4V" id="BEH-d6-HBo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D5p-3F-qLE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2459" y="2179"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Jgi-0p-q5h">
             <objects>
@@ -998,5 +1037,6 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
     <inferredMetricsTieBreakers>
         <segue reference="93o-04-vje"/>
         <segue reference="KJD-30-6ps"/>
+        <segue reference="DPf-Pt-Q4V"/>
     </inferredMetricsTieBreakers>
 </document>

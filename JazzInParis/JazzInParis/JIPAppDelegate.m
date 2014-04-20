@@ -40,14 +40,14 @@
         NSMutableArray *allJazzClubsInParis = [[NSMutableArray alloc]init];
         
         NSMutableDictionary *baiserSaleDict = [[NSMutableDictionary alloc] init];
-        baiserSaleDict[@"id"]        = @(-1);
-        baiserSaleDict[@"name"]      = @"Baiser Salé";
-        baiserSaleDict[@"city"]      = @"Paris";
-        baiserSaleDict[@"street"]    = @"58, rue des Lombards";
-        baiserSaleDict[@"phone"]     = @"+33 1 42 33 37 71";
-        baiserSaleDict[@"website"]   = @"http://www.lebaisersale.com";
-        baiserSaleDict[@"latitude"]  = @"48.859722222222224";
-        baiserSaleDict[@"longitude"] = @"2.348055555555556";
+        baiserSaleDict[@"id"]              = @(-1);
+        baiserSaleDict[@"name"]            = @"Baiser Salé";
+        baiserSaleDict[@"city"]            = @"Paris";
+        baiserSaleDict[@"street"]          = @"58, rue des Lombards";
+        baiserSaleDict[@"phone"]           = @"+33 1 42 33 37 71";
+        baiserSaleDict[@"websiteString"]   = @"http://www.lebaisersale.com";
+        baiserSaleDict[@"lat"]             = @"48.859722222222224";
+        baiserSaleDict[@"long"]            = @"2.348055555555556";
         
         [allJazzClubsInParis addObject:baiserSaleDict];
         

@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "JIPVenue.h"
 
 @interface JIPJazzClubsMapVC : UIViewController <MKMapViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *allJazzClubsMap;
 @property (strong, nonatomic) NSArray *jazzClubsArray;
+@property (strong, nonatomic) JIPVenue *venue;
 @end

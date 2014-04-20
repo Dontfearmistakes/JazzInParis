@@ -10,7 +10,7 @@
 #import "JIPVenue+Create.h"
 #import "JIPManagedDocument.h"
 #import "ECSlidingViewController.h"
-
+#import "JIPVenueMapVC.h"
 
 @interface JIPJazzClubsMapVC ()
 
@@ -20,6 +20,7 @@
 
 @synthesize allJazzClubsMap = _allJazzClubsMap;
 @synthesize jazzClubsArray  = _jazzClubsArray;
+@synthesize venue           = _venue;
 
 ////////////////////////////////////////////////
 //method for every rootVC / implements side menu
@@ -50,9 +51,7 @@
     MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(parisCenterCoordinate, regionWidth, regionHeight);
     [_allJazzClubsMap setRegion:startRegion
                     animated:YES];
-    
-    //CENTRER SUR LE VENUE ET TRACK USER
-    _allJazzClubsMap.showsUserLocation = YES;
+
     
     [_allJazzClubsMap addAnnotations:_jazzClubsArray];
     
@@ -72,13 +71,31 @@
     MKAnnotationView *view = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
     
     view.canShowCallout = YES;
-    view.image = [UIImage imageNamed:@"Venue"];
-    
-    UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    view.rightCalloutAccessoryView = disclosureButton;
+    view.image = [UIImage imageNamed:@"jazzClubIcon"];
+    view.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];;
     
     return view;
 }
+
+
+
+
+-(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+    _venue = view.annotation;
+    [self performSegueWithIdentifier:@"toVenueDetails" sender:nil];
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"toVenueDetails"])
+    {
+        JIPVenueMapVC * venueMapVC  = [segue destinationViewController];
+        [venueMapVC setVenue:_venue];
+    }
+}
+
 
 -(void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
