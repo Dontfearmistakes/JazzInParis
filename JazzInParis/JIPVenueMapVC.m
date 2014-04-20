@@ -60,7 +60,7 @@
     self.event.shouldDisplayDistanceFromUserToEvent = NO;
     
     //ADD ANNOTATION
-    [_mapView addAnnotation:_event];
+    [_mapView addAnnotation:_venue];
 }
 
 
@@ -80,7 +80,7 @@
 ////////////////////////////////////////////////////
 -(void)viewDidAppear:(BOOL)animated
 {
-    [_mapView selectAnnotation:self.event animated:YES];
+    [_mapView selectAnnotation:_venue animated:YES];
 }
 
 
