@@ -33,10 +33,10 @@
 
 
 
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
     
-    [super viewDidLoad];
+    [super viewWillAppear:YES];
     self.title = @"Jazz Clubs in Paris";
 
     ////////////////////////////////////////////FETCH JAZZ CLUBS IN CORE DATA
@@ -87,6 +87,7 @@
             //PASS distanceFromUserLocationToEvent to adhoc event @property to display it
             //as subtitle of the annotation (called by -viewForAnnotation below)
             jazzClub.shouldDisplayDistanceFromUserToVenue = YES;
+            _venue = jazzClub;
             jazzClub.distanceFromUserToVenue = [self distanceFromUserLocationToEvent];
         }
     }
@@ -126,10 +127,11 @@
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
     //We want to display UserLocation as classic blue dot, not custom
-    if([annotation isKindOfClass:[MKUserLocation class]]) {return nil;}
+    if([annotation isKindOfClass:[MKUserLocation class]])
+    
+        return nil;
     
     MKAnnotationView *view = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
-
     
     view.canShowCallout = YES;
     view.image = [UIImage imageNamed:@"jazzClubIcon"];
@@ -162,10 +164,18 @@
 {
     for (MKAnnotationView *annView in views)
     {
-        CGRect endFrame = annView.frame;
-        annView.frame = CGRectOffset(endFrame, 0, -500);
-        [UIView animateWithDuration:0.5
-                         animations:^{ annView.frame = endFrame; }];
+        #warning try to exclude userLocation blue dot from animation
+        if([annView isKindOfClass:[MKUserLocation class]])
+        {
+            
+        }
+        else
+        {
+            CGRect endFrame = annView.frame;
+            annView.frame = CGRectOffset(endFrame, 0, -500);
+            [UIView animateWithDuration:0.5
+                             animations:^{ annView.frame = endFrame; }];            
+        }
     }
 }
 

@@ -24,21 +24,26 @@
 @synthesize event              = _event;
 @synthesize venue              = _venue;
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    //BackgroundImage
     [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
+    
     //Remove space between navBar and 1st cell
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 7){
         self.tableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0);
     }
 
+    //Labels
     self.title             = _event.name;
     _concertDateLabel.text = [NSString stringWithFormat:@"%@ @ %@", [NSDate stringFromDate:_event.date], _event.startTime];
     
     
-    // Create http request to fetch venue details in prevision of next VC
+    // Fetch venue details in prevision of next VC
     NSURLSession * session  = [NSURLSession sharedSession];
     NSURL *url = [[JIPUpdateManager sharedUpdateManager] songkickURLUpcomingEventsForVenueWithId:[NSString stringWithFormat:@"%@", _event.venue.id]];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
@@ -48,8 +53,7 @@
                                                 NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
                                                 NSDictionary *dictionnaryOfVenue = parsedObject[@"resultsPage"][@"results"][@"venue"];
                                                 
-                                                [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
-                                                 {
+                                               
                                                      _venue = [JIPVenue venueWithDict:@{    @"id"            : dictionnaryOfVenue[@"id"],
                                                                                             @"street"        : dictionnaryOfVenue[@"street"],
                                                                                             @"capacity"      : dictionnaryOfVenue[@"capacity"],
@@ -57,10 +61,10 @@
                                                                                             @"phone"         : dictionnaryOfVenue[@"phone"],
                                                                                             @"websiteString" : dictionnaryOfVenue[@"website"],
                                                                                             @"city"          : dictionnaryOfVenue[@"city"][@"displayName"]
-                                                                                            }
-                                                               inManagedObjectContext:managedDocument.managedObjectContext];
-                                                 }
-                                                 ];
+                                                                                        }
+                                                               inManagedObjectContext:[JIPManagedDocument sharedManagedDocument].managedObjectContext];
+                                                
+                                                
                                                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                                                 
                                             }];
@@ -68,6 +72,8 @@
     [dataTask resume];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
+
+
 
 
 -(void)viewWillAppear:(BOOL)animated
@@ -99,13 +105,16 @@
 }
 
 
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //VenueMap
     if (indexPath.section == 2)
     {
         [self performSegueWithIdentifier:@"VenueMapView" sender:nil];
     }
-    
+    //Songkick.com
     if (indexPath.section == 3)
     {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.event.uriString]];
