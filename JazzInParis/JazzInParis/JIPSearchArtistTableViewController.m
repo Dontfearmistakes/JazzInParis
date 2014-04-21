@@ -110,11 +110,7 @@
     _artistDict[@"id"]          = self.artistsDictionnaries[indexPath.row][@"id"]           ;
     _artistDict[@"songkickUri"] = self.artistsDictionnaries[indexPath.row][@"uri"]          ;
     
-    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
-     {
-         _managedDocument = managedDocument;
-         [self performSegueWithIdentifier:@"ArtistDetails" sender:nil];
-     }];
+    [self performSegueWithIdentifier:@"ArtistDetails" sender:nil];
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -129,7 +125,7 @@
     {
         JIPArtistDetailsTVC *artistDetailsTVC = [segue destinationViewController];
         artistDetailsTVC.artist = [JIPArtist artistWithDict:_artistDict
-                                    inManagedObjectContext:_managedDocument.managedObjectContext];
+                                     inManagedObjectContext:[JIPManagedDocument sharedManagedDocument].managedObjectContext];
     }
 }
 
