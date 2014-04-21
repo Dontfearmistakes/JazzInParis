@@ -10,6 +10,7 @@
 #import "JIPUpdateManager.h"
 #import "YouTubeVC.h"
 #import "WikipediaHelper.h"
+#import "AFNetworking/AFHTTPRequestOperation.h"
 
 @interface JIPArtistDetailsTVC ()
 
@@ -43,28 +44,48 @@
 {
     [super viewWillAppear:animated];
     [_favoriteSwitchView setOn:[_artist.favorite boolValue]];
-
-    //fetching GoogleImage
-    NSURLSession * session    = [NSURLSession sharedSession];
     NSString* cleanArtistName = [_artist.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%@", cleanArtistName]];
-    
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
-                                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                
-                                                NSError      *localError   = nil;
-                                                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
-                                                NSString     * imageId     = parsedObject[@"responseData"][@"results"][0][@"imageId"];
-                                                
-                                                NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://t1.gstatic.com/images?q=tbn:%@",imageId]];
-                                                NSData *myData  = [NSData dataWithContentsOfURL:imageUrl];
-                                                UIImage *googleImage  = [[UIImage alloc] initWithData:myData];
 
-                                                [_artistImageView setImage:googleImage];
-                                                                  
-                                                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                                            }];
-    [dataTask resume];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%@", cleanArtistName]]];
+    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    op.responseSerializer = [AFJSONResponseSerializer serializer];
+    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        
+       // v
+        
+        NSString *imageId = [[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"imageId"]];
+         NSInteger imageWitdh = [[[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"width"]] integerValue];
+        NSInteger imageHeight = [[[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"height"]] integerValue];
+
+        //NSLog(@"IMG ID : [%@] [%@]",imageHeight, imageWitdh);
+        
+        NSURLRequest *requestImg = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://t1.gstatic.com/images?q=tbn:%@",imageId]]];
+
+        
+        AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:requestImg];
+        requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
+        [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"Response: %@", responseObject);
+            _artistImageView.image = responseObject;
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Image error: %@", error);
+        }];
+        [requestOperation start];
+        
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    [op start];
+    
+    
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
