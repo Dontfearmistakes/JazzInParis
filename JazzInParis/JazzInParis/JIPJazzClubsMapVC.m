@@ -11,6 +11,7 @@
 #import "JIPManagedDocument.h"
 #import "ECSlidingViewController.h"
 #import "JIPVenueMapVC.h"
+#import "JIPVenue.h"
 
 @interface JIPJazzClubsMapVC ()
 
@@ -44,6 +45,13 @@
     NSError *error = nil;
     _jazzClubsArray = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
     
+    for (JIPVenue *jazzClub in _jazzClubsArray)
+    {
+        //initialisation cf didUpdateUserLocation below
+        jazzClub.distanceFromUserToVenue = 0;
+        jazzClub.shouldDisplayDistanceFromUserToVenue = NO;
+    }
+    
     ////////////////////////////////////////////POSITIONNE MAPVIEW DANS L'ESPACE AVEC PARIS COMME CENTRE
     CLLocationCoordinate2D parisCenterCoordinate = CLLocationCoordinate2DMake(48.86222222222222, 2.340833333333333);
     double regionWidth  = 12000;
@@ -58,6 +66,58 @@
 }
 
 
+
+//////////////////////////////////////////////
+///Called when userLocation updated
+//////////////////////////////////////////////
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    if (!userLocation)
+    {
+        for (JIPVenue *jazzClub in _jazzClubsArray)
+        {
+            jazzClub.shouldDisplayDistanceFromUserToVenue = NO;
+            jazzClub.distanceFromUserToVenue = 0;
+        }
+    }
+    else
+    {
+        for (JIPVenue *jazzClub in _jazzClubsArray)
+        {
+            //PASS distanceFromUserLocationToEvent to adhoc event @property to display it
+            //as subtitle of the annotation (called by -viewForAnnotation below)
+            jazzClub.shouldDisplayDistanceFromUserToVenue = YES;
+            jazzClub.distanceFromUserToVenue = [self distanceFromUserLocationToEvent];
+        }
+    }
+}
+
+
+
+-(void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
+{
+    for (JIPVenue *jazzClub in _jazzClubsArray)
+    {
+        jazzClub.shouldDisplayDistanceFromUserToVenue = NO;
+        jazzClub.distanceFromUserToVenue = 0;
+    }
+}
+
+
+
+//////////////////////////////////////////////
+///USE CURRENT USER LOCATION TO CALCULATE DISTANCE TO eventCoordinare
+//////////////////////////////////////////////
+-(double)distanceFromUserLocationToEvent
+{
+    CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:_venue.location.latitude
+                                                           longitude:_venue.location.longitude];
+    
+    return [_allJazzClubsMap.userLocation.location distanceFromLocation:eventLocation];;
+}
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - MKMapViewDelegate
@@ -69,6 +129,7 @@
     if([annotation isKindOfClass:[MKUserLocation class]]) {return nil;}
     
     MKAnnotationView *view = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
+
     
     view.canShowCallout = YES;
     view.image = [UIImage imageNamed:@"jazzClubIcon"];

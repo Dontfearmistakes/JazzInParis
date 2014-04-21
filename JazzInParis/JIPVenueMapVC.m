@@ -56,8 +56,8 @@
     
     
     //initialisation cf didUpdateUserLocation below
-    self.event.distanceFromUserToEvent = 0;
-    self.event.shouldDisplayDistanceFromUserToEvent = NO;
+    _venue.distanceFromUserToVenue = 0;
+    _venue.shouldDisplayDistanceFromUserToVenue = NO;
     
     //ADD ANNOTATION
     [_mapView addAnnotation:_venue];
@@ -94,15 +94,15 @@
 {
     if (!userLocation)
     {
-        self.event.shouldDisplayDistanceFromUserToEvent = NO;
-        self.event.distanceFromUserToEvent = 0;
+        _venue.shouldDisplayDistanceFromUserToVenue = NO;
+        _venue.distanceFromUserToVenue = 0;
     }
     else
     {
         //PASS distanceFromUserLocationToEvent to adhoc event @property to display it
         //as subtitle of the annotation (called by -viewForAnnotation below)
-        self.event.shouldDisplayDistanceFromUserToEvent = YES;
-        self.event.distanceFromUserToEvent = [self distanceFromUserLocationToEvent];
+        _venue.shouldDisplayDistanceFromUserToVenue = YES;
+        _venue.distanceFromUserToVenue = [self distanceFromUserLocationToEvent];
     }
 }
 
@@ -110,8 +110,8 @@
 
 -(void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
 {
-    self.event.shouldDisplayDistanceFromUserToEvent = NO;
-    self.event.distanceFromUserToEvent = 0;
+    _venue.shouldDisplayDistanceFromUserToVenue = NO;
+    _venue.distanceFromUserToVenue = 0;
 }
 
 
@@ -121,8 +121,8 @@
 //////////////////////////////////////////////
 -(double)distanceFromUserLocationToEvent
 {
-    CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:self.event.location.latitude
-                                                           longitude:self.event.location.longitude];
+    CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:_venue.location.latitude
+                                                           longitude:_venue.location.longitude];
     
     return [_mapView.userLocation.location distanceFromLocation:eventLocation];;
 }
@@ -139,6 +139,11 @@
 {
     
     MKAnnotationView *view = [[JIPMyPinView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
+    //We want to display UserLocation as classic blue dot, not custom
+    if([annotation isKindOfClass:[MKUserLocation class]])
+    {
+        return nil;
+    }
     
     view.canShowCallout = YES;
     
