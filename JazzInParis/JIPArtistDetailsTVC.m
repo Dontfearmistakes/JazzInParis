@@ -52,36 +52,40 @@
     op.responseSerializer = [AFJSONResponseSerializer serializer];
     [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
+        NSArray * results = [[responseObject objectForKey:@"responseData"] objectForKey:@"results"];
+       //
         
-       // v
-        
-        NSString *imageId = [[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"imageId"]];
-         NSInteger imageWitdh = [[[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"width"]] integerValue];
-        NSInteger imageHeight = [[[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"height"]] integerValue];
-
-        //NSLog(@"IMG ID : [%@] [%@]",imageHeight, imageWitdh);
-        
-        NSURLRequest *requestImg = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://t1.gstatic.com/images?q=tbn:%@",imageId]]];
-
-        
-        AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:requestImg];
-        requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
-        [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"Response: %@", responseObject);
-            _artistImageView.image = responseObject;
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-
+        if ([results count] > 0) {
+            NSString *imageId = [[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"imageId"]];
+            NSInteger imageWitdh = [[[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"width"]] integerValue];
+            NSInteger imageHeight = [[[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"height"]] integerValue];
             
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Image error: %@", error);
-        }];
-        [requestOperation start];
-        
-        
-        
+            //NSLog(@"IMG ID : [%@] [%@]",imageHeight, imageWitdh);
+            
+            NSURLRequest *requestImg = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://t1.gstatic.com/images?q=tbn:%@",imageId]]];
+            
+            
+            AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:requestImg];
+            requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
+            [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSLog(@"Response: %@", responseObject);
+                _artistImageView.image = responseObject;
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Image error: %@", error);
+            }];
+            [requestOperation start];
+        }
+        else
+            [_artistImageView setImage:[UIImage imageNamed:@"imageError"]];
+            // set image error
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        // set image error
+
     }];
     [op start];
     
