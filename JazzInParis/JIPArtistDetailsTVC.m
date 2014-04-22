@@ -22,7 +22,7 @@
 @synthesize artistImageView    = _artistImageView;
 @synthesize searchString       = _searchString;
 @synthesize favoriteSwitchView = _favoriteSwitchView;
-
+@synthesize ratio              = _ratio;
 
 
 
@@ -44,50 +44,62 @@
 {
     [super viewWillAppear:animated];
     [_favoriteSwitchView setOn:[_artist.favorite boolValue]];
-    NSString* cleanArtistName = [_artist.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString* nsutf8ArtistName = [[_artist.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] lowercaseString] ;
 
+    /////////////////////////////////////
     // A) REQUEST POUR L'IMAGE ID
-    /////////////////////////////
-    NSURLRequest *requestImgId      = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%@", cleanArtistName]]];
-    AFHTTPRequestOperation *operationForImgId = [[AFHTTPRequestOperation alloc] initWithRequest:requestImgId];
-    operationForImgId.responseSerializer      = [AFJSONResponseSerializer serializer];
+    /////////////////////////////////////
+    NSURLRequest            *requestImgId                        = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://www.googleapis.com/freebase/v1/topic/en/%@?filter=/common/topic/image&limit=1", nsutf8ArtistName]]];
+    AFHTTPRequestOperation *operationForImgId                    = [[AFHTTPRequestOperation alloc] initWithRequest:requestImgId];
+                            operationForImgId.responseSerializer = [AFJSONResponseSerializer serializer];
     
     [operationForImgId
     setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
     {
-        NSArray * results = [[responseObject objectForKey:@"responseData"] objectForKey:@"results"];
-        
+    
         //S'il y a bien des résultats
-        if ([results count] > 0)
+        if ([[[responseObject objectForKey:@"property"] objectForKey:@"/common/topic/image" ] objectForKey:@"values"] > 0)
         {
             //On récupère l'id et la taille de la 1ère image
-            #warning : Pkoi on refait responseData + Results ?? Pkoi on utilise pas results au dessus ??
-            NSString *imageId = [[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"imageId"]];
-            NSInteger imageWitdh = [[[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"width"]] integerValue];
-            NSInteger imageHeight = [[[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"height"]] integerValue];
+            NSString *imageId = [[NSString alloc]  initWithString:[[[[[responseObject objectForKey:@"property"] objectForKey:@"/common/topic/image" ] objectForKey:@"values"] objectAtIndex:0] objectForKey:@"id"]];
+
             
             //0) calcule ratio image reçue ex : 2/1
-            float ratio = (float)imageHeight/(float)imageWitdh;
+//            _ratio =
+            
             
             
             //1) resize imageView
-            _artistImageView.frame = CGRectMake(0, 0, 320, 320 * ratio);
+            if (320 * _ratio < 260)
+                _artistImageView.frame = CGRectMake(0, 0, 320, 320 * _ratio);
+            else
+                _artistImageView.frame = CGRectMake(0, 0, 320, 260);
             
             
             /////////////////////////////////////
             // B) REQUEST POUR L'IMAGE ELLE MEME
             /////////////////////////////////////
-            NSURLRequest *requestImg = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://t1.gstatic.com/images?q=tbn:%@",imageId]]];
-            AFHTTPRequestOperation *operationForImg = [[AFHTTPRequestOperation alloc] initWithRequest:requestImg];
-            operationForImg.responseSerializer = [AFImageResponseSerializer serializer];
+            NSURLRequest            *requestImg                         = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://usercontent.googleapis.com/freebase/v1/image%@?maxwidth=320&maxheight=220",imageId]]];
+            AFHTTPRequestOperation *operationForImg                     = [[AFHTTPRequestOperation alloc] initWithRequest:requestImg];
+                                    operationForImg.responseSerializer  = [AFImageResponseSerializer serializer];
             [operationForImg
              
             setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
             {
                 //2) resize image (au max 320 x 200) selon ratio
-                UIImage* resizedImg = [UIImage imageWithImage:responseObject scaledToSize:CGSizeMake(320.0, 320.0 * ratio)];
+                
+                UIImage * responseImg = responseObject;
+                float     imgWidth    = responseImg.size.width;
+                float     imgHeight   = responseImg.size.height;
+                
+                UIImage* resizedImg;
+                if (320*_ratio < 260)
+                    resizedImg = [UIImage imageWithImage:responseObject scaledToSize:CGSizeMake(320.0, 320.0 * _ratio)];
+                else
+                    resizedImg = [UIImage imageWithImage:responseObject scaledToSize:CGSizeMake(320.0, 260)];
                 
                 _artistImageView.image = resizedImg;
+                
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             }
              
@@ -122,6 +134,14 @@
 }
 
 
+
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (indexPath.row == 0)
+//    {
+//        return 320 * _ratio;
+//    }
+//}
 
 
 - (IBAction)toggleFavorite:(id)sender {

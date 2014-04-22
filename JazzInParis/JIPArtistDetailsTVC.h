@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *artistImageView;
 
 - (IBAction)toggleFavorite:(id)sender;
-@property (strong, nonatomic) IBOutlet UITableViewCell *youTubeCell;
+
+@property (nonatomic) float  ratio;
 
 @end

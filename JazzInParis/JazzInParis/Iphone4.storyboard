@@ -162,7 +162,6 @@
                     <connections>
                         <outlet property="artistImageView" destination="z2t-DM-3bL" id="kUY-Bz-2L4"/>
                         <outlet property="favoriteSwitchView" destination="o9C-ZT-aEt" id="7bq-ei-GCm"/>
-                        <outlet property="youTubeCell" destination="7GB-bW-iRI" id="VHq-kt-Rg6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eD7-RN-0qA" userLabel="First Responder" sceneMemberID="firstResponder"/>
