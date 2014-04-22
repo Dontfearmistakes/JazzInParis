@@ -34,31 +34,41 @@
         [userDefaults setBool:YES forKey:@"firstLaunch"];
     }
     
-    
     [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
-
-        NSMutableArray *allJazzClubsInParis = [[NSMutableArray alloc]init];
         
-        NSMutableDictionary *baiserSaleDict = [[NSMutableDictionary alloc] init];
-        baiserSaleDict[@"id"]              = @(-1);
-        baiserSaleDict[@"name"]            = @"Baiser Salé";
-        baiserSaleDict[@"city"]            = @"Paris";
-        baiserSaleDict[@"street"]          = @"58, rue des Lombards";
-        baiserSaleDict[@"phone"]           = @"+33 1 42 33 37 71";
-        baiserSaleDict[@"websiteString"]   = @"http://www.lebaisersale.com";
-        baiserSaleDict[@"lat"]             = @"48.859722222222224";
-        baiserSaleDict[@"long"]            = @"2.348055555555556";
         
-        [allJazzClubsInParis addObject:baiserSaleDict];
+        
+        NSDictionary *baiserSaleDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                        @(-1)                         ,  @"id",
+                                        @"Baiser Salé"                ,  @"name",
+                                        @"Paris"                      ,  @"city",
+                                        @"58, rue des Lombards"       ,  @"street",
+                                        @"+33 1 42 33 37 71"          ,  @"phone",
+                                        @"http://www.lebaisersale.com",  @"websiteString",
+                                        @"48.859722222222224"         ,  @"lat",
+                                        @"2.348055555555556"          ,  @"long",
+                                        nil];
+        NSDictionary *newMorningDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                        @(-2)                           ,  @"id",
+                                        @"New Morning"                  ,  @"name",
+                                        @"Paris"                        ,  @"city",
+                                        @"7 & 9 Rue des Petites Ecuries",  @"street",
+                                        @"+33 (0)1 45 23 51 41"         ,  @"phone",
+                                        @"http://www.newmorning.com"    ,  @"websiteString",
+                                        @"48.87305555555555"            ,  @"lat",
+                                        @"2.3525"                       ,  @"long",
+                                        nil];
+        
+        
+        
+        NSArray *allJazzClubsInParis = [NSArray arrayWithObjects:baiserSaleDict, newMorningDict, nil];
         
         for (NSMutableDictionary * jazzClubDict in allJazzClubsInParis)
         {
             [JIPVenue venueWithDict:jazzClubDict inManagedObjectContext:managedDocument.managedObjectContext];
         }
-        
-        
-
     }];
+    
 
     [[JIPUpdateManager sharedUpdateManager] clearOldEvents];
     [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];

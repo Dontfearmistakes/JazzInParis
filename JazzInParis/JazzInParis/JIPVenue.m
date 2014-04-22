@@ -65,21 +65,6 @@
     return self;
 }
 
-///////////////////////////////////////////////////////////////////////////
-//lat and long are stored in CoreData as double/NSNumbers
-//we just put them together as a CLLocationCoordinate2D
-///////////////////////////////////////////////////////////////////////////
--(CLLocationCoordinate2D)location
-{
-    return CLLocationCoordinate2DMake([self.latitude doubleValue], [self.longitude doubleValue]);
-}
-
--(void)setLocation:(CLLocationCoordinate2D)location
-{
-    _location = location;
-    self.latitude = [NSNumber numberWithDouble:location.latitude];
-    self.longitude = [NSNumber numberWithDouble:location.longitude];
-}
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -91,6 +76,12 @@
 -(CLLocationCoordinate2D)coordinate
 {
     return self.location;
+}
+
+//lat and long are stored in CoreData as double/NSNumbers - we just put them together as a CLLocationCoordinate2D
+-(CLLocationCoordinate2D)location
+{
+    return CLLocationCoordinate2DMake([self.latitude doubleValue], [self.longitude doubleValue]);
 }
 
 -(NSString *)title

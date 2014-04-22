@@ -21,7 +21,7 @@
 @implementation JIPJazzClubsMapVC
 
 @synthesize allJazzClubsMap = _allJazzClubsMap;
-@synthesize jazzClubsArray  = _jazzClubsArray;
+@synthesize jazzClubsArrayFromCoreData  = _jazzClubsArrayFromCoreData;
 @synthesize venue           = _venue;
 
 ////////////////////////////////////////////////
@@ -42,14 +42,12 @@
 
     ////////////////////////////////////////////FETCH JAZZ CLUBS IN CORE DATA
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPVenue"];
-    request.predicate = [NSPredicate predicateWithFormat:@"id = -1"];
+    request.predicate = [NSPredicate predicateWithFormat:@"id < 0"];
     NSError *error = nil;
-    _jazzClubsArray = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
+    _jazzClubsArrayFromCoreData = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
     
-    for (JIPVenue *jazzClub in _jazzClubsArray)
+    for (JIPVenue *jazzClub in _jazzClubsArrayFromCoreData)
     {
-        //initialisation cf didUpdateUserLocation below
-        jazzClub.distanceFromUserToVenue = 0;
         jazzClub.shouldDisplayDistanceFromUserToVenue = NO;
     }
     
@@ -62,60 +60,8 @@
                     animated:YES];
 
     
-    [_allJazzClubsMap addAnnotations:_jazzClubsArray];
+    [_allJazzClubsMap addAnnotations:_jazzClubsArrayFromCoreData];
     
-}
-
-
-
-//////////////////////////////////////////////
-///Called when userLocation updated
-//////////////////////////////////////////////
--(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-{
-    if (!userLocation)
-    {
-        for (JIPVenue *jazzClub in _jazzClubsArray)
-        {
-            jazzClub.shouldDisplayDistanceFromUserToVenue = NO;
-            jazzClub.distanceFromUserToVenue = 0;
-        }
-    }
-    else
-    {
-        for (JIPVenue *jazzClub in _jazzClubsArray)
-        {
-            //PASS distanceFromUserLocationToEvent to adhoc event @property to display it
-            //as subtitle of the annotation (called by -viewForAnnotation below)
-            jazzClub.shouldDisplayDistanceFromUserToVenue = YES;
-            _venue = jazzClub;
-            jazzClub.distanceFromUserToVenue = [self distanceFromUserLocationToEvent];
-        }
-    }
-}
-
-
-
--(void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
-{
-    for (JIPVenue *jazzClub in _jazzClubsArray)
-    {
-        jazzClub.shouldDisplayDistanceFromUserToVenue = NO;
-        jazzClub.distanceFromUserToVenue = 0;
-    }
-}
-
-
-
-//////////////////////////////////////////////
-///USE CURRENT USER LOCATION TO CALCULATE DISTANCE TO eventCoordinare
-//////////////////////////////////////////////
--(double)distanceFromUserLocationToEvent
-{
-    CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:_venue.location.latitude
-                                                           longitude:_venue.location.longitude];
-    
-    return [_allJazzClubsMap.userLocation.location distanceFromLocation:eventLocation];;
 }
 
 
