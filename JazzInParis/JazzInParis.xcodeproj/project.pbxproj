@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5008E04718DC992F00530542 /* JIPSearchArtistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5008E04618DC992F00530542 /* JIPSearchArtistsViewController.m */; };
 		5012E5E019045A66002EA140 /* JIPJazzClubsMapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5012E5DF19045A66002EA140 /* JIPJazzClubsMapVC.m */; };
+		50149FA1190586F20037E9A7 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 50149FA0190586F20037E9A7 /* UIImage+Resize.m */; };
 		5015AAAE18A159ED000A7625 /* JIPConcertDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */; };
 		501FB96118D1BFCE00845256 /* JIPManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 501FB96018D1BFCE00845256 /* JIPManagedDocument.m */; };
 		5029345518FD5B2A009A4F2F /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5029343118FD5B29009A4F2F /* AFHTTPRequestOperation.m */; };
@@ -130,6 +131,8 @@
 		5008E04618DC992F00530542 /* JIPSearchArtistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JIPSearchArtistsViewController.m; path = ../JIPSearchArtistsViewController.m; sourceTree = "<group>"; };
 		5012E5DE19045A66002EA140 /* JIPJazzClubsMapVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPJazzClubsMapVC.h; sourceTree = "<group>"; };
 		5012E5DF19045A66002EA140 /* JIPJazzClubsMapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPJazzClubsMapVC.m; sourceTree = "<group>"; };
+		50149F9F190586F20037E9A7 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "../UIImage+Resize.h"; sourceTree = "<group>"; };
+		50149FA0190586F20037E9A7 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "../UIImage+Resize.m"; sourceTree = "<group>"; };
 		5015AAAC18A159ED000A7625 /* JIPConcertDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPConcertDetailsViewController.h; sourceTree = "<group>"; };
 		5015AAAD18A159ED000A7625 /* JIPConcertDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPConcertDetailsViewController.m; sourceTree = "<group>"; };
 		501FB95F18D1BFCE00845256 /* JIPManagedDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPManagedDocument.h; sourceTree = "<group>"; };
@@ -741,6 +744,8 @@
 		50DAA79218AB8E57003DDADA /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				50149F9F190586F20037E9A7 /* UIImage+Resize.h */,
+				50149FA0190586F20037E9A7 /* UIImage+Resize.m */,
 				50DAA78F18AB8E52003DDADA /* NSDate+Formatting.h */,
 				50DAA79018AB8E52003DDADA /* NSDate+Formatting.m */,
 			);
@@ -1017,6 +1022,7 @@
 				5029346318FD5B2A009A4F2F /* UIProgressView+AFNetworking.m in Sources */,
 				50FCB09D18CE140800AD4402 /* JIPUpcomingEventsCDTVC.m in Sources */,
 				50A52FB0189ED5D9001D9779 /* main.m in Sources */,
+				50149FA1190586F20037E9A7 /* UIImage+Resize.m in Sources */,
 				5029346118FD5B2A009A4F2F /* UIButton+AFNetworking.m in Sources */,
 				50916F4518F81AC1006D5C26 /* MGLineStyled.m in Sources */,
 				5029345A18FD5B2A009A4F2F /* AFURLConnectionOperation.m in Sources */,

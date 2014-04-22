@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Max. All rights reserved.
 //
 
+#import "JIPMyPinView.h"
 #import "JIPJazzClubsMapVC.h"
 #import "JIPVenue+Create.h"
 #import "JIPManagedDocument.h"
@@ -131,10 +132,9 @@
     
         return nil;
     
-    MKAnnotationView *view = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
+    JIPMyPinView *view = [[JIPMyPinView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];
     
     view.canShowCallout = YES;
-    view.image = [UIImage imageNamed:@"jazzClubIcon"];
     view.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];;
     
     return view;
@@ -160,23 +160,6 @@
 }
 
 
--(void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
-{
-    for (MKAnnotationView *annView in views)
-    {
-        #warning try to exclude userLocation blue dot from animation
-        if([annView isKindOfClass:[MKUserLocation class]])
-        {
-            
-        }
-        else
-        {
-            CGRect endFrame = annView.frame;
-            annView.frame = CGRectOffset(endFrame, 0, -500);
-            [UIView animateWithDuration:0.5
-                             animations:^{ annView.frame = endFrame; }];            
-        }
-    }
-}
+
 
 @end

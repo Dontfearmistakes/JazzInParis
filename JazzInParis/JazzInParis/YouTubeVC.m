@@ -84,7 +84,16 @@
                                                 json[@"feed"][@"entry"]
                                                 ];
                                       
-                                      if (videos) NSLog(@"Loaded successfully models");
+                                      if (videos)
+                                      {
+                                          NSLog(@"Loaded successfully models");
+                                      }
+                                      else
+                                      {
+                                          UILabel* label = [JIPDesign emptyTableViewLabelWithString:@"No videos for this artist"];
+                                          [self.view addSubview:label];
+                                      }
+                                      
 
                                       //show the videos
                                       [self showVideos];

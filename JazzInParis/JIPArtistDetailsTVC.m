@@ -9,8 +9,8 @@
 #import "JIPArtistDetailsTVC.h"
 #import "JIPUpdateManager.h"
 #import "YouTubeVC.h"
-#import "WikipediaHelper.h"
 #import "AFNetworking/AFHTTPRequestOperation.h"
+#import "UIImage+Resize.h"
 
 @interface JIPArtistDetailsTVC ()
 
@@ -46,50 +46,78 @@
     [_favoriteSwitchView setOn:[_artist.favorite boolValue]];
     NSString* cleanArtistName = [_artist.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
+    // A) REQUEST POUR L'IMAGE ID
+    /////////////////////////////
+    NSURLRequest *requestImgId      = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%@", cleanArtistName]]];
+    AFHTTPRequestOperation *operationForImgId = [[AFHTTPRequestOperation alloc] initWithRequest:requestImgId];
+    operationForImgId.responseSerializer      = [AFJSONResponseSerializer serializer];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%@", cleanArtistName]]];
-    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    op.responseSerializer = [AFJSONResponseSerializer serializer];
-    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
+    [operationForImgId
+    setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
+    {
         NSArray * results = [[responseObject objectForKey:@"responseData"] objectForKey:@"results"];
-       //
         
-        if ([results count] > 0) {
+        //S'il y a bien des résultats
+        if ([results count] > 0)
+        {
+            //On récupère l'id et la taille de la 1ère image
+            #warning : Pkoi on refait responseData + Results ?? Pkoi on utilise pas results au dessus ??
             NSString *imageId = [[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"imageId"]];
             NSInteger imageWitdh = [[[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"width"]] integerValue];
             NSInteger imageHeight = [[[NSString alloc] initWithString:[[[[responseObject objectForKey:@"responseData"] objectForKey:@"results"] objectAtIndex:0] objectForKey:@"height"]] integerValue];
             
-            //NSLog(@"IMG ID : [%@] [%@]",imageHeight, imageWitdh);
+            //0) calcule ratio image reçue ex : 2/1
+            float ratio = (float)imageHeight/(float)imageWitdh;
             
+            
+            //1) resize imageView
+            _artistImageView.frame = CGRectMake(0, 0, 320, 320 * ratio);
+            
+            
+            /////////////////////////////////////
+            // B) REQUEST POUR L'IMAGE ELLE MEME
+            /////////////////////////////////////
             NSURLRequest *requestImg = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://t1.gstatic.com/images?q=tbn:%@",imageId]]];
-            
-            
-            AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:requestImg];
-            requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
-            [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSLog(@"Response: %@", responseObject);
-                _artistImageView.image = responseObject;
+            AFHTTPRequestOperation *operationForImg = [[AFHTTPRequestOperation alloc] initWithRequest:requestImg];
+            operationForImg.responseSerializer = [AFImageResponseSerializer serializer];
+            [operationForImg
+             
+            setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
+            {
+                //2) resize image (au max 320 x 200) selon ratio
+                UIImage* resizedImg = [UIImage imageWithImage:responseObject scaledToSize:CGSizeMake(320.0, 320.0 * ratio)];
+                
+                _artistImageView.image = resizedImg;
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                
-                
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            }
+             
+            failure:^(AFHTTPRequestOperation *operation, NSError *error)
+            {
                 NSLog(@"Image error: %@", error);
+                [_artistImageView setImage:[UIImage imageNamed:@"errorImage"]];
             }];
-            [requestOperation start];
+            [operationForImg start];
+            
         }
-        else
-            [_artistImageView setImage:[UIImage imageNamed:@"imageError"]];
-            // set image error
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //S'il n'y a pas de résultats
+        else
+        {
+            [_artistImageView setImage:[UIImage imageNamed:@"errorImage"]];
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        }
+        
+    }
+    
+    failure:^(AFHTTPRequestOperation *operation, NSError *error)
+    {
         NSLog(@"Error: %@", error);
-        // set image error
+        [_artistImageView setImage:[UIImage imageNamed:@"imageError"]];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 
     }];
-    [op start];
     
-    
+    [operationForImgId start];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
