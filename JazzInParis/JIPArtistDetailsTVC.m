@@ -62,18 +62,6 @@
         {
             //On récupère l'id et la taille de la 1ère image
             NSString *imageId = [[NSString alloc]  initWithString:[[[[[responseObject objectForKey:@"property"] objectForKey:@"/common/topic/image" ] objectForKey:@"values"] objectAtIndex:0] objectForKey:@"id"]];
-
-            
-            //0) calcule ratio image reçue ex : 2/1
-//            _ratio =
-            
-            
-            
-            //1) resize imageView
-            if (320 * _ratio < 260)
-                _artistImageView.frame = CGRectMake(0, 0, 320, 320 * _ratio);
-            else
-                _artistImageView.frame = CGRectMake(0, 0, 320, 260);
             
             
             /////////////////////////////////////
@@ -85,19 +73,27 @@
             [operationForImg
              
             setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-            {
-                //2) resize image (au max 320 x 200) selon ratio
-                
+            {                
                 UIImage * responseImg = responseObject;
                 float     imgWidth    = responseImg.size.width;
                 float     imgHeight   = responseImg.size.height;
+                _ratio = imgHeight/imgWidth;
                 
+                
+                //1) resize imageView
+                if (320 * _ratio < 260)
+                    _artistImageView.frame = CGRectMake(0, 0, 320, 320 * _ratio);
+                else
+                    _artistImageView.frame = CGRectMake(0, 0, 320, 260);
+                
+                //2) resize UIimage
                 UIImage* resizedImg;
                 if (320*_ratio < 260)
                     resizedImg = [UIImage imageWithImage:responseObject scaledToSize:CGSizeMake(320.0, 320.0 * _ratio)];
                 else
                     resizedImg = [UIImage imageWithImage:responseObject scaledToSize:CGSizeMake(320.0, 260)];
                 
+                //3
                 _artistImageView.image = resizedImg;
                 
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
