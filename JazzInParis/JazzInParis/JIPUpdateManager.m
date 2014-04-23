@@ -110,7 +110,7 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
     
     NSArray *dictionnariesOfEventsFromApi = parsedObject[@"resultsPage"][@"results"][@"event"];
     
-    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
+
         
         for (NSDictionary * eventDictFromApi in dictionnariesOfEventsFromApi)
         {
@@ -145,12 +145,10 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
             if ([self eventLocationIsNotTooFarFromParisCenter:eventLocation])
             {
                 [JIPEvent eventWithSongkickInfo:eventDict
-                         inManagedObjectContext:managedDocument.managedObjectContext];
+                         inManagedObjectContext:[JIPManagedDocument sharedManagedDocument].managedObjectContext];
             }
             
         }
-    }];
-    
 }
 
 
@@ -223,7 +221,7 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 {
     
     NSFetchRequest *request     = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
-    //request.predicate         = [NSPredicate predicateWithFormat:@"artist.id = %@", artist.id]; //all JIPEvents for this artist
+    request.predicate           = [NSPredicate predicateWithFormat:@"artist.id = %@", artist.id]; //all JIPEvents for this artist
     NSError *error = nil;
     
     //#warning : BUG fetch not working, objectsToBeDeleted is always empty

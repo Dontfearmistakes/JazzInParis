@@ -185,6 +185,11 @@
 		502A222718F97ABB00CB7926 /* JIPSearchArtistNameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JIPSearchArtistNameCell.m; path = ../JIPSearchArtistNameCell.m; sourceTree = "<group>"; };
 		502A222918F9815C00CB7926 /* JIPArtistDetailsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JIPArtistDetailsTVC.h; path = ../JIPArtistDetailsTVC.h; sourceTree = "<group>"; };
 		502A222A18F9815C00CB7926 /* JIPArtistDetailsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JIPArtistDetailsTVC.m; path = ../JIPArtistDetailsTVC.m; sourceTree = "<group>"; };
+		503C453719081C220058E659 /* DtfmIosIcon80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DtfmIosIcon80x80.png; sourceTree = "<group>"; };
+		503C453819081CB40058E659 /* DtfmIosIcon58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DtfmIosIcon58x58.png; sourceTree = "<group>"; };
+		503C453919081CF70058E659 /* 120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 120x120.png; sourceTree = "<group>"; };
+		503C453A190820FD0058E659 /* milesjeanne 640x960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "milesjeanne 640x960.png"; sourceTree = "<group>"; };
+		503C453B190821610058E659 /* milesjeanne 640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "milesjeanne 640x1136.png"; sourceTree = "<group>"; };
 		5040392A18F5649200AE815A /* JIPUpcomingEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPUpcomingEventCell.h; sourceTree = "<group>"; };
 		5040392B18F5649200AE815A /* JIPUpcomingEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPUpcomingEventCell.m; sourceTree = "<group>"; };
 		5051B4F318D9A6D600BBE2DB /* JIPUpdateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPUpdateManager.h; sourceTree = "<group>"; };
@@ -619,6 +624,11 @@
 		50A52F97189ED5D9001D9779 = {
 			isa = PBXGroup;
 			children = (
+				503C453B190821610058E659 /* milesjeanne 640x1136.png */,
+				503C453A190820FD0058E659 /* milesjeanne 640x960.png */,
+				503C453919081CF70058E659 /* 120x120.png */,
+				503C453819081CB40058E659 /* DtfmIosIcon58x58.png */,
+				503C453719081C220058E659 /* DtfmIosIcon80x80.png */,
 				50AEB97E18EEDB920055FE07 /* Iphone4.storyboard */,
 				50A52FA9189ED5D9001D9779 /* JazzInParis */,
 				50A52FC2189ED5D9001D9779 /* JazzInParisTests */,
@@ -895,6 +905,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Max;
 				TargetAttributes = {
+					50A52F9F189ED5D9001D9779 = {
+						DevelopmentTeam = 2GRL7A9P7R;
+					};
 					50A52FBA189ED5D9001D9779 = {
 						TestTargetID = 50A52F9F189ED5D9001D9779;
 					};
@@ -1165,12 +1178,13 @@
 		50A52FCD189ED5D9001D9779 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JazzInParis/JazzInParis-Prefix.pch";
 				INFOPLIST_FILE = "JazzInParis/JazzInParis-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1179,12 +1193,13 @@
 		50A52FCE189ED5D9001D9779 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JazzInParis/JazzInParis-Prefix.pch";
 				INFOPLIST_FILE = "JazzInParis/JazzInParis-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

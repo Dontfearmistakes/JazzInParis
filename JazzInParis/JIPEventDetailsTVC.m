@@ -12,6 +12,7 @@
 #import "JIPManagedDocument.h"
 #import "JIPUpdateManager.h"
 #import "JIPVenue+Create.h"
+#import "AFNetworking/AFHTTPRequestOperation.h"
 
 @interface JIPEventDetailsTVC ()
 
@@ -71,38 +72,87 @@
     
     [dataTask resume];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-}
-
-
-
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
     
-    //fetching GoogleImage
-    NSURLSession * session         = [NSURLSession sharedSession];
-    NSString     * cleanArtistName = [_event.artist.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL        *             url = [NSURL URLWithString:[NSString stringWithFormat:@"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%@", cleanArtistName]];
+    /////////////////////////////////////
+    // A) REQUEST POUR L'IMAGE ID
+    /////////////////////////////////////
+    NSString* nsutf8ArtistName = [[_event.artist.name stringByReplacingOccurrencesOfString:@" " withString:@"_"] lowercaseString];
+    // convert to a data object, using a lossy conversion to ASCII
+    NSData *asciiEncoded = [nsutf8ArtistName dataUsingEncoding:NSASCIIStringEncoding
+                                          allowLossyConversion:YES];
     
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
-                                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                
-                                                NSError      *localError   = nil;
-                                                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
-                                                NSString     * imageId     = parsedObject[@"responseData"][@"results"][0][@"imageId"];
-                                                
-                                                NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://t1.gstatic.com/images?q=tbn:%@",imageId]];
-                                                NSData *myData  = [NSData dataWithContentsOfURL:imageUrl];
-                                                UIImage *googleImage  = [[UIImage alloc] initWithData:myData];
-                                                
-                                                [_artistImageView setImage:googleImage];
-                                                
-                                                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                                            }];
-    [dataTask resume];
+    // take the data object and recreate a string using the lossy conversion
+    NSString *cleanArtistName = [[NSString alloc] initWithData:asciiEncoded
+                                                      encoding:NSASCIIStringEncoding];
+    
+    
+    NSURLRequest            *requestImgId                        = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://www.googleapis.com/freebase/v1/topic/en/%@?filter=/common/topic/image&limit=1", cleanArtistName]]];
+    AFHTTPRequestOperation *operationForImgId                    = [[AFHTTPRequestOperation alloc] initWithRequest:requestImgId];
+    operationForImgId.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [operationForImgId
+     setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         
+         //S'il y a bien des résultats
+         if ([[[responseObject objectForKey:@"property"] objectForKey:@"/common/topic/image" ] objectForKey:@"values"] > 0)
+         {
+             //On récupère l'id et la taille de la 1ère image
+             NSString *imageId = [[NSString alloc]  initWithString:[[[[[responseObject objectForKey:@"property"] objectForKey:@"/common/topic/image" ] objectForKey:@"values"] objectAtIndex:0] objectForKey:@"id"]];
+             
+             
+             /////////////////////////////////////
+             // B) REQUEST POUR L'IMAGE ELLE MEME
+             /////////////////////////////////////
+             NSURLRequest            *requestImg                         = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://usercontent.googleapis.com/freebase/v1/image%@?maxwidth=2020&maxheight=2020&minwidth=1020&minheight=2020",imageId]]];
+             AFHTTPRequestOperation *operationForImg                     = [[AFHTTPRequestOperation alloc] initWithRequest:requestImg];
+             operationForImg.responseSerializer  = [AFImageResponseSerializer serializer];
+             [operationForImg
+              
+              setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
+              {
+                  UIImage * responseImg = responseObject;
+                  _artistImageView.image = responseImg;
+                  
+                  [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+              }
+              
+              failure:^(AFHTTPRequestOperation *operation, NSError *error)
+              {
+                  NSLog(@"Image error: %@", error);
+                  [_artistImageView setImage:[UIImage imageNamed:@"errorImage"]];
+              }];
+             [operationForImg start];
+             
+         }
+         
+         //S'il n'y a pas de résultats
+         else
+         {
+             [_artistImageView setImage:[UIImage imageNamed:@"errorImage"]];
+             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+         }
+         
+     }
+     
+     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"Error: %@", error);
+         [_artistImageView setImage:[UIImage imageNamed:@"errorImage"]];
+         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+         
+     }];
+    
+    [operationForImgId start];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [self performSelector:@selector(noImgAvalaible) withObject:nil afterDelay:1.5];
 }
+
+
+
+
+
+
 
 
 

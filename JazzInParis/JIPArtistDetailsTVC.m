@@ -37,12 +37,7 @@
     
     self.title = _artist.name;
     [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
-}
 
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
     [_favoriteSwitchView setOn:[_artist.favorite boolValue]];
     NSString* nsutf8ArtistName = [[_artist.name stringByReplacingOccurrencesOfString:@" " withString:@"_"] lowercaseString];
     // convert to a data object, using a lossy conversion to ASCII
@@ -110,24 +105,27 @@
     failure:^(AFHTTPRequestOperation *operation, NSError *error)
     {
         NSLog(@"Error: %@", error);
-        [_artistImageView setImage:[UIImage imageNamed:@"imageError"]];
+        [_artistImageView setImage:[UIImage imageNamed:@"errorImage"]];
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 
     }];
     
     [operationForImgId start];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [self performSelector:@selector(noImgAvalaible) withObject:nil afterDelay:1.5];
+}
+
+
+-(void)noImgAvalaible
+{
+    if (!_artistImageView.image)
+        [_artistImageView setImage:[UIImage imageNamed:@"errorImage"]];
 }
 
 
 
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (indexPath.row == 0)
-//    {
-//        return 320 * _ratio;
-//    }
-//}
+
+
 
 
 - (IBAction)toggleFavorite:(id)sender {

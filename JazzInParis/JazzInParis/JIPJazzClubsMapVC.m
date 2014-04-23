@@ -71,14 +71,13 @@
     NSError *error = nil;
     _jazzClubsArrayFromCoreData = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
     
+    ///////////////////////////////////////////////////////Don't display distance to userLocation
     for (JIPVenue *jazzClub in _jazzClubsArrayFromCoreData)
     {
         [jazzClub setShouldDisplayDistanceFromUserToVenue:NO];
     }
     
     [_allJazzClubsMap addAnnotations:_jazzClubsArrayFromCoreData];
-    [_allJazzClubsMap selectAnnotation:_jazzClubsArrayFromCoreData[0] animated:YES];
-    ///////////////////////////////////////////////////////Don't display distance to userLocation
 }
 
 
