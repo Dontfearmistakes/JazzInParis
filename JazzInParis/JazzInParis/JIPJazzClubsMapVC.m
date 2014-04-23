@@ -32,15 +32,13 @@
     [self.slidingViewController anchorTopViewTo:ECRight];
 }
 
-
-
-- (void)viewWillAppear:(BOOL)animated
+-(void)viewDidLoad
 {
+    [super viewDidLoad];
     
-    [super viewWillAppear:YES];
     self.title = @"Jazz Clubs in Paris";
-    
-    /////Style buttonForUserLocation
+
+    ///////////////////////////////////////////////////////Style buttons
     _buttonForUserLocation.layer.cornerRadius = 5;
     _buttonForUserLocation.layer.borderColor = [UIColor grayColor].CGColor;
     _buttonForUserLocation.layer.borderWidth = 1;
@@ -49,16 +47,6 @@
     _buttonBackToLargeView.layer.borderColor = [UIColor grayColor].CGColor;
     _buttonBackToLargeView.layer.borderWidth = 1;
 
-    ////////////////////////////////////////////FETCH JAZZ CLUBS IN CORE DATA
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPVenue"];
-    request.predicate = [NSPredicate predicateWithFormat:@"id < 0"];
-    NSError *error = nil;
-    _jazzClubsArrayFromCoreData = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
-    
-    for (JIPVenue *jazzClub in _jazzClubsArrayFromCoreData)
-    {
-        jazzClub.shouldDisplayDistanceFromUserToVenue = NO;
-    }
     
     ////////////////////////////////////////////POSITIONNE MAPVIEW DANS L'ESPACE AVEC PARIS COMME CENTRE
     CLLocationCoordinate2D parisCenterCoordinate = CLLocationCoordinate2DMake(48.86222222222222, 2.340833333333333);
@@ -66,13 +54,33 @@
     double regionHeight = 11000;
     MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(parisCenterCoordinate, regionWidth, regionHeight);
     [_allJazzClubsMap setRegion:startRegion
-                    animated:YES];
+                       animated:YES];
 
-    
-    [_allJazzClubsMap addAnnotations:_jazzClubsArrayFromCoreData];
-    
 }
 
+
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+
+    ////////////////////////////////////////////////////////FETCH JAZZ CLUBS IN CORE DATA
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPVenue"];
+    request.predicate = [NSPredicate predicateWithFormat:@"id < 0"];
+    NSError *error = nil;
+    _jazzClubsArrayFromCoreData = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
+    
+    for (JIPVenue *jazzClub in _jazzClubsArrayFromCoreData)
+    {
+        #warning : bool doesn't get set
+        [jazzClub setShouldDisplayDistanceFromUserToVenue:NO];
+    }
+    
+    [_allJazzClubsMap addAnnotations:_jazzClubsArrayFromCoreData];
+    [_allJazzClubsMap selectAnnotation:_jazzClubsArrayFromCoreData[0] animated:YES];
+    ///////////////////////////////////////////////////////Don't display distance to userLocation
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,7 +92,6 @@
 {
     //We want to display UserLocation as classic blue dot, not custom
     if([annotation isKindOfClass:[MKUserLocation class]])
-    
         return nil;
     
     JIPMyPinView *view = [[JIPMyPinView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationId"];

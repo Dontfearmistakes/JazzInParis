@@ -44,12 +44,12 @@
     
     
     // Fetch venue details in prevision of next VC
-    NSURLSession * session  = [NSURLSession sharedSession];
-    NSURL *url = [[JIPUpdateManager sharedUpdateManager] songkickURLUpcomingEventsForVenueWithId:[NSString stringWithFormat:@"%@", _event.venue.id]];
+    NSURLSession        * session  = [NSURLSession sharedSession];
+    NSURL                     *url = [[JIPUpdateManager sharedUpdateManager] songkickURLUpcomingEventsForVenueWithId:[NSString stringWithFormat:@"%@", _event.venue.id]];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
                                             completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                 
-                                                NSError *localError = nil;
+                                                NSError      *localError = nil;
                                                 NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
                                                 NSDictionary *dictionnaryOfVenue = parsedObject[@"resultsPage"][@"results"][@"venue"];
                                                 
@@ -81,9 +81,9 @@
     [super viewWillAppear:animated];
     
     //fetching GoogleImage
-    NSURLSession * session    = [NSURLSession sharedSession];
-    NSString* cleanArtistName = [_event.artist.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%@", cleanArtistName]];
+    NSURLSession * session         = [NSURLSession sharedSession];
+    NSString     * cleanArtistName = [_event.artist.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL        *             url = [NSURL URLWithString:[NSString stringWithFormat:@"https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=%@", cleanArtistName]];
     
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
                                             completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {

@@ -56,8 +56,8 @@
     
     
     //initialisation cf didUpdateUserLocation below
-    _venue.distanceFromUserToVenue = 0;
-    _venue.shouldDisplayDistanceFromUserToVenue = NO;
+    //_venue.distanceFromUserToVenue = 0;
+    //_venue.shouldDisplayDistanceFromUserToVenue = NO;
     
     //ADD ANNOTATION
     [_mapView addAnnotation:_venue];

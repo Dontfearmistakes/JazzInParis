@@ -117,7 +117,9 @@
 -(void)setDistanceFromUserToVenue:(double)distanceFromUserToVenue
 {
     [self willChangeValueForKey:@"subtitle"];
+    [self willChangeValueForKey:@"distanceFromUserToVenue"];
     _distanceFromUserToVenue = distanceFromUserToVenue;
+    [self didChangeValueForKey:@"distanceFromUserToVenue"];
     [self didChangeValueForKey:@"subtitle"];
 }
 @end
