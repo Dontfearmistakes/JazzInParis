@@ -12,6 +12,14 @@
 
 @interface JIPJazzClubsMapVC : UIViewController <MKMapViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *allJazzClubsMap;
+@property (strong, nonatomic) IBOutlet UIButton *buttonForUserLocation;
+@property (strong, nonatomic) IBOutlet UIButton *buttonBackToLargeView;
+- (IBAction)buttonForUserLocationClick:(id)sender;
+- (IBAction)buttonBackToLargeViewClick:(id)sender;
+
+
+
+
 @property (strong, nonatomic) NSArray *jazzClubsArrayFromCoreData;
 @property (strong, nonatomic) JIPVenue *venue;
 @end

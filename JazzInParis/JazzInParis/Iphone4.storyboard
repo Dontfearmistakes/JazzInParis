@@ -331,7 +331,7 @@
         <scene sceneID="6TC-2b-R2O">
             <objects>
                 <tableViewController storyboardIdentifier="Menu" id="eP8-K5-nBF" customClass="SideMenuViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="76y-vP-9Aj">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="76y-vP-9Aj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -707,6 +707,30 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                                     <outlet property="delegate" destination="ixu-SN-aI4" id="VYi-3e-AUz"/>
                                 </connections>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5yl-4T-Tzy">
+                                <rect key="frame" x="20" y="446" width="38" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                <state key="normal" image="userLocation">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonForUserLocationClick:" destination="ixu-SN-aI4" eventType="touchUpInside" id="XsQ-Fv-wjD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Bd-jr-W9o">
+                                <rect key="frame" x="263" y="446" width="37" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <state key="normal" image="circle">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonBackToLargeViewClick:" destination="ixu-SN-aI4" eventType="touchUpInside" id="mMI-uS-kGV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -720,6 +744,8 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                     </navigationItem>
                     <connections>
                         <outlet property="allJazzClubsMap" destination="g6c-rA-gcg" id="C39-lz-oWW"/>
+                        <outlet property="buttonBackToLargeView" destination="3Bd-jr-W9o" id="YiK-zF-mpq"/>
+                        <outlet property="buttonForUserLocation" destination="5yl-4T-Tzy" id="klr-YK-xRM"/>
                         <segue destination="cpd-fZ-ZId" kind="push" identifier="toVenueDetails" id="DPf-Pt-Q4V"/>
                     </connections>
                 </viewController>
@@ -927,6 +953,16 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                                     <outlet property="delegate" destination="ann-bC-rUB" id="EkY-8Z-fBQ"/>
                                 </connections>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qU3-M8-ySt">
+                                <rect key="frame" x="20" y="437" width="116" height="116"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.19215686269999999" green="0.19215686269999999" blue="0.19215686269999999" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                                <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <state key="normal" backgroundImage="locationIcon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -1026,8 +1062,11 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
         </scene>
     </scenes>
     <resources>
+        <image name="circle" width="366" height="370"/>
+        <image name="locationIcon" width="116" height="116"/>
         <image name="menuIcon" width="16" height="16"/>
         <image name="miles2" width="422" height="760"/>
+        <image name="userLocation" width="48" height="48"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

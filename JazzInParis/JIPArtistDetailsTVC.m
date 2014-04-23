@@ -44,12 +44,21 @@
 {
     [super viewWillAppear:animated];
     [_favoriteSwitchView setOn:[_artist.favorite boolValue]];
-    NSString* nsutf8ArtistName = [[_artist.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] lowercaseString] ;
+    NSString* nsutf8ArtistName = [[_artist.name stringByReplacingOccurrencesOfString:@" " withString:@"_"] lowercaseString];
+    // convert to a data object, using a lossy conversion to ASCII
+    NSData *asciiEncoded = [nsutf8ArtistName dataUsingEncoding:NSASCIIStringEncoding
+                             allowLossyConversion:YES];
+    
+    // take the data object and recreate a string using the lossy conversion
+    NSString *cleanArtistName = [[NSString alloc] initWithData:asciiEncoded
+                                            encoding:NSASCIIStringEncoding];
+    
+    
 
     /////////////////////////////////////
     // A) REQUEST POUR L'IMAGE ID
     /////////////////////////////////////
-    NSURLRequest            *requestImgId                        = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://www.googleapis.com/freebase/v1/topic/en/%@?filter=/common/topic/image&limit=1", nsutf8ArtistName]]];
+    NSURLRequest            *requestImgId                        = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://www.googleapis.com/freebase/v1/topic/en/%@?filter=/common/topic/image&limit=1", cleanArtistName]]];
     AFHTTPRequestOperation *operationForImgId                    = [[AFHTTPRequestOperation alloc] initWithRequest:requestImgId];
                             operationForImgId.responseSerializer = [AFJSONResponseSerializer serializer];
     
@@ -67,34 +76,15 @@
             /////////////////////////////////////
             // B) REQUEST POUR L'IMAGE ELLE MEME
             /////////////////////////////////////
-            NSURLRequest            *requestImg                         = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://usercontent.googleapis.com/freebase/v1/image%@?maxwidth=320&maxheight=220",imageId]]];
+            NSURLRequest            *requestImg                         = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://usercontent.googleapis.com/freebase/v1/image%@?maxwidth=2020&maxheight=2020&minwidth=1020&minheight=2020",imageId]]];
             AFHTTPRequestOperation *operationForImg                     = [[AFHTTPRequestOperation alloc] initWithRequest:requestImg];
                                     operationForImg.responseSerializer  = [AFImageResponseSerializer serializer];
             [operationForImg
              
             setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-            {                
+            {
                 UIImage * responseImg = responseObject;
-                float     imgWidth    = responseImg.size.width;
-                float     imgHeight   = responseImg.size.height;
-                _ratio = imgHeight/imgWidth;
-                
-                
-                //1) resize imageView
-                if (320 * _ratio < 260)
-                    _artistImageView.frame = CGRectMake(0, 0, 320, 320 * _ratio);
-                else
-                    _artistImageView.frame = CGRectMake(0, 0, 320, 260);
-                
-                //2) resize UIimage
-                UIImage* resizedImg;
-                if (320*_ratio < 260)
-                    resizedImg = [UIImage imageWithImage:responseObject scaledToSize:CGSizeMake(320.0, 320.0 * _ratio)];
-                else
-                    resizedImg = [UIImage imageWithImage:responseObject scaledToSize:CGSizeMake(320.0, 260)];
-                
-                //3
-                _artistImageView.image = resizedImg;
+                _artistImageView.image = responseImg;
                 
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             }

@@ -39,6 +39,15 @@
     
     [super viewWillAppear:YES];
     self.title = @"Jazz Clubs in Paris";
+    
+    /////Style buttonForUserLocation
+    _buttonForUserLocation.layer.cornerRadius = 5;
+    _buttonForUserLocation.layer.borderColor = [UIColor grayColor].CGColor;
+    _buttonForUserLocation.layer.borderWidth = 1;
+    
+    _buttonBackToLargeView.layer.cornerRadius = 5;
+    _buttonBackToLargeView.layer.borderColor = [UIColor grayColor].CGColor;
+    _buttonBackToLargeView.layer.borderWidth = 1;
 
     ////////////////////////////////////////////FETCH JAZZ CLUBS IN CORE DATA
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPVenue"];
@@ -105,7 +114,41 @@
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - IBActions
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+- (IBAction)buttonForUserLocationClick:(id)sender
+{
+    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied)
+    {
+        double regionWidth  = 1200;
+        double regionHeight = 1100;
+        MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(_allJazzClubsMap.userLocation.location.coordinate, regionWidth, regionHeight);
+        [_allJazzClubsMap setRegion:startRegion
+                           animated:YES];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service disabled for Dontfearmistakes."
+                                                        message:@"Please go to your settings"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
 
+- (IBAction)buttonBackToLargeViewClick:(id)sender
+{
+    CLLocationCoordinate2D parisCenterCoordinate = CLLocationCoordinate2DMake(48.86222222222222, 2.340833333333333);
+    double regionWidth  = 12000;
+    double regionHeight = 11000;
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(parisCenterCoordinate, regionWidth, regionHeight);
+    [_allJazzClubsMap setRegion:startRegion
+                       animated:YES];
+}
 @end

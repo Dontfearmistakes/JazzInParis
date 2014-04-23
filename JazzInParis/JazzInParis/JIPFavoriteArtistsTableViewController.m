@@ -257,12 +257,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    #warning : this method is never called ...
     [self.searchDisplayController setActive:NO animated:YES];
 }
 
