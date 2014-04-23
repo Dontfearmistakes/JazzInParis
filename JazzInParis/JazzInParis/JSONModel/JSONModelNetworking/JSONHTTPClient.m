@@ -66,12 +66,12 @@ static NSMutableDictionary* flags = nil;
 
 +(void)setDefaultTextEncoding:(NSStringEncoding)encoding
 {
-    defaultTextEncoding = encoding;
+    defaultTextEncoding = (int)encoding;
 }
 
 +(void)setDefaultCachingPolicy:(NSURLRequestCachePolicy)policy
 {
-    defaultCachePolicy = policy;
+    defaultCachePolicy = (int)policy;
 }
 
 +(void)setControlsNetworkIndicator:(BOOL)does
@@ -168,7 +168,7 @@ static NSMutableDictionary* flags = nil;
         NSData* bodyData = [bodyString dataUsingEncoding:defaultTextEncoding];
         [request setHTTPBody: bodyData];
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-        [request addValue:[NSString stringWithFormat:@"%i", [bodyData length]] forHTTPHeaderField:@"Content-Length"];
+        [request addValue:[NSString stringWithFormat:@"%lu", (unsigned long)[bodyData length]] forHTTPHeaderField:@"Content-Length"];
 #else
         [request addValue:[NSString stringWithFormat:@"%ld", [bodyData length]] forHTTPHeaderField:@"Content-Length"];
 #endif

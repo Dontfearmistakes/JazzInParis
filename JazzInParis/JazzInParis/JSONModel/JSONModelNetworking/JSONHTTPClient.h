@@ -24,7 +24,6 @@ extern NSString * const kHTTPMethodPOST;
  * You pass it to methods which create a model asynchroniously. When the operation is finished
  * you receive back the initialized model (or nil) and an error (or nil)
  *
- * TODO: How do you document block type definitions? This doesn't work obviously.
  *
  * @param model the newly created JSONModel instance or nil
  * @param e JSONModelError or nil

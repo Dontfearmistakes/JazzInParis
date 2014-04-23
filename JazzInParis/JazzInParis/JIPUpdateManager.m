@@ -226,7 +226,7 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
     //request.predicate         = [NSPredicate predicateWithFormat:@"artist.id = %@", artist.id]; //all JIPEvents for this artist
     NSError *error = nil;
     
-    #warning : BUG fetch not working, objectsToBeDeleted is always empty
+    //#warning : BUG fetch not working, objectsToBeDeleted is always empty
     NSArray *objectsToBeDeleted = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request
                                                                                                                  error:&error];
     //SI on a des JIPEvents à supprimer

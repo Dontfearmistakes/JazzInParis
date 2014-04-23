@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="MpH-gp-Xkl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="MpH-gp-Xkl">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -48,7 +48,7 @@
                                 <action selector="revealMenu:" destination="mbH-FO-pnw" id="hSE-f0-xeC"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="Hx8-oU-u7O">
+                        <barButtonItem key="rightBarButtonItem" id="Hx8-oU-u7O">
                             <textField key="customView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Enter artist name" minimumFontSize="17" clearButtonMode="whileEditing" id="sBE-2g-POp">
                                 <rect key="frame" x="55" y="7" width="249" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -510,7 +510,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vdy-av-oEj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="709" y="-348"/>
+            <point key="canvasLocation" x="709" y="-332"/>
         </scene>
         <!--Upcoming EventsCDTVC - All concerts-->
         <scene sceneID="2Zr-pD-P1w">
@@ -712,9 +712,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                                <state key="normal" image="userLocation">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="normal" image="userLocation"/>
                                 <connections>
                                     <action selector="buttonForUserLocationClick:" destination="ixu-SN-aI4" eventType="touchUpInside" id="XsQ-Fv-wjD"/>
                                 </connections>
@@ -724,9 +722,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                                <state key="normal" image="circle">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="normal" image="circle"/>
                                 <connections>
                                     <action selector="buttonBackToLargeViewClick:" destination="ixu-SN-aI4" eventType="touchUpInside" id="mMI-uS-kGV"/>
                                 </connections>
@@ -953,15 +949,13 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                                     <outlet property="delegate" destination="ann-bC-rUB" id="EkY-8Z-fBQ"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qU3-M8-ySt">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qU3-M8-ySt">
                                 <rect key="frame" x="20" y="437" width="116" height="116"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.19215686269999999" green="0.19215686269999999" blue="0.19215686269999999" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                 <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                                <state key="normal" backgroundImage="locationIcon">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="normal" backgroundImage="locationIcon"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1074,8 +1068,8 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="DPf-Pt-Q4V"/>
         <segue reference="KJD-30-6ps"/>
         <segue reference="njn-IU-hsv"/>
-        <segue reference="DPf-Pt-Q4V"/>
     </inferredMetricsTieBreakers>
 </document>

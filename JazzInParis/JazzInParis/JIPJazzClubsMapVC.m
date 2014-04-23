@@ -73,7 +73,6 @@
     
     for (JIPVenue *jazzClub in _jazzClubsArrayFromCoreData)
     {
-        #warning : bool doesn't get set
         [jazzClub setShouldDisplayDistanceFromUserToVenue:NO];
     }
     

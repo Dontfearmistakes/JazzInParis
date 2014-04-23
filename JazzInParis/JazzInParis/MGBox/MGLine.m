@@ -78,7 +78,11 @@
                 padding:(UIEdgeInsets)padding {
 
   // compute min height
-  CGSize minSize = [text sizeWithFont:font];
+    
+    NSDictionary *attributes = @{NSFontAttributeName:font};
+    
+    CGSize minSize = [text sizeWithAttributes:attributes];
+
   CGFloat height = minSize.height + padding.top + padding.bottom;
 
   // make the line
@@ -467,8 +471,18 @@
 
           // plain old string
         } else {
-          label.size = [label.text sizeWithFont:label.font
-              constrainedToSize:(CGSize){limit - used, maxHeight}];
+            
+            CGRect textRect = [label.text boundingRectWithSize:(CGSize){limit - used, maxHeight}
+                                                 options:NSStringDrawingUsesLineFragmentOrigin
+                                              attributes:@{NSFontAttributeName:label.font}
+                                                 context:nil];
+            
+            CGSize size = textRect.size;
+            
+            label.size = size;
+            
+          //label.size = [label.text sizeWithFont:label.font
+            //  constrainedToSize:(CGSize){limit - used, maxHeight}];
         }
 
         // single line
@@ -623,7 +637,12 @@
     }
     label.size = size;
   } else {
-    label.size = [label.text sizeWithFont:label.font];
+      
+      NSDictionary *attributes = @{NSFontAttributeName:label.font};
+      
+    label.size = [text sizeWithAttributes:attributes];
+      
+      
   }
 
   // tag as modifiable

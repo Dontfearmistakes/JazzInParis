@@ -58,7 +58,7 @@
          */
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit| NSDayCalendarUnit ) fromDate:[self date]];
-        tmp = [NSString stringWithFormat:@"%d", ([components year] * 10000) + [components month] * 100 +[components day]];
+        tmp = [NSString stringWithFormat:@"%ld", ([components year] * 10000) + [components month] * 100 +[components day]];
         [self setPrimitiveSectionIdentifier:tmp];
     }
     return tmp;
@@ -103,8 +103,6 @@
 
 
 
-
-#warning Event Name attribute getter/setter commented out
 ////////////////////////////////////////
 // Check if we have a custom display name for the event.
 // If not, set and use the artist's name as the display name.
