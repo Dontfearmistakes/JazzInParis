@@ -55,11 +55,11 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 -(void)updateUpcomingEvents
 {
     //1) Create http requests for all favorite artists
-    NSURLSession * session  = [NSURLSession sharedSession];
+    NSURLSession * session            = [NSURLSession sharedSession];
     
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
-    request.predicate       = [NSPredicate predicateWithFormat:@"favorite == %@", @YES];
-    NSError *error = nil;
+    NSFetchRequest *request           = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
+                    request.predicate = [NSPredicate predicateWithFormat:@"favorite == %@", @YES];
+    NSError        *error = nil;
     
     self.favoriteArtists = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
     
@@ -79,12 +79,12 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 }
 
 
-/////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 -(void)updateUpcomingEventsForFavoriteArtist:(JIPArtist *)artist
 {
-    NSURLSession * session  = [NSURLSession sharedSession];
-    NSURL *url = [self songkickURLUpcomingEventsForArtist:artist];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
+    NSURLSession         * session  = [NSURLSession sharedSession];
+    NSURL                * url      = [self songkickURLUpcomingEventsForArtist:artist];
+    NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                     
                                                     [self insertJIPEventsFromJSON:data error:&error];
@@ -117,26 +117,8 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
             NSMutableDictionary * eventDict = [[NSMutableDictionary alloc]init];
             
             //event details
-            eventDict[@"id"]        = eventDictFromApi[@"id"];
-            eventDict[@"name"]      = eventDictFromApi[@"displayName"];
             eventDict[@"lat"]       = [NSString stringWithFormat:@"%@", eventDictFromApi[@"location"][@"lat"]];
             eventDict[@"long"]      = [NSString stringWithFormat:@"%@", eventDictFromApi[@"location"][@"lng"]];
-            eventDict[@"date"]      = [NSDate dateFromAPIString:eventDictFromApi[@"start"][@"date"]] ;
-            eventDict[@"startTime"] = eventDictFromApi[@"start"][@"time"] ;
-            eventDict[@"venue"]     = eventDictFromApi[@"venue"][@"displayName"];
-            eventDict[@"artist"]    = eventDictFromApi[@"performance"][0][@"artist"][@"displayName"] ;
-            eventDict[@"uriString"] = eventDictFromApi[@"uri"];
-            
-            //artist details
-            eventDict[@"artistId"]  = eventDictFromApi[@"performance"][0][@"artist"][@"id"];
-            eventDict[@"artistUri"] = eventDictFromApi[@"performance"][0][@"artist"][@"uri"];
-            
-            
-            //venue details
-            eventDict[@"venueId"]   = eventDictFromApi[@"venue"][@"id"];
-            eventDict[@"venueUri"]  = eventDictFromApi[@"venue"][@"uri"];
-            eventDict[@"venueName"] = eventDictFromApi[@"venue"][@"displayName"];
-            eventDict[@"venueCity"] = eventDictFromApi[@"location"][@"city"];
             
             CLLocation *eventLocation = [[CLLocation alloc] initWithLatitude:[eventDict[@"lat"]  doubleValue]
                                                                    longitude:[eventDict[@"long"] doubleValue]];
@@ -144,6 +126,26 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
             //if event dans un rayon de 30km autour de Paris alors insertIntoContext
             if ([self eventLocationIsNotTooFarFromParisCenter:eventLocation])
             {
+
+                eventDict[@"id"]        = eventDictFromApi[@"id"];
+                eventDict[@"name"]      = eventDictFromApi[@"displayName"];
+                eventDict[@"date"]      = [NSDate dateFromAPIString:eventDictFromApi[@"start"][@"date"]] ;
+                eventDict[@"startTime"] = eventDictFromApi[@"start"][@"time"] ;
+                eventDict[@"venue"]     = eventDictFromApi[@"venue"][@"displayName"];
+                eventDict[@"artist"]    = eventDictFromApi[@"performance"][0][@"artist"][@"displayName"] ;
+                eventDict[@"uriString"] = eventDictFromApi[@"uri"];
+                
+                //artist details
+                eventDict[@"artistId"]  = eventDictFromApi[@"performance"][0][@"artist"][@"id"];
+                eventDict[@"artistUri"] = eventDictFromApi[@"performance"][0][@"artist"][@"uri"];
+                
+                
+                //venue details
+                eventDict[@"venueId"]   = eventDictFromApi[@"venue"][@"id"];
+                eventDict[@"venueUri"]  = eventDictFromApi[@"venue"][@"uri"];
+                eventDict[@"venueName"] = eventDictFromApi[@"venue"][@"displayName"];
+                eventDict[@"venueCity"] = eventDictFromApi[@"location"][@"city"];
+            
                 [JIPEvent eventWithSongkickInfo:eventDict
                          inManagedObjectContext:[JIPManagedDocument sharedManagedDocument].managedObjectContext];
             }
@@ -165,8 +167,10 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
         return NO;
 }
 
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 -(NSURL *)songkickURLUpcomingEventsForArtist:(JIPArtist *)artist
 {
@@ -174,7 +178,8 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
     return [self songkickApiURLWithComponent:artistUrlPiece];
 }
 
-////////////////////////////////////////////////////////////////
+
+
 -(NSURL *)songkickURLUpcomingEventsForVenueWithId:(NSString *)venueId
 {
     //goal : http://api.songkick.com/api/3.0/venues/{venue_id}.json?apikey={your_api_key}
@@ -182,7 +187,8 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
     return [self songkickApiURLWithComponent:venueUrlPiece];
 }
 
-///////////////////////////////////////////////////////
+
+
 -(NSURL *)songkickApiURLWithComponent:(NSString*)component
 {
     if (!component)
@@ -193,30 +199,34 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
                                                                                                               JIPUpdateManagerSongkickAPIKey];
     return [NSURL URLWithString:songkickAPIString];
 }
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 
 
 
 
-/////////////////////
 -(void)clearOldEvents
 {
     
-        NSFetchRequest *request     = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
-        NSDate         *tenDaysAgo  = [NSDate dateWithTimeIntervalSinceNow:( -JIPUpdateManagerDeletionDelay * 24 * 60 * 60 )];
-        request.predicate           = [NSPredicate predicateWithFormat:@"date <= %@", tenDaysAgo]; //all JIPEvents older than XX days
-        NSError *error = nil;
-        NSArray *objectsToBeDeleted = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request
+        NSFetchRequest *request            = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
+        NSDate         *tenDaysAgo         = [NSDate dateWithTimeIntervalSinceNow:( -JIPUpdateManagerDeletionDelay * 24 * 60 * 60 )];
+                        request.predicate  = [NSPredicate predicateWithFormat:@"date <= %@", tenDaysAgo]; //all JIPEvents older than XX days
+        NSError        *error = nil;
+        NSArray        *objectsToBeDeleted = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request
                                                                                    error:&error];
         
-        if (objectsToBeDeleted != nil)
+        if ([objectsToBeDeleted count] != 0)
         for (NSManagedObject* objectToBeDeleted in objectsToBeDeleted)
         [[JIPManagedDocument sharedManagedDocument].managedObjectContext deleteObject:objectToBeDeleted];
     
     
 }
 
-/////////////////////
+
+
+
+
 -(void)clearArtistEvents:(JIPArtist *)artist
 {
     

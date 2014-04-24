@@ -38,8 +38,6 @@
     [_phoneNumberButton setTitle:_venue.phone         forState:UIControlStateNormal] ;
     [_websiteButton     setTitle:_venue.websiteString forState:UIControlStateNormal];
 
-
-    
     _mapView         .scrollEnabled = YES;
     
     //////////////////////////////////////////// 3) POSITIONNE MAPVIEW DANS L'ESPACE AVEC eventCoordinate COMME CENTRE
@@ -66,7 +64,8 @@
 
 - (IBAction)phoneNumberClick:(id)sender
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", _venue.phone]]];
+    NSString *spacesFreePhoneNumber = [_venue.phone stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", spacesFreePhoneNumber]]];
 }
 
 - (IBAction)venueWebsiteClick:(id)sender

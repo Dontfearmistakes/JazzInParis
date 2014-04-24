@@ -31,20 +31,19 @@
     [super viewDidLoad];
     
     //Remove space between navBar and 1st cell
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 7){
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 7)
         self.tableView.contentInset = UIEdgeInsetsMake(-35, 0, 0, 0);
-    }
     
-    self.title = _artist.name;
     [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
-
+    self.title = _artist.name;
     [_favoriteSwitchView setOn:[_artist.favorite boolValue]];
+    
+    //GETTING A cleanArtistName that we can send to the API below
     NSString* nsutf8ArtistName = [[_artist.name stringByReplacingOccurrencesOfString:@" " withString:@"_"] lowercaseString];
-    // convert to a data object, using a lossy conversion to ASCII
+    // 1) convert to a data object, using a lossy conversion to ASCII
     NSData *asciiEncoded = [nsutf8ArtistName dataUsingEncoding:NSASCIIStringEncoding
                              allowLossyConversion:YES];
-    
-    // take the data object and recreate a string using the lossy conversion
+    // 2) take the data object and recreate a string using the lossy conversion
     NSString *cleanArtistName = [[NSString alloc] initWithData:asciiEncoded
                                             encoding:NSASCIIStringEncoding];
     
@@ -142,6 +141,7 @@
         [[JIPUpdateManager sharedUpdateManager] clearArtistEvents:self.artist];
     }
 }
+
 
 
 

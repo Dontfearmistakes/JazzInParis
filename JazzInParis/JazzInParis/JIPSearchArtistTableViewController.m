@@ -54,6 +54,7 @@
     
     [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
     
+
     
     _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOnTableView:)];
     [self.tableView addGestureRecognizer:_tapGesture];

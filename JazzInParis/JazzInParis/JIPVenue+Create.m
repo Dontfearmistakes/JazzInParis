@@ -36,9 +36,8 @@
         venue = [NSEntityDescription insertNewObjectForEntityForName:@"JIPVenue"
                                                      inManagedObjectContext:context];
         if (venueDict[@"id"] != [NSNull null])
-        {
             venue.id       = venueDict[@"id"];
-        }
+        
         venue.name     = venueDict[@"name"];
         venue.city     = venueDict[@"city"];
         venue.latitude = [NSNumber numberWithDouble:[venueDict[@"lat"] doubleValue]];
