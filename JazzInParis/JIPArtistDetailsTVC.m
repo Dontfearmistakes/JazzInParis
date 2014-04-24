@@ -112,11 +112,11 @@
     
     [operationForImgId start];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [self performSelector:@selector(noImgAvalaible) withObject:nil afterDelay:1.5];
+    [self performSelector:@selector(noImgAvailable) withObject:nil afterDelay:1.5];
 }
 
 
--(void)noImgAvalaible
+-(void)noImgAvailable
 {
     if (!_artistImageView.image)
         [_artistImageView setImage:[UIImage imageNamed:@"errorImage"]];

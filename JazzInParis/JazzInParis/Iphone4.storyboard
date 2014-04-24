@@ -81,15 +81,15 @@
                         <sections>
                             <tableViewSection headerTitle="" id="2wM-fm-bbb">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="220" id="d2x-kB-Pex">
-                                        <rect key="frame" x="0.0" y="35" width="320" height="220"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="300" id="d2x-kB-Pex">
+                                        <rect key="frame" x="0.0" y="35" width="320" height="300"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d2x-kB-Pex" id="y72-oV-EjG">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="219"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="299"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z2t-DM-3bL">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="219"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="299"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
@@ -101,7 +101,7 @@
                             <tableViewSection headerTitle="" id="9Xr-ud-7Wb">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5wG-1g-Bh8">
-                                        <rect key="frame" x="0.0" y="275" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="355" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5wG-1g-Bh8" id="Jmb-cn-qUy">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -130,7 +130,7 @@
                             <tableViewSection headerTitle="" id="0Nk-85-Sny">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="7GB-bW-iRI">
-                                        <rect key="frame" x="0.0" y="339" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="419" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7GB-bW-iRI" id="w4n-sE-lrI">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -722,7 +722,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                                <state key="normal" image="circle"/>
+                                <state key="normal" image="blackCircle"/>
                                 <connections>
                                     <action selector="buttonBackToLargeViewClick:" destination="ixu-SN-aI4" eventType="touchUpInside" id="mMI-uS-kGV"/>
                                 </connections>
@@ -1056,7 +1056,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
         </scene>
     </scenes>
     <resources>
-        <image name="circle" width="366" height="370"/>
+        <image name="blackCircle" width="64" height="64"/>
         <image name="locationIcon" width="116" height="116"/>
         <image name="menuIcon" width="16" height="16"/>
         <image name="miles2" width="422" height="760"/>

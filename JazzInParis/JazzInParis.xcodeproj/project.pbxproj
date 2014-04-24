@@ -35,6 +35,7 @@
 		5029347218FD79AC009A4F2F /* JIPInitialVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5029347118FD79AB009A4F2F /* JIPInitialVC.m */; };
 		502A222818F97ABB00CB7926 /* JIPSearchArtistNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 502A222718F97ABB00CB7926 /* JIPSearchArtistNameCell.m */; };
 		502A222B18F9815C00CB7926 /* JIPArtistDetailsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 502A222A18F9815C00CB7926 /* JIPArtistDetailsTVC.m */; };
+		503CE20D19091E9800EB2F4C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 503CE20C19091E9800EB2F4C /* Default-568h@2x.png */; };
 		5040392C18F5649200AE815A /* JIPUpcomingEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5040392B18F5649200AE815A /* JIPUpcomingEventCell.m */; };
 		5051B4F518D9A6D600BBE2DB /* JIPUpdateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5051B4F418D9A6D600BBE2DB /* JIPUpdateManager.m */; };
 		5069740F18F1811800A4E23C /* JIPArtistNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5069740E18F1811800A4E23C /* JIPArtistNameCell.m */; };
@@ -190,6 +191,7 @@
 		503C453919081CF70058E659 /* 120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 120x120.png; sourceTree = "<group>"; };
 		503C453A190820FD0058E659 /* milesjeanne 640x960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "milesjeanne 640x960.png"; sourceTree = "<group>"; };
 		503C453B190821610058E659 /* milesjeanne 640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "milesjeanne 640x1136.png"; sourceTree = "<group>"; };
+		503CE20C19091E9800EB2F4C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		5040392A18F5649200AE815A /* JIPUpcomingEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPUpcomingEventCell.h; sourceTree = "<group>"; };
 		5040392B18F5649200AE815A /* JIPUpcomingEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JIPUpcomingEventCell.m; sourceTree = "<group>"; };
 		5051B4F318D9A6D600BBE2DB /* JIPUpdateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JIPUpdateManager.h; sourceTree = "<group>"; };
@@ -624,6 +626,7 @@
 		50A52F97189ED5D9001D9779 = {
 			isa = PBXGroup;
 			children = (
+				503CE20C19091E9800EB2F4C /* Default-568h@2x.png */,
 				503C453B190821610058E659 /* milesjeanne 640x1136.png */,
 				503C453A190820FD0058E659 /* milesjeanne 640x960.png */,
 				503C453919081CF70058E659 /* 120x120.png */,
@@ -937,6 +940,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50A52FAE189ED5D9001D9779 /* InfoPlist.strings in Resources */,
+				503CE20D19091E9800EB2F4C /* Default-568h@2x.png in Resources */,
 				50AEB97F18EEDB920055FE07 /* Iphone4.storyboard in Resources */,
 				50A52FB6189ED5D9001D9779 /* Images.xcassets in Resources */,
 			);
