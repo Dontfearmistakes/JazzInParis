@@ -13,7 +13,7 @@
 //////////////////////////////////////////////////////////////////
 +(void)applyBackgroundWallpaperInTableView:(UITableView*)tableView
 {
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miles2.png"]];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"milesDavisBackground.png"]];
     [tableView setBackgroundView:imageView];
 }
 
