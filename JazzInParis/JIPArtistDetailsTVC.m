@@ -8,9 +8,12 @@
 
 #import "JIPArtistDetailsTVC.h"
 #import "JIPUpdateManager.h"
+#import "JIPManagedDocument.h"
 #import "YouTubeVC.h"
 #import "AFNetworking/AFHTTPRequestOperation.h"
-#import "UIImage+Resize.h"
+#import "JIPArtist.h"
+#import "JIPArtist+Create.h"
+
 
 @interface JIPArtistDetailsTVC ()
 
@@ -63,7 +66,7 @@
      setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          //S'il y a bien des résultats
-         if ([[[responseObject objectForKey:@"property"] objectForKey:@"/common/topic/image" ] objectForKey:@"values"] > 0)
+         if ([[[[responseObject objectForKey:@"property"] objectForKey:@"/common/topic/image" ] objectForKey:@"values"] count] > 0)
          {
              //On récupère l'id et la taille de la 1ère image
              NSString *imageId = [[NSString alloc]  initWithString:[[[[[responseObject objectForKey:@"property"] objectForKey:@"/common/topic/image" ] objectForKey:@"values"] objectAtIndex:0] objectForKey:@"id"]];
@@ -138,7 +141,8 @@
 
 
 
-- (IBAction)toggleFavorite:(id)sender {
+- (IBAction)toggleFavorite:(id)sender
+{
     //1) On update l'attribut favorite
     [self.artist setFavorite:[NSNumber numberWithBool:[(UISwitch*)sender isOn]]];
     

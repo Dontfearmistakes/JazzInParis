@@ -46,14 +46,6 @@
     [self searchYoutubeVideosForTerm: _searchString];
 }
 
-//fire up API search on Enter pressed
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    [self searchYoutubeVideosForTerm:textField.text];
-    return YES;
-}
-
 -(void)searchYoutubeVideosForTerm:(NSString*)term
 {
     NSLog(@"Searching for '%@' ...", term);

@@ -823,7 +823,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
         <scene sceneID="tx9-JQ-Ks5">
             <objects>
                 <tableViewController id="QbP-ia-AHo" customClass="JIPEventDetailsTVC" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="iIb-Yk-lqA">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="5" id="iIb-Yk-lqA">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -850,7 +850,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                             <tableViewSection headerTitle="" id="mAM-uD-hjn">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="xbr-RL-kW2">
-                                        <rect key="frame" x="0.0" y="335" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="321" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xbr-RL-kW2" id="BCV-vs-tTZ">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -872,7 +872,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                             <tableViewSection headerTitle="" id="cZY-Zc-zPD">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="1rN-Yq-8xg">
-                                        <rect key="frame" x="0.0" y="399" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="371" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1rN-Yq-8xg" id="udp-Dc-bjx">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -893,8 +893,8 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                             </tableViewSection>
                             <tableViewSection headerTitle="" id="LWv-JR-Dhm">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="Sae-sx-ExF">
-                                        <rect key="frame" x="0.0" y="463" width="320" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Sae-sx-ExF">
+                                        <rect key="frame" x="0.0" y="421" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Sae-sx-ExF" id="OFu-XY-40G">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>

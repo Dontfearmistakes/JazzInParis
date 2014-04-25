@@ -33,12 +33,10 @@
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
         self.edgesForExtendedLayout = UIRectEdgeNone;
     
+    //If iOS7
     float currentVersion = 7.0;
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= currentVersion)
-    {
-        // iOS 7
         self.navBar.frame = CGRectMake(self.navBar.frame.origin.x, self.navBar.frame.origin.y, self.navBar.frame.size.width, 64);
-    }
 
     [self.slidingViewController setAnchorRightRevealAmount:180.0f];
      self.slidingViewController.underLeftWidthLayout = ECFullWidth;

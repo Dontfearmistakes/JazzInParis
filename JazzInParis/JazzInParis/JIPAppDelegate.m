@@ -34,6 +34,7 @@
         [userDefaults setBool:YES forKey:@"firstLaunch"];
     }
     
+    
     [[JIPUpdateManager sharedUpdateManager] clearOldEvents];
     [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
     

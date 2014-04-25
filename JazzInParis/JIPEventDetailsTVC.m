@@ -178,7 +178,16 @@
 }
 
 
-
+#warning réduire taille des cells si on est sur petit iPhone - mais pour le moment ça chamboule tout (conflit avec storyboard)
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGRect screenRect    = [[UIScreen mainScreen] bounds];
+    CGFloat screenHeight = screenRect.size.height;
+    if (screenHeight < 568)
+        return 40;
+    else
+        return 45;
+}
 
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue

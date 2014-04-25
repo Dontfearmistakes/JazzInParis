@@ -109,8 +109,6 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
     }
     
     NSArray *dictionnariesOfEventsFromApi = parsedObject[@"resultsPage"][@"results"][@"event"];
-    
-
         
         for (NSDictionary * eventDictFromApi in dictionnariesOfEventsFromApi)
         {
