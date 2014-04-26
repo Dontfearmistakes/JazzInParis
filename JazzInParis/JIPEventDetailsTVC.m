@@ -20,7 +20,7 @@
 
 @implementation JIPEventDetailsTVC
 
-@synthesize artistImageView     = _artistImageView;
+@synthesize artistImageView    = _artistImageView;
 @synthesize concertDateLabel   = _concertDateLabel;
 @synthesize event              = _event;
 @synthesize venue              = _venue;
@@ -132,7 +132,6 @@
              [_artistImageView setImage:[UIImage imageNamed:@"errorImage"]];
              [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
          }
-         
      }
      
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
@@ -178,16 +177,7 @@
 }
 
 
-#warning réduire taille des cells si on est sur petit iPhone - mais pour le moment ça chamboule tout (conflit avec storyboard)
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CGRect screenRect    = [[UIScreen mainScreen] bounds];
-    CGFloat screenHeight = screenRect.size.height;
-    if (screenHeight < 568)
-        return 40;
-    else
-        return 45;
-}
+
 
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue
