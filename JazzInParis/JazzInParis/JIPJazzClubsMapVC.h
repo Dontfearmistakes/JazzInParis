@@ -20,6 +20,6 @@
 
 
 
-@property (strong, nonatomic) NSArray *jazzClubsArrayFromCoreData;
+@property (strong, nonatomic) NSArray  *jazzClubsArrayFromCoreData;
 @property (strong, nonatomic) JIPVenue *venue;
 @end

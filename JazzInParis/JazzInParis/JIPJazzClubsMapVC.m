@@ -20,9 +20,9 @@
 
 @implementation JIPJazzClubsMapVC
 
-@synthesize allJazzClubsMap = _allJazzClubsMap;
+@synthesize allJazzClubsMap             = _allJazzClubsMap;
 @synthesize jazzClubsArrayFromCoreData  = _jazzClubsArrayFromCoreData;
-@synthesize venue           = _venue;
+@synthesize venue                       = _venue;
 
 ////////////////////////////////////////////////
 //method for every rootVC / implements side menu

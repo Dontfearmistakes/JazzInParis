@@ -13,13 +13,27 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  UIStoryboard *storyboard;
-  
-  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-    storyboard = [UIStoryboard storyboardWithName:@"Iphone4" bundle:nil];
-  } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-    storyboard = [UIStoryboard storyboardWithName:@"IPhone4" bundle:nil];
-  }
+    UIStoryboard *storyboard = nil;
+    
+    // The iOS device = iPhone or iPod Touch
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone)
+    {
+        CGSize iOSDeviceScreenSize = [[UIScreen mainScreen] bounds].size;
+        if (iOSDeviceScreenSize.height == 480)
+        {
+            // iPhone 3GS, 4, and 4S and iPod Touch 3rd and 4th generation: 3.5 inch screen (diagonally measured)
+            //NSLog(@"Loading iphone 4 storyboard");
+            // Instantiate a new storyboard object using the storyboard file named MainStoryboard_iPhone
+            storyboard = [UIStoryboard storyboardWithName:@"Iphone4" bundle:nil];
+        }
+        if (iOSDeviceScreenSize.height == 568)
+        {
+            // iPhone 5 and iPod Touch 5th generation: 4 inch screen (diagonally measured)
+            //NSLog(@"Loading iphone 5 storyboard");
+            // Instantiate a new storyboard object using the storyboard file named Storyboard_iPhone4
+            storyboard = [UIStoryboard storyboardWithName:@"Iphone5" bundle:nil];
+        }
+    }
   
     self.topViewController = [storyboard instantiateViewControllerWithIdentifier:@"Search Artist"];
 }
