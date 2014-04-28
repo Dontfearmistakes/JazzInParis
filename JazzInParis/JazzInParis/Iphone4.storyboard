@@ -67,6 +67,13 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3hv-Ko-KOL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="14J-e3-z5I">
+                    <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="tintColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </objects>
             <point key="canvasLocation" x="3197" y="543"/>
         </scene>
@@ -74,7 +81,7 @@
         <scene sceneID="L7H-8m-fVq">
             <objects>
                 <tableViewController id="3N1-EL-i97" customClass="JIPArtistDetailsTVC" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="CYw-hY-EEv">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="7" sectionFooterHeight="7" id="CYw-hY-EEv">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -101,7 +108,7 @@
                             <tableViewSection headerTitle="" id="9Xr-ud-7Wb">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5wG-1g-Bh8">
-                                        <rect key="frame" x="0.0" y="335" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="329" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5wG-1g-Bh8" id="Jmb-cn-qUy">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -130,7 +137,7 @@
                             <tableViewSection headerTitle="" id="0Nk-85-Sny">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="7GB-bW-iRI">
-                                        <rect key="frame" x="0.0" y="399" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="387" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7GB-bW-iRI" id="w4n-sE-lrI">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -456,7 +463,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="miles2" translatesAutoresizingMaskIntoConstraints="NO" id="gQZ-Om-EfT">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="milesDavisBackground" translatesAutoresizingMaskIntoConstraints="NO" id="gQZ-Om-EfT">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -823,7 +830,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
         <scene sceneID="tx9-JQ-Ks5">
             <objects>
                 <tableViewController id="QbP-ia-AHo" customClass="JIPEventDetailsTVC" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="5" sectionFooterHeight="5" id="iIb-Yk-lqA">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="8" sectionFooterHeight="8" id="iIb-Yk-lqA">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -850,7 +857,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                             <tableViewSection headerTitle="" id="mAM-uD-hjn">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="33" id="xbr-RL-kW2">
-                                        <rect key="frame" x="0.0" y="290" width="320" height="33"/>
+                                        <rect key="frame" x="0.0" y="296" width="320" height="33"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xbr-RL-kW2" id="BCV-vs-tTZ">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
@@ -872,7 +879,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                             <tableViewSection headerTitle="" id="cZY-Zc-zPD">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="33" id="1rN-Yq-8xg">
-                                        <rect key="frame" x="0.0" y="333" width="320" height="33"/>
+                                        <rect key="frame" x="0.0" y="345" width="320" height="33"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1rN-Yq-8xg" id="udp-Dc-bjx">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="32"/>
@@ -894,7 +901,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
                             <tableViewSection headerTitle="" id="LWv-JR-Dhm">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="33" id="Sae-sx-ExF">
-                                        <rect key="frame" x="0.0" y="376" width="320" height="33"/>
+                                        <rect key="frame" x="0.0" y="394" width="320" height="33"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Sae-sx-ExF" id="OFu-XY-40G">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="32"/>
@@ -1060,6 +1067,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
         <image name="locationIcon" width="116" height="116"/>
         <image name="menuIcon" width="16" height="16"/>
         <image name="miles2" width="422" height="760"/>
+        <image name="milesDavisBackground" width="640" height="960"/>
         <image name="userLocation" width="48" height="48"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -1068,7 +1076,7 @@ Keep posted on your favorites artists upcoming concerts in Paris and goodbye to 
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="OVo-v0-HvK"/>
+        <segue reference="KJD-30-6ps"/>
         <segue reference="njn-IU-hsv"/>
         <segue reference="iEN-GU-oAi"/>
     </inferredMetricsTieBreakers>

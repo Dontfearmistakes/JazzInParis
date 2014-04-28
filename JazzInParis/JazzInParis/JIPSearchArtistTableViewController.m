@@ -12,13 +12,15 @@
 #import "ECSlidingViewController.h"
 #import "SideMenuViewController.h"
 #import "JIPSearchArtistNameCell.h"
-
+#import "UIBezierPath+dqd_arrowhead.h"
 
 @interface JIPSearchArtistTableViewController ()
 
 @property (strong, nonatomic) NSMutableArray * artistsDictionnaries;
 @property (strong, nonatomic) NSMutableDictionary * artistDict;
 @property (strong, nonatomic) JIPManagedDocument * managedDocument;
+@property (strong, nonatomic) UIImageView * arrow;
+@property (strong, nonatomic) UILabel * startHintLabel;
 
 @end
 
@@ -31,6 +33,10 @@
 @synthesize managedDocument = _managedDocument;
 @synthesize searchArtistTextField = _searchArtistTextField;
 @synthesize tapGesture           = _tapGesture;
+@synthesize arrow           = _arrow;
+@synthesize startHintLabel           = _startHintLabel;
+
+
 
 ////////////////////////////////////////////////
 //method for every rootVC / implements side menu
@@ -42,9 +48,11 @@
 
 
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     
     //Page qui appraît au lancement de l'appli = rattacher le side menu à la page de lancement
     if (![self.slidingViewController.underLeftViewController isKindOfClass:[SideMenuViewController class]])
@@ -54,7 +62,12 @@
     
     [JIPDesign applyBackgroundWallpaperInTableView:self.tableView];
     
-
+    if ([_artistDict count] == 0)
+    {
+        [self drawArrow];
+        _startHintLabel = [JIPDesign emptyTableViewFilledLabelLabelWithString:@"Enter your favorite artist name"];
+        [self.tableView addSubview:_startHintLabel];
+    }
     
     _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOnTableView:)];
     [self.tableView addGestureRecognizer:_tapGesture];
@@ -66,6 +79,41 @@
 }
 
 
+
+
+
+-(void)drawArrow
+{
+    CGPoint startPoint = CGPointMake(160, 100);
+    CGPoint endPoint   = CGPointMake(160, 10);
+    
+    UIBezierPath* path = [UIBezierPath dqd_bezierPathWithArrowFromPoint:startPoint toPoint:endPoint tailWidth:2 headWidth:10 headLength:15];
+
+    
+    //you have to account for the x and y values of your UIBezierPath rect
+    //add the x to the width (75 + 200)
+    //add the y to the height (100 + 200)
+    UIGraphicsBeginImageContext(CGSizeMake(275, 300));
+    
+    //this gets the graphic context
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    //you can stroke and/or fill
+    //CGContextSetStrokeColorWithColor(context, [UIColor blueColor].CGColor);
+    CGContextSetFillColorWithColor(context, [UIColor lightGrayColor].CGColor);
+    //[path setLineWidth:1.0];
+    [path fill];
+    //[path stroke];
+    
+    //now get the image from the context
+    UIImage *bezierImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    _arrow = [[UIImageView alloc]initWithImage:bezierImage];
+    
+    [self.tableView addSubview:_arrow];
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,7 +207,12 @@
     return YES;
 }
 
-
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    [_arrow removeFromSuperview];
+    [_startHintLabel removeFromSuperview];
+    return YES;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -14,6 +14,7 @@
 #import "JIPVenueMapVC.h"
 #import "JIPVenue.h"
 
+
 @interface JIPJazzClubsMapVC ()
 
 @end
@@ -31,6 +32,7 @@
 {
     [self.slidingViewController anchorTopViewTo:ECRight];
 }
+
 
 -(void)viewDidLoad
 {

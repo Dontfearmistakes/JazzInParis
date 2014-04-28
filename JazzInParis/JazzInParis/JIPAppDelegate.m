@@ -19,10 +19,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
+    //Choose storyboard Iphone4 or Iphone5
     [self initializeStoryBoardBasedOnScreenSize];
     
+    #warning TEST
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
+    //request.predicate       = [NSPredicate predicateWithFormat:@"favorite == %@", @YES];
+    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
+        NSError *error = nil;
+        NSMutableDictionary *favArtists;
+        favArtists = [[managedDocument.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    }];
     
+    //Set statusBar style
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     //Configure PageController
@@ -39,8 +48,8 @@
     }
     
     
-    [[JIPUpdateManager sharedUpdateManager] clearOldEvents];
-    [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
+    //[[JIPUpdateManager sharedUpdateManager] clearOldEvents];
+    //[[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
     
     //Insert all jazz clubs in Paris into Core Data
     [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {

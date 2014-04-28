@@ -12,6 +12,7 @@
 
 + (void)      applyBackgroundWallpaperInTableView     :(UITableView*)tableView;
 + (UILabel *) emptyTableViewLabelWithString           :(NSString*)string;
++ (UILabel*)  emptyTableViewFilledLabelLabelWithString:(NSString*)string;
 + (UIButton*) emptyTableViewButtonWithString          :(NSString*)string;
 
 @end

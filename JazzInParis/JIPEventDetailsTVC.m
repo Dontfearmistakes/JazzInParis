@@ -40,9 +40,16 @@
     }
 
     //Labels
-    self.title             = _event.name;
-    _concertDateLabel.text = [NSString stringWithFormat:@"%@ @ %@", [NSDate stringFromDate:_event.date], _event.startTime];
-    
+    self.title                 = _event.name;
+
+    NSString *concertTimeStart;
+    if ([_event.startTime isEqualToString:@"Unknown Time"])
+        _concertDateLabel.text     = [NSString stringWithFormat:@"%@", [NSDate stringFromDate:_event.date]];
+    else
+    {
+        concertTimeStart = [_event.startTime substringToIndex:5];
+        _concertDateLabel.text     = [NSString stringWithFormat:@"%@ @ %@", [NSDate stringFromDate:_event.date], concertTimeStart];
+    }
     
     // Fetch venue details in prevision of next VC
     NSURLSession        * session  = [NSURLSession sharedSession];
