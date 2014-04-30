@@ -61,6 +61,7 @@ static JIPManagedDocument * _sharedManagedDocument;
         {
             NSLog(@"COULDNT PERFORM BLOCK WITH ManagedDocument");
         }
+
         self.openingDocument = NO;
     };
     

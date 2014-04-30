@@ -34,12 +34,12 @@
 
 +(UILabel*)emptyTableViewFilledLabelLabelWithString:(NSString*)string
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 110, 280, 40)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 90, 280, 40)];
     label.text     = string;
     label.textColor= [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentCenter;
     label.layer.cornerRadius = 8;
-    label.backgroundColor = Rgb2UIColorWithAlpha(49,49,49,0.7);
+    label.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.3];
     return label;
 }
 

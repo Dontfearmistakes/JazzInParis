@@ -324,4 +324,14 @@
     }
 }
 
+-(void)applicationDidEnterBackground:(UIApplication *)application
+{
+    NSError* error = nil;
+    if (![[[JIPManagedDocument sharedManagedDocument] managedObjectContext] save:&error])
+    {
+        NSLog(@"Can't Save! %@ \r %@", error, [error localizedDescription]);
+    }
+}
+
+
 @end

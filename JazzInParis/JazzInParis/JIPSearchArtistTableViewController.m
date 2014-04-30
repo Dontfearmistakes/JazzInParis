@@ -84,7 +84,7 @@
 
 -(void)drawArrow
 {
-    CGPoint startPoint = CGPointMake(160, 100);
+    CGPoint startPoint = CGPointMake(160, 80);
     CGPoint endPoint   = CGPointMake(160, 10);
     
     UIBezierPath* path = [UIBezierPath dqd_bezierPathWithArrowFromPoint:startPoint toPoint:endPoint tailWidth:2 headWidth:10 headLength:15];

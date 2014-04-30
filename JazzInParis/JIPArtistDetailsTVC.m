@@ -145,6 +145,7 @@
 {
     //1) On update l'attribut favorite
     [self.artist setFavorite:[NSNumber numberWithBool:[(UISwitch*)sender isOn]]];
+
     
     //2) On télecharge ou efface les Events liés à cet artiste
     if ([(UISwitch*)sender isOn])
