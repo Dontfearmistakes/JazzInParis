@@ -21,6 +21,7 @@
 @dynamic websiteString;
 @dynamic capacity;
 @dynamic events;
+@dynamic isJazzClub;
 
 
 @synthesize location = _location;

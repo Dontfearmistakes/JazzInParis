@@ -68,18 +68,23 @@
     [super viewWillAppear:YES];
 
     ////////////////////////////////////////////////////////FETCH JAZZ CLUBS IN CORE DATA
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPVenue"];
-    request.predicate = [NSPredicate predicateWithFormat:@"id < 0"];
-    NSError *error = nil;
-    _jazzClubsArrayFromCoreData = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
     
-    ///////////////////////////////////////////////////////Don't display distance to userLocation
-    for (JIPVenue *jazzClub in _jazzClubsArrayFromCoreData)
-    {
-        [jazzClub setShouldDisplayDistanceFromUserToVenue:NO];
-    }
+    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
     
-    [_allJazzClubsMap addAnnotations:_jazzClubsArrayFromCoreData];
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPVenue"];
+        request.predicate = [NSPredicate predicateWithFormat:@"isJazzClub == %@", @1];
+        NSError *error = nil;
+        _jazzClubsArrayFromCoreData = [managedDocument.managedObjectContext executeFetchRequest:request error:&error];
+        
+        ///////////////////////////////////////////////////////Don't display distance to userLocation
+        for (JIPVenue *jazzClub in _jazzClubsArrayFromCoreData)
+        {
+            [jazzClub setShouldDisplayDistanceFromUserToVenue:NO];
+        }
+        
+        [_allJazzClubsMap addAnnotations:_jazzClubsArrayFromCoreData];
+    }];
+    
 }
 
 

@@ -27,6 +27,7 @@
 @property (nonatomic, retain) NSNumber *latitude;
 @property (strong, nonatomic) NSString *websiteString;
 @property (strong, nonatomic) NSNumber *capacity;
+@property (strong, nonatomic) NSNumber *isJazzClub;
 
 //TO-MANY RELATIONSHIPS TO BE STORED
 @property (nonatomic, retain) NSSet *events;

@@ -47,6 +47,7 @@
         venue.street   = venueDict[@"street"];
         venue.phone    = venueDict[@"phone"];
         venue.websiteString = venueDict[@"websiteString"];
+        venue.isJazzClub = venueDict[@"isJazzClub"];
     }
     
     // 3) the object has already been created upon upcomingEvents API call
