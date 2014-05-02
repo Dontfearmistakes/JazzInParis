@@ -86,8 +86,9 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
     NSURL                * url      = [self songkickURLUpcomingEventsForArtist:artist];
     NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                    
+
                                                     [self insertJIPEventsFromJSON:data error:&error];
+                                                    
                                                     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                                                 }];
     [dataTask resume];
@@ -109,9 +110,12 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
     }
     
     NSArray *dictionnariesOfEventsFromApi = parsedObject[@"resultsPage"][@"results"][@"event"];
-        
+    
+    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
+    
         for (NSDictionary * eventDictFromApi in dictionnariesOfEventsFromApi)
         {
+            //Pour tous les events reçus de Songkick
             NSMutableDictionary * eventDict = [[NSMutableDictionary alloc]init];
             
             //event details
@@ -124,7 +128,7 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
             //if event dans un rayon de 30km autour de Paris alors insertIntoContext
             if ([self eventLocationIsNotTooFarFromParisCenter:eventLocation])
             {
-
+                
                 eventDict[@"id"]        = eventDictFromApi[@"id"];
                 eventDict[@"name"]      = eventDictFromApi[@"displayName"];
                 eventDict[@"date"]      = [NSDate dateFromAPIString:eventDictFromApi[@"start"][@"date"]] ;
@@ -143,12 +147,22 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
                 eventDict[@"venueUri"]  = eventDictFromApi[@"venue"][@"uri"];
                 eventDict[@"venueName"] = eventDictFromApi[@"venue"][@"displayName"];
                 eventDict[@"venueCity"] = eventDictFromApi[@"location"][@"city"];
-            
+                
                 [JIPEvent eventWithSongkickInfo:eventDict
-                         inManagedObjectContext:[JIPManagedDocument sharedManagedDocument].managedObjectContext];
+                         inManagedObjectContext:managedDocument.managedObjectContext];
             }
             
         }
+        
+        #warning save context
+        NSError *error = nil;
+        if (![[[JIPManagedDocument sharedManagedDocument] managedObjectContext] save:&error])
+        {
+            NSLog(@"Can't Save! %@ \r %@", error, [error localizedDescription]);
+        }
+    
+    }];
+    
 }
 
 

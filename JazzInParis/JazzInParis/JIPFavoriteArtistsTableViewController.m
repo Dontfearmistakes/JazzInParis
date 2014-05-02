@@ -54,14 +54,6 @@
     
     [self fetchfavoriteArtist];
     
-    if ([_favoriteArtists count] == 0)
-    {
-        [self.searchBar setHidden:YES];
-        [self.navigationItem.rightBarButtonItem setEnabled:NO];
-        [self addLabelAndButtonIfNoFavorites];
-    }
-    
-    [self.tableView reloadData];
 }
 
 
@@ -69,12 +61,28 @@
 
 -(void)fetchfavoriteArtist
 {
+    
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
     request.predicate       = [NSPredicate predicateWithFormat:@"favorite == %@", @YES];
     
-    NSError *error = nil;
-    _favoriteArtists = [[[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
+    
+        NSError *error = nil;
+        _favoriteArtists = [[managedDocument.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+        
+        [self.tableView reloadData];
+        
+        if ([_favoriteArtists count] == 0)
+        {
+            [self.searchBar setHidden:YES];
+            [self.navigationItem.rightBarButtonItem setEnabled:NO];
+            [self addLabelAndButtonIfNoFavorites];
+        }
+        
+    }];
+    
+
 }
 
 

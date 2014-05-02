@@ -31,6 +31,11 @@
     pageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
     pageControl.backgroundColor = [UIColor blackColor];
     
+    
+    // Open sharedManagedDoc / mauvaise solution mais temporaire ?
+    //[[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {}];
+    
+    
     //Is it first launch ??
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (![userDefaults objectForKey:@"firstLaunch"])

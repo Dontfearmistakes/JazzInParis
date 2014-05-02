@@ -59,12 +59,9 @@
     [JSONHTTPClient getJSONFromURLWithString: searchCall
                                   completion:^(NSDictionary *json, JSONModelError *err) {
                                       
-                                      //got JSON back
-                                      NSLog(@"Got JSON from web: %@", json);
-                                      
                                       if (err) {
                                           [[[UIAlertView alloc] initWithTitle:@"Error"
-                                                                      message:[err localizedDescription]
+                                                                      message:@"Couldn't download YouTube videos"
                                                                      delegate:nil
                                                             cancelButtonTitle:@"Close"
                                                             otherButtonTitles: nil] show];

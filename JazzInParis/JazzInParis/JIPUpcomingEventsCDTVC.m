@@ -70,23 +70,30 @@
         NSPredicate * p3 = [NSPredicate predicateWithFormat:@"(venue.id != nil)"];             //and venue is not undefined
         NSPredicate * globalPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[p1, p2, p3]];
         request.predicate= globalPredicate;
+   
+    
+    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
+    {
     
         self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                                            managedObjectContext:[JIPManagedDocument sharedManagedDocument].managedObjectContext
+                                                                            managedObjectContext:managedDocument.managedObjectContext
                                                                               sectionNameKeyPath:@"sectionIdentifier"
                                                                                        cacheName:nil];
-
-    if ([[self.fetchedResultsController fetchedObjects] count] == 0)
-    {
-        UILabel *label = [JIPDesign emptyTableViewLabelWithString:@"No upcoming concerts yet..."];
-        [self.view addSubview:label];
         
-        UIButton *button = [JIPDesign emptyTableViewButtonWithString:@"Add more artists"];;
-        [button addTarget:self
-                   action:@selector(segueToSearchArtists)
-         forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:button];
+        if ([[self.fetchedResultsController fetchedObjects] count] == 0)
+        {
+            UILabel *label = [JIPDesign emptyTableViewLabelWithString:@"No upcoming concerts yet..."];
+            [self.view addSubview:label];
+            
+            UIButton *button = [JIPDesign emptyTableViewButtonWithString:@"Add more artists"];;
+            [button addTarget:self
+                       action:@selector(segueToSearchArtists)
+             forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:button];
+        }
+    
     }
+    ];
 }
 
 -(void)segueToSearchArtists
