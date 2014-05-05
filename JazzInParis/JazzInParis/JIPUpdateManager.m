@@ -71,6 +71,11 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                     
                                                     [self insertJIPEventsFromJSON:data error:&error];
+                                                    #warning TODO
+                                                    // 1) Désérialiser ici
+                                                    // 2) l'ajouter à un NSMutableDictionary (toujours le même)
+                                                    // 3) self insertJIPEventsFromJSon et passer ce NSMutableDict en argument
+                                                    
                                                     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                                                 }];
         [dataTask resume];
