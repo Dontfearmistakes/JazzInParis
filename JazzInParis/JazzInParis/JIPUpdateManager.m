@@ -25,12 +25,15 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 
 @interface JIPUpdateManager ()
 
-@property (strong, nonatomic) NSArray * favoriteArtists;
+@property (strong, nonatomic) NSArray    * favoriteArtists;
+@property (nonatomic)         NSUInteger   i;
 -(BOOL)eventLocationIsNotTooFarFromParisCenter:(CLLocation*)eventLocation;
 
 @end
 
 @implementation JIPUpdateManager
+
+@synthesize i = _i;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // First time it's called, create an instance of JIPUIUpdateManager and put it in the static ivar
@@ -54,33 +57,58 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 /////////////////////////////////////////////////////////////
 -(void)updateUpcomingEvents
 {
+    NSMutableArray * dictsOfAllFavoriteConcerts   = [[NSMutableArray alloc]init];
+    _i = 0;
+    
     //1) Create http requests for all favorite artists
-    NSURLSession * session            = [NSURLSession sharedSession];
-    
-    NSFetchRequest *request           = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
-                    request.predicate = [NSPredicate predicateWithFormat:@"favorite == %@", @YES];
-    NSError        *error = nil;
-    
-    self.favoriteArtists = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request error:&error];
-    
-    for (JIPArtist * artist in self.favoriteArtists)
-    {
-        NSURL *url = [self songkickURLUpcomingEventsForArtist:artist];
+    NSURLSession   * session               = [NSURLSession sharedSession];
+    NSFetchRequest * request               = [NSFetchRequest fetchRequestWithEntityName:@"JIPArtist"];
+                     request.predicate     = [NSPredicate predicateWithFormat:@"favorite == %@", @YES];
 
-        NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
-                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                    
-                                                    [self insertJIPEventsFromJSON:data error:&error];
+    [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
+    
+        NSError        * error = nil;
+        self.favoriteArtists  = [managedDocument.managedObjectContext executeFetchRequest:request error:&error];
+        
+        for (JIPArtist * artist in self.favoriteArtists)
+        {
+            NSURL *url = [self songkickURLUpcomingEventsForArtist:artist];
+            
+            NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url
+                                                    completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                        
                                                     #warning TODO
-                                                    // 1) Désérialiser ici
+                                                    // 1) Désérialiser la liste des concerts
+                                                    NSError *localError = nil;
+                                                    NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data
+                                                                                                                 options:0
+                                                                                                                   error:&localError];
+                                                    if (localError != nil)
+                                                        NSLog(@"%@", localError);
+                                                    
                                                     // 2) l'ajouter à un NSMutableDictionary (toujours le même)
+                                                    NSArray * dictsOfSongkickEventsForArtist = parsedObject[@"resultsPage"][@"results"][@"event"];
+                                                             [dictsOfAllFavoriteConcerts addObjectsFromArray:dictsOfSongkickEventsForArtist];
+                                                    
+                                                    _i++;
+                                                        
                                                     // 3) self insertJIPEventsFromJSon et passer ce NSMutableDict en argument
+                                                    if (_i == [self.favoriteArtists count])
+                                                    {
+                                                        [self insertJIPEventsFromJSON:dictsOfAllFavoriteConcerts
+                                                                                error:&error];
+                                                    }
+                                                        
                                                     
                                                     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                                                 }];
-        [dataTask resume];
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    }
+            [dataTask resume];
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        }
+
+    }];
+    
+    
 }
 
 
@@ -92,7 +120,19 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
     NSURLSessionDataTask * dataTask = [session dataTaskWithURL:url
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 
-                                                    [self insertJIPEventsFromJSON:data error:&error];
+                                                    //1 Désérialiser
+                                                    NSError *localError = nil;
+                                                    NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data
+                                                                                                                 options:0
+                                                                                                                   error:&localError];
+                                                    
+                                                    if (localError != nil)
+                                                        NSLog(@"%@", localError);
+                                                    
+                                                    NSArray *dictionnariesOfSongkickEventsForAnArtist = parsedObject[@"resultsPage"][@"results"][@"event"];
+                                                    
+                                                    [self insertJIPEventsFromJSON:dictionnariesOfSongkickEventsForAnArtist
+                                                                            error:&error];
                                                     
                                                     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                                                 }];
@@ -105,20 +145,12 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
 
 
 /////////////////////////////////////////////////////////////////////
--(void)insertJIPEventsFromJSON:(NSData *)JsonData error:(NSError **)error
+-(void)insertJIPEventsFromJSON:(NSArray *)arrayOfEventDictsFromApi error:(NSError **)error
 {
-    NSError *localError = nil;
-    NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:JsonData options:0 error:&localError];
-    if (localError != nil) {
-        *error = localError;
-        NSLog(@"%@", error);
-    }
-    
-    NSArray *dictionnariesOfEventsFromApi = parsedObject[@"resultsPage"][@"results"][@"event"];
     
     [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
     
-        for (NSDictionary * eventDictFromApi in dictionnariesOfEventsFromApi)
+        for (NSDictionary * eventDictFromApi in arrayOfEventDictsFromApi)
         {
             //Pour tous les events reçus de Songkick
             NSMutableDictionary * eventDict = [[NSMutableDictionary alloc]init];
@@ -229,14 +261,24 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
         NSFetchRequest *request            = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
         NSDate         *tenDaysAgo         = [NSDate dateWithTimeIntervalSinceNow:( -JIPUpdateManagerDeletionDelay * 24 * 60 * 60 )];
                         request.predicate  = [NSPredicate predicateWithFormat:@"date <= %@", tenDaysAgo]; //all JIPEvents older than XX days
-        NSError        *error = nil;
-        NSArray        *objectsToBeDeleted = [[JIPManagedDocument sharedManagedDocument].managedObjectContext executeFetchRequest:request
-                                                                                   error:&error];
-        
-        if ([objectsToBeDeleted count] != 0)
-        for (NSManagedObject* objectToBeDeleted in objectsToBeDeleted)
-        [[JIPManagedDocument sharedManagedDocument].managedObjectContext deleteObject:objectToBeDeleted];
-    
+            [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument)
+            {
+                NSError        *error = nil;
+                NSArray        *objectsToBeDeleted = [managedDocument.managedObjectContext executeFetchRequest:request
+                                                                                                                                    error:&error];
+                //S'il y a des events qui date de plus de 10 jours
+                if ([objectsToBeDeleted count] != 0)
+                //alors on les delete
+                for (NSManagedObject* objectToBeDeleted in objectsToBeDeleted)
+                [managedDocument.managedObjectContext deleteObject:objectToBeDeleted];
+                
+                //Puis on sauvegarde le contexte
+                #warning save context
+                NSError *error2 = nil;
+                if (![managedDocument.managedObjectContext save:&error2])
+                    NSLog(@"Can't Save! %@ \r %@", error2, [error2 localizedDescription]);
+                
+            }];
     
 }
 
@@ -257,12 +299,20 @@ static NSString const * JIPUpdateManagerSongkickAPIKey = @"vUGmX4egJWykM1TA";
     //SI on a des JIPEvents à supprimer
     if (! [objectsToBeDeleted count] == 0)
     {
-        for (NSManagedObject* objectToBeDeleted in objectsToBeDeleted)
-        {
-            [[JIPManagedDocument sharedManagedDocument].managedObjectContext deleteObject:objectToBeDeleted];
-        }
+        [[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {
+           
+            for (NSManagedObject* objectToBeDeleted in objectsToBeDeleted)
+            [managedDocument.managedObjectContext deleteObject:objectToBeDeleted];
+            
+        }];
     }
     
+    #warning save context
+    NSError *error2 = nil;
+    if (![[[JIPManagedDocument sharedManagedDocument] managedObjectContext] save:&error])
+    {
+        NSLog(@"Can't Save! %@ \r %@", error2, [error2 localizedDescription]);
+    }
 }
 
 @end

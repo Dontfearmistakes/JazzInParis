@@ -306,9 +306,9 @@
         
     }
     
-    
-    //[[JIPUpdateManager sharedUpdateManager] clearOldEvents];
-    //[[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
+
+    [[JIPUpdateManager sharedUpdateManager] clearOldEvents];
+    [[JIPUpdateManager sharedUpdateManager] updateUpcomingEvents];
     
 
     
@@ -350,6 +350,7 @@
         [self.window makeKeyAndVisible];
     }
 }
+
 
 -(void)applicationDidEnterBackground:(UIApplication *)application
 {

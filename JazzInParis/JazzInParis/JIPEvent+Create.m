@@ -16,9 +16,9 @@
              inManagedObjectContext:(NSManagedObjectContext *)context
 {
     //On cherche si l'event qu'on veut enregistrer est déjà dans le context
-    JIPEvent *event = nil;
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
-    request.predicate = [NSPredicate predicateWithFormat:@"id = %@", eventDictionary[@"id"]];
+    JIPEvent * event = nil;
+    NSFetchRequest * request           = [NSFetchRequest fetchRequestWithEntityName:@"JIPEvent"];
+                     request.predicate = [NSPredicate predicateWithFormat:@"id = %@", eventDictionary[@"id"]];
     NSError *error = nil;
     NSArray *matches = [context executeFetchRequest:request error:&error];
     
