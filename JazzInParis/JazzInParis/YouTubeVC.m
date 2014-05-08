@@ -60,8 +60,8 @@
                                   completion:^(NSDictionary *json, JSONModelError *err) {
                                       
                                       if (err) {
-                                          [[[UIAlertView alloc] initWithTitle:@"Error"
-                                                                      message:@"Couldn't download YouTube videos"
+                                          [[[UIAlertView alloc] initWithTitle:@"Network Problem"
+                                                                      message:@"YouTube videos couldn't be downloaded"
                                                                      delegate:nil
                                                             cancelButtonTitle:@"Close"
                                                             otherButtonTitles: nil] show];
