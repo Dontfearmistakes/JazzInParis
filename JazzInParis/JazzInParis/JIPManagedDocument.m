@@ -50,7 +50,8 @@ static JIPManagedDocument * _sharedManagedDocument;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 -(void)performBlockWithDocument:(void (^)(JIPManagedDocument * managedDocument))block
 {
-    ///////////////////////////////////////////////
+
+    
     void (^completionBlock) (BOOL) = ^(BOOL success) {
         if (success)
         {
@@ -66,7 +67,7 @@ static JIPManagedDocument * _sharedManagedDocument;
     };
     
     
-    ///////////////////////////////////////////////
+
     //SOIT DOC PRET et ouvert --> on execute le completionBlock
     if (self.documentState == UIDocumentStateNormal)
     {

@@ -29,17 +29,13 @@
         if (iOSDeviceScreenSize.height == 568)
         {
             // iPhone 5 and iPod Touch 5th generation: 4 inch screen (diagonally measured)
-            //NSLog(@"Loading iphone 5 storyboard");
+            // NSLog(@"Loading iphone 5 storyboard");
             // Instantiate a new storyboard object using the storyboard file named Storyboard_iPhone4
             storyboard = [UIStoryboard storyboardWithName:@"Iphone5" bundle:nil];
         }
     }
   
     self.topViewController = [storyboard instantiateViewControllerWithIdentifier:@"Search Artist"];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
 }
 
 

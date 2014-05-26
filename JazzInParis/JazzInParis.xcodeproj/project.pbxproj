@@ -682,13 +682,10 @@
 				DBB9130B190A890000D913A4 /* Resources */,
 				50FA943618F2FB78008A761D /* Trash */,
 				DB1FE85F18EEECFE0032A1F9 /* Lib */,
-				504A1EFE18FE927D00629F6A /* InitialPageContent */,
 				50A52FB2189ED5D9001D9779 /* JIPAppDelegate.h */,
 				50A52FB3189ED5D9001D9779 /* JIPAppDelegate.m */,
-				501FB95F18D1BFCE00845256 /* JIPManagedDocument.h */,
-				501FB96018D1BFCE00845256 /* JIPManagedDocument.m */,
-				5051B4F318D9A6D600BBE2DB /* JIPUpdateManager.h */,
-				5051B4F418D9A6D600BBE2DB /* JIPUpdateManager.m */,
+				504A1EFE18FE927D00629F6A /* InitialPageContent */,
+				50DA916619335E9F0020D124 /* Singletons */,
 				5074704018FBFE470040C7FC /* JIPDesign.h */,
 				5074704118FBFE470040C7FC /* JIPDesign.m */,
 				50FB3192189EE04F00137949 /* ViewControllers */,
@@ -764,6 +761,17 @@
 				5069741418F1828300A4E23C /* JIPYouTubeVideoCell.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		50DA916619335E9F0020D124 /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				501FB95F18D1BFCE00845256 /* JIPManagedDocument.h */,
+				501FB96018D1BFCE00845256 /* JIPManagedDocument.m */,
+				5051B4F318D9A6D600BBE2DB /* JIPUpdateManager.h */,
+				5051B4F418D9A6D600BBE2DB /* JIPUpdateManager.m */,
+			);
+			name = Singletons;
 			sourceTree = "<group>";
 		};
 		50DAA79218AB8E57003DDADA /* Categories */ = {
@@ -1232,7 +1240,7 @@
 				GCC_PREFIX_HEADER = "JazzInParis/JazzInParis-Prefix.pch";
 				INFOPLIST_FILE = "JazzInParis/JazzInParis-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "52E4CFE1-A469-4C1B-B8E2-FE3E5A72A169";
+				PROVISIONING_PROFILE = "3EFFC9A5-E333-45B9-86FB-C987EFEE8CBC";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1249,7 +1257,7 @@
 				GCC_PREFIX_HEADER = "JazzInParis/JazzInParis-Prefix.pch";
 				INFOPLIST_FILE = "JazzInParis/JazzInParis-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "52E4CFE1-A469-4C1B-B8E2-FE3E5A72A169";
+				PROVISIONING_PROFILE = "3EFFC9A5-E333-45B9-86FB-C987EFEE8CBC";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

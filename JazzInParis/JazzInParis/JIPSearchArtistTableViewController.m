@@ -29,11 +29,11 @@
 
 @implementation JIPSearchArtistTableViewController
 
-@synthesize artistDict = _artistDict;
-@synthesize managedDocument = _managedDocument;
-@synthesize searchArtistTextField = _searchArtistTextField;
-@synthesize tapGesture           = _tapGesture;
-@synthesize arrow           = _arrow;
+@synthesize artistDict               = _artistDict;
+@synthesize managedDocument          = _managedDocument;
+@synthesize searchArtistTextField    = _searchArtistTextField;
+@synthesize tapGesture               = _tapGesture;
+@synthesize arrow                    = _arrow;
 @synthesize startHintLabel           = _startHintLabel;
 
 

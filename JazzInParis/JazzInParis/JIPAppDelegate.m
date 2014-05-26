@@ -27,13 +27,9 @@
     
     //Configure PageController
     UIPageControl *pageControl = [UIPageControl appearance];
-    pageControl.pageIndicatorTintColor = [UIColor whiteColor];
+    pageControl.pageIndicatorTintColor        = [UIColor whiteColor];
     pageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
-    pageControl.backgroundColor = [UIColor blackColor];
-    
-    
-    // Open sharedManagedDoc / mauvaise solution mais temporaire ?
-    //[[JIPManagedDocument sharedManagedDocument] performBlockWithDocument:^(JIPManagedDocument *managedDocument) {}];
+    pageControl.backgroundColor               = [UIColor blackColor];
     
     
     //Is it first launch ??
@@ -326,7 +322,7 @@
         if (iOSDeviceScreenSize.height == 480)
         {
             // iPhone 3GS, 4, and 4S and iPod Touch 3rd and 4th generation: 3.5 inch screen (diagonally measured)
-            //NSLog(@"Loading iphone 4 storyboard");
+            // NSLog(@"Loading iphone 4 storyboard");
             // Instantiate a new storyboard object using the storyboard file named MainStoryboard_iPhone
             storyboard = [UIStoryboard storyboardWithName:@"Iphone4" bundle:nil];
         }
@@ -334,7 +330,7 @@
         if (iOSDeviceScreenSize.height == 568)
         {
             // iPhone 5 and iPod Touch 5th generation: 4 inch screen (diagonally measured)
-            //NSLog(@"Loading iphone 5 storyboard");
+            // NSLog(@"Loading iphone 5 storyboard");
             // Instantiate a new storyboard object using the storyboard file named Storyboard_iPhone4
             storyboard = [UIStoryboard storyboardWithName:@"Iphone5" bundle:nil];
         }
